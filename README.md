@@ -2,12 +2,12 @@
 Frontend app for [macgyver](https://github.com/navikt/macgyver)
 
 ## Technologies used
+* NEXT.js
 * Typescript
-* React
 * Yarn
 
 #### Requirements
-* npm
+* npm or yarn already installed
 
 ## Getting Started
 
