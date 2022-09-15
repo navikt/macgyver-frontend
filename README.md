@@ -2,10 +2,20 @@
 Frontend app for https://github.com/navikt/macgyver that fixes stuff like macgyver for team sykmelding
 
 ## Getting Started
-Run these commands to run the development server:
 
+### install dependencies
 ```bash
 yarn
+```
+
+### build
+```bash
+yarn build
+```
+
+### run development server
+
+```bash
 yarn start
 ```
 
