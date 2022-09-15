@@ -1,23 +1,41 @@
 # macgyver-frontend
-Frontend app for https://github.com/navikt/macgyver that fixes stuff like macgyver for team sykmelding
+Frontend app for [macgyver](https://github.com/navikt/macgyver)
+
+## Technologies used
+* Typescript
+* React
+* Yarn
+
+#### Requirements
+* npm
 
 ## Getting Started
 
-### install dependencies
+### install yarn
+Yarn can be installed through the npm package manager, with this command: 
+```npm install --global yarn```
+
+The following steps need to be in the project directory(the root foler for this app), you can run:
+
+### Install all the dependencies
 ```bash
 yarn
 ```
 
-### build
+### Builds the app for production
 ```bash
 yarn build
 ```
 
-### run development server
+### Run the app in development mode
 
 ```bash
 yarn start
 ```
+Open http://localhost:3000/ to view it in the browser.
+
+The page will reload if you make edits.
+You will also see any lint errors in the console.
 
 ## FlowChart
 This the high level flow of the application
