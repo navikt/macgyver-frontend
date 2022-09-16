@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import pino from 'pino';
 
 const getFrontendLogger = (): pino.Logger =>
