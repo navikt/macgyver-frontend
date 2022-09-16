@@ -1,8 +1,9 @@
-name: Deploy to dev and prod
+name: Deploy to dev
 on:
   push:
     branches:
-      - main
+      - '*'
+      - '!master'
 env:
   docker_image: ghcr.io/navikt/macgyver-frontend:${{ github.sha }}
 jobs:
@@ -70,18 +71,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_TEAMSYKMELDING }}
           CLUSTER: dev-gcp
-          RESOURCE: nais-dev.yaml
-          VAR: image=${{ env.docker_image }}
-
-  deploy-to-prod-gcp:
-    name: deploy to nais prod
-    needs: [snyk-test, build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_TEAMSYKMELDING }}
-          CLUSTER: prod-gcp
           RESOURCE: nais-dev.yaml
           VAR: image=${{ env.docker_image }}

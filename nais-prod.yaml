@@ -1,0 +1,41 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: macgyver-frontend
+  namespace: teamsykmelding
+  labels:
+    team: teamsykmelding
+spec:
+  image: {{ image }}
+  port: 3000
+  ingresses:
+    - "https://macgyver-frontend.intern.nav.no"
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: /api/internal/is_alive
+  readiness:
+    path: /api/internal/is_ready
+  azure:
+    sidecar:
+      enabled: true
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /internal/*
+    application:
+      enabled: true
+      tenant: nav.no
+      claims:
+        extra:
+          - "NAVident"
+        groups:
+          - id: "3a541678-8965-45c4-844b-486a8b9b94a3"
