@@ -27,6 +27,7 @@ spec:
     path: /api/internal/is_ready
   azure:
     sidecar:
+      enabled: true
       autoLogin: true
       autoLoginIgnorePaths:
         - /internal/*
