@@ -38,6 +38,12 @@ Open http://localhost:3000/ to view it in the browser.
 The page will reload if you make edits.
 You will also see any lint errors in the console.
 
+### Creating a docker image
+Creating a docker image should be as simple as `docker build -t macgyver-frontend .`
+
+### Running a docker image
+`docker run --rm -it -p 3000:3000 macgyver-frontend`
+
 ## FlowChart
 This the high level flow of the application
 
