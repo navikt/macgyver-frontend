@@ -25,3 +25,12 @@ spec:
     path: /api/internal/is_alive
   readiness:
     path: /api/internal/is_ready
+  azure:
+    application:
+      enabled: true
+      tenant: nav.no
+      claims:
+        extra:
+          - "NAVident"
+        groups:
+          - id: "01a3d2a8-fabf-4bad-8017-2e9b5b8baba8"
