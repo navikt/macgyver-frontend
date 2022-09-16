@@ -83,5 +83,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_TEAMSYKMELDING }}
           CLUSTER: prod-gcp
-          RESOURCE: nais-dev.yaml
+          RESOURCE: nais-prod.yaml
           VAR: image=${{ env.docker_image }}
