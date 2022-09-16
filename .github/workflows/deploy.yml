@@ -75,7 +75,7 @@ jobs:
 
   deploy-to-prod-gcp:
     name: deploy to nais prod
-    needs: [snyk-test, build]
+    needs: [snyk-test, build, deploy-to-dev-gcp]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

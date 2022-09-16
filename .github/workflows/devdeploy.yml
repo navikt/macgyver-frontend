@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - '*'
-      - '!master'
+      - '!main'
 env:
   docker_image: ghcr.io/navikt/macgyver-frontend:${{ github.sha }}
 jobs:
