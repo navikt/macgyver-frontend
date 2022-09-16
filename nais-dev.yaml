@@ -26,6 +26,10 @@ spec:
   readiness:
     path: /api/internal/is_ready
   azure:
+    sidecar:
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /internal/*
     application:
       enabled: true
       tenant: nav.no
