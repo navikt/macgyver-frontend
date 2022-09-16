@@ -8,7 +8,6 @@ env:
   docker_image: ghcr.io/navikt/macgyver-frontend:${{ github.sha }}
 jobs:
   snyk-monitor:
-    if: github.ref == 'refs/heads/master'
     name: monitor dependencies
     runs-on: ubuntu-latest
     steps:
