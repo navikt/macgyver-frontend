@@ -42,9 +42,6 @@ const Home: NextPage = () => {
                 <h1>Papirsykmelding</h1>
                 <ul>
                     <li>
-                        <Link href="/papirsykmelding/endrePeriode/EndrePeriode">Endre periodelisten for en gitt papir sykmelding</Link>
-                    </li>
-                    <li>
                         <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato">Endre behandletdato for en gitt papir sykmelding</Link>
                     </li>
                 </ul>
