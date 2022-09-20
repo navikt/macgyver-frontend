@@ -2,10 +2,11 @@ name: Deploy to dev
 on:
   push:
     branches:
-      - '*'
+      - '**'
       - '!main'
 env:
   docker_image: ghcr.io/navikt/macgyver-frontend:${{ github.sha }}
+  NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 jobs:
   snyk-monitor:
     name: monitor dependencies
