@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from "react"
-import {Button, TextField} from "@navikt/ds-react";
+import {BodyShort, Button, TextField} from "@navikt/ds-react";
 import {Header} from "@navikt/ds-react-internal";
 import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
