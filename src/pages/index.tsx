@@ -6,7 +6,7 @@ import "@navikt/ds-css-internal";
 import {Header} from "@navikt/ds-react-internal";
 import {Link} from "@navikt/ds-react";
 import {Print} from "@navikt/ds-icons";
-import {Attachment} from "@navikt/ds-icons";
+import { Bandage } from "@navikt/ds-icons";
 import {Copy} from "@navikt/ds-icons";
 import {Employer} from "@navikt/ds-icons";
 
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div>
-                <h1><Attachment/> Sykmelding</h1>
+                <h1><Bandage/> Sykmelding</h1>
                 <ul>
                     <li>
                         <Link href="/sykmelding/identEndring/IdentEndring">Endre fnr for en gitt sykmelding</Link>
