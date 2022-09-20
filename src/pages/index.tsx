@@ -98,7 +98,7 @@ export const getServerSideProps = withAuthenticatedPage(async (context, accessTo
     );
 
     if (typeof oboToken === 'string') {
-        logger.info(`Got a oboToken and it is: ${oboToken}`);
+        logger.info(`Got a oboToken and it is all good`);
     } else {
         throw new Error(oboToken.message, { cause: oboToken.error });
     }
