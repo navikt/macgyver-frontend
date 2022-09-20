@@ -1,54 +1,51 @@
-import {ChangeEvent, FormEvent, useState} from "react"
-import {BodyShort, Button, TextField} from "@navikt/ds-react";
-import {Header} from "@navikt/ds-react-internal";
-import "@navikt/ds-css";
-import "@navikt/ds-css-internal";
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { BodyShort, Button, TextField } from '@navikt/ds-react';
 
+import '@navikt/ds-css';
+import '@navikt/ds-css-internal';
+import { withAuthenticatedPage } from '../../../auth/withAuth';
 
-const BiDiagnoseEndring = () => {
+const BiDiagnoseEndring = (): JSX.Element => {
+    const [kode, setKode] = useState('');
+    const [system, setSystem] = useState('');
 
-    const [kode, setKode] = useState("")
-    const [system, setSystem] = useState("")
+    const [sykmeldingId, setSykmeldingId] = useState('');
 
-    const [sykmeldingId, setSykmeldingId] = useState("")
+    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+        setSykmeldingId(event.target.value);
+    };
 
-    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setSykmeldingId(event.target.value)
-    }
+    const setKodeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+        setKode(event.target.value);
+    };
 
-    const setKodeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setKode(event.target.value)
-    }
+    const setSystemHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+        setSystem(event.target.value);
+    };
 
-    const setSystemHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setSystem(event.target.value)
-    }
-
-    const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        setSykmeldingId(sykmeldingId)
-        setKode(kode)
-        setSystem(system)
+    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        setSykmeldingId(sykmeldingId);
+        setKode(kode);
+        setSystem(system);
 
         //TODO also send to backend api
-    }
+    };
 
-    // TODO need to swap out "Ola Normann" with loggedin user name, based on token claims
     return (
         <div>
-            <Header>
-                <Header.Title as="h1">Macgyver</Header.Title>
-                <Header.User name="Ola Normann"/>
-            </Header>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
             <form onSubmit={submitHandler}>
-                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler}/>
-                <TextField label="kode" size="medium" onChange={setKodeHandler}/>
-                <TextField label="system" size="medium" onChange={setSystemHandler}/>
-                <Button variant="primary" size="medium">Endre</Button>
+                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
+                <TextField label="kode" size="medium" onChange={setKodeHandler} />
+                <TextField label="system" size="medium" onChange={setSystemHandler} />
+                <Button variant="primary" size="medium">
+                    Endre
+                </Button>
             </form>
         </div>
-    )
-}
+    );
+};
+export const getServerSideProps = withAuthenticatedPage();
 
-export default BiDiagnoseEndring
+export default BiDiagnoseEndring;

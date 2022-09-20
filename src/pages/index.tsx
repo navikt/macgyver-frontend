@@ -1,79 +1,93 @@
-import type {NextPage} from 'next'
-import Head from 'next/head'
+import '@navikt/ds-css';
+import '@navikt/ds-css-internal';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { Print } from '@navikt/ds-icons';
+import { Bandage } from '@navikt/ds-icons';
+import { Copy } from '@navikt/ds-icons';
+import { Employer } from '@navikt/ds-icons';
+import Link from 'next/link';
+import { Link as DsLink } from '@navikt/ds-react';
 
-import "@navikt/ds-css";
-import "@navikt/ds-css-internal";
-import {Header} from "@navikt/ds-react-internal";
-import {Link} from "@navikt/ds-react";
-import {Print} from "@navikt/ds-icons";
-import { Bandage } from "@navikt/ds-icons";
-import {Copy} from "@navikt/ds-icons";
-import {Employer} from "@navikt/ds-icons";
-
+import { withAuthenticatedPage } from '../auth/withAuth';
 
 const Home: NextPage = () => {
-    // TODO need to swap out "Ola Normann" with loggedin user name, based on token claims
     return (
         <div>
-            <Header>
-                <Header.Title as="h1">Macgyver</Header.Title>
-                <Header.User name="Ola Normann"/>
-            </Header>
             <Head>
                 <title>Macgyver</title>
-                <meta name="description" content="macgyver"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <meta name="description" content="macgyver" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <h1><Bandage/> Sykmelding</h1>
+                <h1>
+                    <Bandage /> Sykmelding
+                </h1>
                 <ul>
                     <li>
-                        <Link href="/sykmelding/identEndring/IdentEndring">Endre fnr for en gitt sykmelding</Link>
+                        <Link href="/sykmelding/identEndring/IdentEndring" passHref>
+                            <DsLink>Endre fnr for en gitt sykmelding</DsLink>
+                        </Link>
                     </li>
                     <li>
-                        <Link href="/sykmelding/slettSykmelding/SlettSykmelding">Slett en gitt sykmelding</Link>
+                        <Link href="/sykmelding/slettSykmelding/SlettSykmelding" passHref>
+                            <DsLink>Slett en gitt sykmelding</DsLink>
+                        </Link>
                     </li>
                     <li>
-                        <Link href="/sykmelding/diagnoseEndring/DiagnoseEndring">Endre diagnose for en gitt
-                            sykmelding</Link>
+                        <Link href="/sykmelding/diagnoseEndring/DiagnoseEndring" passHref>
+                            <DsLink>Endre diagnose for en gitt sykmelding</DsLink>
+                        </Link>
                     </li>
                     <li>
-                        <Link href="/sykmelding/biDiagnoseEndring/BiDiagnoseEndring">Endre Bi-diagnose for en gitt
-                            sykmelding</Link>
+                        <Link href="/sykmelding/biDiagnoseEndring/BiDiagnoseEndring" passHref>
+                            <DsLink> Endre Bi-diagnose for en gitt sykmelding</DsLink>
+                        </Link>
                     </li>
                 </ul>
             </div>
             <div>
-                <h1><Print/> Papirsykmelding</h1>
+                <h1>
+                    <Print /> Papirsykmelding
+                </h1>
                 <ul>
                     <li>
-                        <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato">Endre behandletdato for en
-                            gitt papir sykmelding</Link>
+                        <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato" passHref>
+                            <DsLink>Endre behandletdato for en gitt papir sykmelding </DsLink>
+                        </Link>
                     </li>
                 </ul>
             </div>
 
             <div>
-                <h1><Copy/> Oppgave</h1>
+                <h1>
+                    <Copy /> Oppgave
+                </h1>
                 <ul>
                     <li>
-                        <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver">Hent liste av oppgaver</Link>
+                        <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver" passHref>
+                            <DsLink>Hent liste av oppgaver </DsLink>
+                        </Link>
                     </li>
                 </ul>
             </div>
 
             <div>
-                <h1><Employer/> Narmesteleder</h1>
+                <h1>
+                    <Employer /> Narmesteleder
+                </h1>
                 <ul>
                     <li>
-                        <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn">Sender ny NL-request til
-                            altinn</Link>
+                        <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn" passHref>
+                            <DsLink>Sender ny NL-request til altinn</DsLink>
+                        </Link>
                     </li>
                 </ul>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export const getServerSideProps = withAuthenticatedPage();
+
+export default Home;
