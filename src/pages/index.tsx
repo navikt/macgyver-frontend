@@ -10,6 +10,9 @@ import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../auth/withAuth';
+import { grantAzureOboToken } from '@navikt/next-auth-wonderwall';
+import { GrantError } from '@navikt/next-auth-wonderwall/dist/auth/shared/utils';
+import { logger } from '@navikt/next-logger';
 
 const Home: NextPage = () => {
     return (
@@ -88,6 +91,19 @@ const Home: NextPage = () => {
     );
 };
 
-export const getServerSideProps = withAuthenticatedPage();
+export const getServerSideProps = withAuthenticatedPage(async (context, accessToken) => {
+    const oboToken: string | GrantError = await grantAzureOboToken(
+        accessToken,
+        process.env.MACGYVER_BACKEND_SCOPE ?? 'notset',
+    );
+
+    if (typeof oboToken === 'string') {
+        logger.info(`Got a oboToken and it is: ${oboToken}`);
+    } else {
+        throw new Error(oboToken.message, { cause: oboToken.error });
+    }
+
+    return { props: {} };
+});
 
 export default Home;
