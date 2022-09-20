@@ -5,6 +5,10 @@ import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
 import {Header} from "@navikt/ds-react-internal";
 import {Link} from "@navikt/ds-react";
+import {Print} from "@navikt/ds-icons";
+import {Attachment} from "@navikt/ds-icons";
+import {Copy} from "@navikt/ds-icons";
+import {Employer} from "@navikt/ds-icons";
 
 
 const Home: NextPage = () => {
@@ -21,7 +25,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div>
-                <h1>Sykmelding</h1>
+                <h1><Attachment/> Sykmelding</h1>
                 <ul>
                     <li>
                         <Link href="/sykmelding/identEndring/IdentEndring">Endre fnr for en gitt sykmelding</Link>
@@ -30,7 +34,8 @@ const Home: NextPage = () => {
                         <Link href="/sykmelding/slettSykmelding/SlettSykmelding">Slett en gitt sykmelding</Link>
                     </li>
                     <li>
-                        <Link href="/sykmelding/diagnoseEndring/DiagnoseEndring">Endre diagnose for en gitt sykmelding</Link>
+                        <Link href="/sykmelding/diagnoseEndring/DiagnoseEndring">Endre diagnose for en gitt
+                            sykmelding</Link>
                     </li>
                     <li>
                         <Link href="/sykmelding/biDiagnoseEndring/BiDiagnoseEndring">Endre Bi-diagnose for en gitt
@@ -39,16 +44,17 @@ const Home: NextPage = () => {
                 </ul>
             </div>
             <div>
-                <h1>Papirsykmelding</h1>
+                <h1><Print/> Papirsykmelding</h1>
                 <ul>
                     <li>
-                        <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato">Endre behandletdato for en gitt papir sykmelding</Link>
+                        <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato">Endre behandletdato for en
+                            gitt papir sykmelding</Link>
                     </li>
                 </ul>
             </div>
 
             <div>
-                <h1>Oppgave</h1>
+                <h1><Copy/> Oppgave</h1>
                 <ul>
                     <li>
                         <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver">Hent liste av oppgaver</Link>
@@ -57,10 +63,11 @@ const Home: NextPage = () => {
             </div>
 
             <div>
-                <h1>Narmesteleder</h1>
+                <h1><Employer/> Narmesteleder</h1>
                 <ul>
                     <li>
-                        <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn">Sender ny NL-request til altinn</Link>
+                        <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn">Sender ny NL-request til
+                            altinn</Link>
                     </li>
                 </ul>
             </div>
