@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from "react"
-import {Button} from "@navikt/ds-react";
+import {BodyShort, Button, TextField} from "@navikt/ds-react";
 import {Header} from "@navikt/ds-react-internal";
 import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
@@ -40,23 +40,12 @@ const DiagnoseEndring = () => {
                 <Header.Title as="h1">Macgyver</Header.Title>
                 <Header.User name="Ola Normann"/>
             </Header>
-            <p>Endre diagnose for sykmelding</p>
+            <BodyShort>Endre diagnose for sykmelding</BodyShort>
             <form onSubmit={submitHandler}>
-                <div>
-                    <label>sykmeldingId</label>
-                    <input type="text" onChange={setSykmeldingIdHandler}/>
-                </div>
-                <div>
-                    <label>kode</label>
-                    <input type="text" onChange={setKodeHandler}/>
-                </div>
-                <div>
-                    <label>system</label>
-                    <input type="text" onChange={setSystemHandler}/>
-                </div>
-                <Button variant="primary" size="medium">
-                    Endre
-                </Button>
+                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler}/>
+                <TextField label="kode" size="medium" onChange={setKodeHandler}/>
+                <TextField label="system" size="medium" onChange={setSystemHandler}/>
+                <Button variant="primary" size="medium">Endre</Button>
             </form>
         </div>
     )

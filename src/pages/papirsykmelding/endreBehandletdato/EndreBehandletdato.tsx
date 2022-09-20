@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from "react"
-import {Button} from "@navikt/ds-react";
+import {BodyShort, Button, TextField} from "@navikt/ds-react";
 import {Header} from "@navikt/ds-react-internal";
 import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
@@ -29,26 +29,17 @@ const EndretBehandletdato = () => {
     }
 
     // TODO need to swap out "Ola Normann" with loggedin user name, based on token claims
-    // TDDO input should be simular to https://github.com/navikt/smregistrering
     return (
         <div>
             <Header>
                 <Header.Title as="h1">Macgyver</Header.Title>
                 <Header.User name="Ola Normann"/>
             </Header>
-            <p>Endre behandletdato ein papir sykmelding</p>
+            <BodyShort>Endre behandletdato ein papir sykmelding</BodyShort>
             <form onSubmit={submitHandler}>
-                <div>
-                    <label>sykmeldingId</label>
-                    <input type="text" onChange={setSykmeldingIdHandler}/>
-                </div>
-                <div>
-                    <label>behandletDato</label>
-                    <input type="text" onChange={setBehandletDatoHandler}/>
-                </div>
-                <Button variant="primary" size="medium">
-                    Endre
-                </Button>
+                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler}/>
+                <TextField label="behandletDato" size="medium" onChange={setBehandletDatoHandler}/>
+                <Button variant="primary" size="medium">Endre</Button>
             </form>
         </div>
     )

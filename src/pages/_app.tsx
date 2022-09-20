@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import "@navikt/ds-css-internal";
 import type { AppProps } from 'next/app'
 import {logger} from "../utils/logger";
 

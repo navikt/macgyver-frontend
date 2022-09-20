@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from "react"
-import {Button} from "@navikt/ds-react";
+import {BodyShort, Button, TextField} from "@navikt/ds-react";
 import {Header} from "@navikt/ds-react-internal";
 import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
@@ -35,19 +35,11 @@ const IdentEndring = () => {
                 <Header.Title as="h1">Macgyver</Header.Title>
                 <Header.User name="Ola Normann"/>
             </Header>
-            <p>Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger</p>
+            <BodyShort>Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger</BodyShort>
             <form onSubmit={submitHandler}>
-                <div>
-                    <label>fnr</label>
-                    <input type="text" onChange={setFnrChangeHandler}/>
-                </div>
-                <div>
-                    <label>nyttFnr</label>
-                    <input type="text" onChange={setNyttFnrChangeHandler}/>
-                </div>
-                <Button variant="primary" size="medium">
-                    Endre
-                </Button>
+                <TextField label="fnr" size="medium" onChange={setFnrChangeHandler}/>
+                <TextField label="nyttFnr" size="medium" onChange={setNyttFnrChangeHandler}/>
+                <Button variant="primary" size="medium">Endre</Button>
             </form>
         </div>
     )

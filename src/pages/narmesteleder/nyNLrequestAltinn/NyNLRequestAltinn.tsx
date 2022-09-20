@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from "react"
-import {Button} from "@navikt/ds-react";
+import {Button, TextField, BodyShort} from "@navikt/ds-react";
 import {Header} from "@navikt/ds-react-internal";
 import "@navikt/ds-css";
 import "@navikt/ds-css-internal";
@@ -40,23 +40,14 @@ const NyNLRequestAltinn = () => {
                 <Header.Title as="h1">Macgyver</Header.Title>
                 <Header.User name="Ola Normann"/>
             </Header>
-            <p>Sender ny NL-request til altinn</p>
+            <BodyShort>
+                Sender ny NL-request til altinn
+            </BodyShort>
             <form onSubmit={submitHandler}>
-                <div>
-                    <label>sykmeldingId</label>
-                    <input type="text" onChange={setSykmeldingIdHandler}/>
-                </div>
-                <div>
-                    <label>fnr</label>
-                    <input type="text" onChange={setFnrHandler}/>
-                </div>
-                <div>
-                    <label>orgnummer</label>
-                    <input type="text" onChange={setOrgnummerHandler}/>
-                </div>
-                <Button variant="primary" size="medium">
-                    Send
-                </Button>
+                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler}/>
+                <TextField label="fnr" size="medium" onChange={setFnrHandler}/>
+                <TextField label="orgnummer" size="medium" onChange={setOrgnummerHandler}/>
+                <Button variant="primary" size="medium">Send</Button>
             </form>
         </div>
     )
