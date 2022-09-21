@@ -27,7 +27,7 @@ const Home: NextPage = () => {
                 <h1>
                     <Bandage /> Sykmelding
                 </h1>
-                <ul>
+                <ul className={styles.list}>
                     <li>
                         <Link href="/sykmelding/identEndring/IdentEndring" passHref>
                             <DsLink>Endre fnr for en gitt sykmelding</DsLink>
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
                 <h1>
                     <Print /> Papirsykmelding
                 </h1>
-                <ul>
+                <ul className={styles.list}>
                     <li>
                         <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato" passHref>
                             <DsLink>Endre behandletdato for en gitt papir sykmelding </DsLink>
@@ -67,7 +67,7 @@ const Home: NextPage = () => {
                 <h1>
                     <Copy /> Oppgave
                 </h1>
-                <ul>
+                <ul className={styles.list}>
                     <li>
                         <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver" passHref>
                             <DsLink>Hent liste av oppgaver </DsLink>
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
                 <h1>
                     <Employer /> Narmesteleder
                 </h1>
-                <ul>
+                <ul className={styles.list}>
                     <li>
                         <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn" passHref>
                             <DsLink>Sender ny NL-request til altinn</DsLink>
