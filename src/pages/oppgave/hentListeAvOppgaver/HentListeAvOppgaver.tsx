@@ -5,6 +5,7 @@ import '@navikt/ds-css';
 import '@navikt/ds-css-internal';
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
+import { logger } from '@navikt/next-logger';
 
 const HentListeAvOppgaver = (): JSX.Element => {
     const [oppgaveider, setOppgaveider] = useState('');
@@ -17,7 +18,27 @@ const HentListeAvOppgaver = (): JSX.Element => {
         event.preventDefault();
         setOppgaveider(oppgaveider);
 
-        //TODO also send to backend api
+        postData(oppgaveider.split(','));
+    };
+
+    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
+    const oboToken = 'fakeObotoken';
+
+    const postData = async (oppgaveider: string[]): Promise<void> => {
+        const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
+            method: 'POST',
+            body: JSON.stringify(oppgaveider),
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `${oboToken}`,
+            },
+        });
+
+        if (response.ok) {
+            logger.info(`Response is OK, message is: ${await response.json()}`);
+        } else {
+            logger.info(`Response is not OK, message is: ${await response.json()}`);
+        }
     };
 
     return (
