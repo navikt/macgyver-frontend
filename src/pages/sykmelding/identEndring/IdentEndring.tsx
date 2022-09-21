@@ -4,6 +4,7 @@ import { BodyShort, Button, TextField } from '@navikt/ds-react';
 import '@navikt/ds-css';
 import '@navikt/ds-css-internal';
 import { withAuthenticatedPage } from '../../../auth/withAuth';
+import styles from '../../../styles/Forms.module.css';
 
 const IdentEndring = (): JSX.Element => {
     const [fnr, setFnr] = useState('');
@@ -27,14 +28,14 @@ const IdentEndring = (): JSX.Element => {
     };
 
     return (
-        <div>
+        <div className={styles.innhold}>
             <BodyShort>
                 Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger
             </BodyShort>
             <form onSubmit={submitHandler}>
                 <TextField label="fnr" size="medium" onChange={setFnrChangeHandler} />
                 <TextField label="nyttFnr" size="medium" onChange={setNyttFnrChangeHandler} />
-                <Button variant="primary" size="medium">
+                <Button variant="primary" size="medium" className={styles.button}>
                     Endre
                 </Button>
             </form>

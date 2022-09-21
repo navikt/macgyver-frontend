@@ -4,6 +4,7 @@ import { BodyShort, Button, TextField } from '@navikt/ds-react';
 import '@navikt/ds-css';
 import '@navikt/ds-css-internal';
 import { withAuthenticatedPage } from '../../../auth/withAuth';
+import styles from '../../../styles/Forms.module.css';
 
 const SlettSykmelding = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
@@ -19,11 +20,11 @@ const SlettSykmelding = (): JSX.Element => {
         // TODO also send to backend api
     };
     return (
-        <div>
+        <div className={styles.innhold}>
             <BodyShort>Sletter en sykmelding</BodyShort>
             <form onSubmit={submitHandler}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
-                <Button variant="primary" size="medium">
+                <Button variant="primary" size="medium" className={styles.button}>
                     Slett
                 </Button>
             </form>
