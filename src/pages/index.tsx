@@ -13,10 +13,11 @@ import { withAuthenticatedPage } from '../auth/withAuth';
 import { grantAzureOboToken } from '@navikt/next-auth-wonderwall';
 import { GrantError } from '@navikt/next-auth-wonderwall/dist/auth/shared/utils';
 import { logger } from '@navikt/next-logger';
+import styles from '../styles/App.module.css';
 
 const Home: NextPage = () => {
     return (
-        <div>
+        <div className={styles.innhold}>
             <Head>
                 <title>Macgyver</title>
                 <meta name="description" content="macgyver" />
@@ -92,10 +93,7 @@ const Home: NextPage = () => {
 };
 
 export const getServerSideProps = withAuthenticatedPage(async (context, accessToken) => {
-    const oboToken: string | GrantError = await grantAzureOboToken(
-        accessToken,
-        process.env.MACGYVER_BACKEND_SCOPE ?? 'notset',
-    );
+    const oboToken: string | GrantError = await getOboToken(accessToken);
 
     if (typeof oboToken === 'string') {
         logger.info(`Got a oboToken and it is all good`);
@@ -105,5 +103,13 @@ export const getServerSideProps = withAuthenticatedPage(async (context, accessTo
 
     return { props: {} };
 });
+
+const getOboToken: (accessToken: string) => Promise<string | GrantError> = async (accessToken: string) => {
+    if (process.env.NODE_ENV !== 'production') {
+        return 'fakeOboToken';
+    } else {
+        return await grantAzureOboToken(accessToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set');
+    }
+};
 
 export default Home;

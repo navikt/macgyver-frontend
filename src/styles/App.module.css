@@ -1,0 +1,9 @@
+.innhold {
+    text-align: center;
+    margin: 2rem auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
