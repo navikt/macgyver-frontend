@@ -29,7 +29,7 @@ const EndretBehandletdato = (): JSX.Element => {
     return (
         <div className={styles.innhold}>
             <BodyShort>Endre behandletdato ein papir sykmelding</BodyShort>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
                 <TextField label="behandletDato" size="medium" onChange={setBehandletDatoHandler} />
                 <Button variant="primary" size="medium" className={styles.button}>

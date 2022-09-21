@@ -34,7 +34,7 @@ const NyNLRequestAltinn = (): JSX.Element => {
     return (
         <div className={styles.innhold}>
             <BodyShort>Sender ny NL-request til altinn</BodyShort>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
                 <TextField label="fnr" size="medium" onChange={setFnrHandler} />
                 <TextField label="orgnummer" size="medium" onChange={setOrgnummerHandler} />

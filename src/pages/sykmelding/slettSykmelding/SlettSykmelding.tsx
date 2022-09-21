@@ -22,7 +22,7 @@ const SlettSykmelding = (): JSX.Element => {
     return (
         <div className={styles.innhold}>
             <BodyShort>Sletter en sykmelding</BodyShort>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
                 <Button variant="primary" size="medium" className={styles.button}>
                     Slett

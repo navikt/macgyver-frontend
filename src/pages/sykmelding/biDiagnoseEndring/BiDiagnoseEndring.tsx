@@ -36,7 +36,7 @@ const BiDiagnoseEndring = (): JSX.Element => {
     return (
         <div className={styles.innhold}>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
                 <TextField label="kode" size="medium" onChange={setKodeHandler} />
                 <TextField label="system" size="medium" onChange={setSystemHandler} />

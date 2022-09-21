@@ -22,8 +22,8 @@ const HentListeAvOppgaver = (): JSX.Element => {
 
     return (
         <div className={styles.innhold}>
-            <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
-            <form onSubmit={submitHandler}>
+            <BodyShort >Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="oppgaveider" size="medium" onChange={setOppgaveiderdHandler} />
                 <Button variant="primary" size="medium" className={styles.button}>
                     Hent

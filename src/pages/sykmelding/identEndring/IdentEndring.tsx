@@ -32,7 +32,7 @@ const IdentEndring = (): JSX.Element => {
             <BodyShort>
                 Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger
             </BodyShort>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="fnr" size="medium" onChange={setFnrChangeHandler} />
                 <TextField label="nyttFnr" size="medium" onChange={setNyttFnrChangeHandler} />
                 <Button variant="primary" size="medium" className={styles.button}>
