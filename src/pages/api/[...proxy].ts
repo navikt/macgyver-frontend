@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedApiRoute } from '../../auth/withAuth';
+import { grantAzureOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall';
+import { json } from 'stream/consumers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: string): Promise<void> => {
     if (!Array.isArray(req.query.proxy)) {
@@ -16,12 +18,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: s
 
     const macgyverBaseUrl = 'http://macgyver';
 
+    const oboToken = await grantAzureOboToken(accessToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set');
+    if (isInvalidTokenSet(oboToken)) {
+        logger.error(oboToken.message);
+        res.status(400).json({ message: 'Not valid' });
+        return;
+    }
+
     const path = req.query.proxy.slice(1).join('/');
     logger.info(`baseurl + path: ${macgyverBaseUrl}/${path}`);
     const result = await fetch(`${macgyverBaseUrl}/${path}`, {
         method: req.method,
         body: getBody(req),
-        headers: getHeaders(req, accessToken),
+        headers: getHeaders(req, oboToken),
     });
 
     if (!result.ok) {
