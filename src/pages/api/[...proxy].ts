@@ -15,6 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     const macgyverBaseUrl = 'http://macgyver';
 
     const path = req.query.proxy.slice(1).join('/');
+    logger.info(`baseurl+ path: ${macgyverBaseUrl}/${path}`);
     const result = await fetch(`${macgyverBaseUrl}/${path}`, {
         method: req.method,
         body: getBody(req),
