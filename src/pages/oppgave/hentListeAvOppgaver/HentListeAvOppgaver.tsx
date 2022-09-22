@@ -1,6 +1,5 @@
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
 import { ChangeEvent, FormEvent, useState } from 'react';
-
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
@@ -17,12 +16,12 @@ const HentListeAvOppgaver = (): JSX.Element => {
         event.preventDefault();
         setOppgaveider(oppgaveider);
 
-        postData(oppgaveider.split(','));
+        postData(oppgaveider.split(',').map(Number));
     };
 
     const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
 
-    const postData = async (oppgaveider: string[]): Promise<void> => {
+    const postData = async (oppgaveider: number[]): Promise<void> => {
         const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
             method: 'POST',
             body: JSON.stringify(oppgaveider),
