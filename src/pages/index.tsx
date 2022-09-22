@@ -1,5 +1,3 @@
-import '@navikt/ds-css';
-import '@navikt/ds-css-internal';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Print } from '@navikt/ds-icons';
@@ -8,11 +6,11 @@ import { Copy } from '@navikt/ds-icons';
 import { Employer } from '@navikt/ds-icons';
 import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
+import { grantAzureOboToken } from '@navikt/next-auth-wonderwall';
+import { GrantError } from '@navikt/next-auth-wonderwall';
+import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../auth/withAuth';
-import { grantAzureOboToken } from '@navikt/next-auth-wonderwall';
-import { GrantError } from '@navikt/next-auth-wonderwall/dist/auth/shared/utils';
-import { logger } from '@navikt/next-logger';
 import styles from '../styles/App.module.css';
 
 const Home: NextPage = () => {
@@ -92,24 +90,6 @@ const Home: NextPage = () => {
     );
 };
 
-export const getServerSideProps = withAuthenticatedPage(async (context, accessToken) => {
-    const oboToken: string | GrantError = await getOboToken(accessToken);
-
-    if (typeof oboToken === 'string') {
-        logger.info(`Got a oboToken and it is all good`);
-    } else {
-        throw new Error(oboToken.message, { cause: oboToken.error });
-    }
-
-    return { props: {} };
-});
-
-const getOboToken: (accessToken: string) => Promise<string | GrantError> = async (accessToken: string) => {
-    if (process.env.NODE_ENV !== 'production') {
-        return 'fakeOboToken';
-    } else {
-        return await grantAzureOboToken(accessToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set');
-    }
-};
+export const getServerSideProps = withAuthenticatedPage();
 
 export default Home;

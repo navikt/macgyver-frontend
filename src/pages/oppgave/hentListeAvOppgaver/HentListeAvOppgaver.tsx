@@ -1,11 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-import '@navikt/ds-css';
-import '@navikt/ds-css-internal';
+import { logger } from '@navikt/next-logger';
+
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
-import { logger } from '@navikt/next-logger';
 
 const HentListeAvOppgaver = (): JSX.Element => {
     const [oppgaveider, setOppgaveider] = useState('');
@@ -22,7 +21,6 @@ const HentListeAvOppgaver = (): JSX.Element => {
     };
 
     const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
-    const oboToken = 'fakeObotoken';
 
     const postData = async (oppgaveider: string[]): Promise<void> => {
         const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
@@ -30,7 +28,6 @@ const HentListeAvOppgaver = (): JSX.Element => {
             body: JSON.stringify(oppgaveider),
             headers: {
                 'Content-Type': 'application/json',
-                authorization: `${oboToken}`,
             },
         });
 

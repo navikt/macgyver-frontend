@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { logger } from '@navikt/next-logger';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+import { withAuthenticatedApiRoute } from '../../auth/withAuth';
+
+const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: string): Promise<void> => {
     if (!Array.isArray(req.query.proxy)) {
         res.status(400).json({ message: 'Invalid request' });
         return;
@@ -15,11 +17,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     const macgyverBaseUrl = 'http://macgyver';
 
     const path = req.query.proxy.slice(1).join('/');
-    logger.info(`baseurl+ path: ${macgyverBaseUrl}/${path}`);
+    logger.info(`baseurl + path: ${macgyverBaseUrl}/${path}`);
     const result = await fetch(`${macgyverBaseUrl}/${path}`, {
         method: req.method,
         body: getBody(req),
-        headers: getHeaders(req),
+        headers: getHeaders(req, accessToken),
     });
 
     if (!result.ok) {
@@ -36,16 +38,11 @@ function getBody(req: NextApiRequest): string | undefined {
     return req.method === 'GET' || req.method === 'DELETE' ? undefined : req.body;
 }
 
-function getHeaders(req: NextApiRequest): Record<string, string> {
-    const headers: Record<string, string> = {
+function getHeaders(req: NextApiRequest, accessToken: string): Record<string, string> {
+    return {
         'Content-Type': 'application/json',
+        authorization: `Bearer ${accessToken}`,
     };
-
-    if (req.headers['authorization']) {
-        headers['authorization'] = req.headers['authorization'] as string;
-    }
-
-    return headers;
 }
 
-export default handler;
+export default withAuthenticatedApiRoute(handler);

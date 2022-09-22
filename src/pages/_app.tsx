@@ -1,3 +1,4 @@
+import '@navikt/ds-css';
 import '@navikt/ds-css-internal';
 import type { AppProps } from 'next/app';
 
