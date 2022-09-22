@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { logger } from '@navikt/next-logger';
+import { grantAzureOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall';
 
 import { withAuthenticatedApiRoute } from '../../auth/withAuth';
-import { grantAzureOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderwall';
-import { json } from 'stream/consumers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: string): Promise<void> => {
     if (!Array.isArray(req.query.proxy)) {
@@ -50,7 +49,7 @@ function getBody(req: NextApiRequest): string | undefined {
 function getHeaders(req: NextApiRequest, accessToken: string): Record<string, string> {
     return {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
     };
 }
 
