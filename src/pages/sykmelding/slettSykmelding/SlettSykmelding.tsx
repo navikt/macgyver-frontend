@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
@@ -13,10 +14,24 @@ const SlettSykmelding = (): JSX.Element => {
 
     const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-
         setSykmeldingId(sykmeldingId);
-        // TODO also send to backend api
+
+        delteData();
     };
+    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/sykmelding`;
+
+    const delteData = async (): Promise<void> => {
+        const response = await fetch(`${HENT_LISTE_AV_OPPGAVER_URL}/${sykmeldingId} `, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            logger.info(`Response is OK, message is: ${await response.json()}`);
+        } else {
+            logger.info(`Response is not OK, message is: ${await response.json()}`);
+        }
+    };
+
     return (
         <div className={styles.innhold}>
             <BodyShort>Sletter en sykmelding</BodyShort>
