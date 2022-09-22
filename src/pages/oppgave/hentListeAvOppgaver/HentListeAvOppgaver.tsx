@@ -21,10 +21,12 @@ const HentListeAvOppgaver = (): JSX.Element => {
 
     const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
 
+    logger.info(`json body: ${JSON.parse(JSON.stringify(oppgaveider))}`);
+
     const postData = async (oppgaveider: number[]): Promise<void> => {
         const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
             method: 'POST',
-            body: JSON.stringify(oppgaveider),
+            body: JSON.parse(JSON.stringify(oppgaveider)),
             headers: {
                 'Content-Type': 'application/json',
             },
