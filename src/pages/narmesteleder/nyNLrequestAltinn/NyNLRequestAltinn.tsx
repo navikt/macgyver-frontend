@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, TextField, BodyShort } from '@navikt/ds-react';
 
-import '@navikt/ds-css';
-import '@navikt/ds-css-internal';
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
 

@@ -1,8 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { logger } from '@navikt/next-logger';
 
-import '@navikt/ds-css';
-import '@navikt/ds-css-internal';
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
 
@@ -17,7 +16,27 @@ const HentListeAvOppgaver = (): JSX.Element => {
         event.preventDefault();
         setOppgaveider(oppgaveider);
 
-        //TODO also send to backend api
+        postData(oppgaveider.split(',').map(Number));
+    };
+
+    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
+
+    logger.info(`json body: ${JSON.parse(JSON.stringify(oppgaveider))}`);
+
+    const postData = async (oppgaveider: number[]): Promise<void> => {
+        const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
+            method: 'POST',
+            body: JSON.parse(JSON.stringify(oppgaveider)),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            logger.info(`Response is OK, message is: ${await response.json()}`);
+        } else {
+            logger.info(`Response is not OK, message is: ${await response.json()}`);
+        }
     };
 
     return (
