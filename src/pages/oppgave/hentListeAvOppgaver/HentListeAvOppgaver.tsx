@@ -24,7 +24,7 @@ const HentListeAvOppgaver = (): JSX.Element => {
     const postData = async (oppgaveider: number[]): Promise<void> => {
         const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
             method: 'POST',
-            body: `[${oppgaveider}]`,
+            body: JSON.stringify(oppgaveider),
             headers: {
                 'Content-Type': 'application/json',
             },
