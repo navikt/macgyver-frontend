@@ -18,10 +18,10 @@ const SlettSykmelding = (): JSX.Element => {
 
         delteData();
     };
-    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/sykmelding`;
+    const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
 
     const delteData = async (): Promise<void> => {
-        const response = await fetch(`${HENT_LISTE_AV_OPPGAVER_URL}/${sykmeldingId} `, {
+        const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
             method: 'DELETE',
         });
 
