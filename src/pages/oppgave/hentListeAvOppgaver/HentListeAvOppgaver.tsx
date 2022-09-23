@@ -25,9 +25,6 @@ const HentListeAvOppgaver = (): JSX.Element => {
         const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
             method: 'POST',
             body: JSON.stringify(oppgaveider),
-            headers: {
-                'Content-Type': 'application/json',
-            },
         });
 
         if (response.ok) {
