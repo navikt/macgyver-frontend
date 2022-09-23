@@ -1,37 +1,25 @@
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { logger } from '@navikt/next-logger';
+import useSWR from 'swr';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import styles from '../../../styles/Forms.module.css';
 
+const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
+
 const HentListeAvOppgaver = (): JSX.Element => {
-    const [oppgaveider, setOppgaveider] = useState('');
+    const [oppgaveider, setOppgaveider] = useState<number[]>([]);
+
+    const { data, error } = useSWR(oppgaveider, () => fetchData(oppgaveider));
 
     const setOppgaveiderdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setOppgaveider(event.target.value);
+        setOppgaveider(event.target.value.split(',').map(Number));
     };
 
     const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         setOppgaveider(oppgaveider);
-
-        postData(oppgaveider.split(',').map(Number));
-    };
-
-    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
-
-    const postData = async (oppgaveider: number[]): Promise<void> => {
-        const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
-            method: 'POST',
-            body: JSON.stringify(oppgaveider),
-        });
-
-        if (response.ok) {
-            logger.info(`Response is OK, message is: ${await response.json()}`);
-        } else {
-            logger.info(`Response is not OK, message is: ${await response.json()}`);
-        }
     };
 
     return (
@@ -47,5 +35,14 @@ const HentListeAvOppgaver = (): JSX.Element => {
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
+
+async function fetchData(oppgaveider: number[]): Promise<unknown> {
+    const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
+        method: 'POST',
+        body: JSON.stringify(oppgaveider),
+    });
+    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    return await response.json();
+}
 
 export default HentListeAvOppgaver;
