@@ -1,36 +1,41 @@
-import { BodyShort, Button, TextField } from '@navikt/ds-react';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { BodyShort, Loader } from '@navikt/ds-react';
+import { useState } from 'react';
 import { logger } from '@navikt/next-logger';
 import useSWR from 'swr';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import OppgaveIdForm from '../../../components/oppgaveIdForm/OppgaveIdForm';
+
+import styles from './HentListeAvOppgaver.module.css';
 
 const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
+
+function createFetchKey(oppgaveIder: number[]): string | null {
+    if (oppgaveIder.length === 0) {
+        return null;
+    } else {
+        return oppgaveIder.join(',');
+    }
+}
 
 const HentListeAvOppgaver = (): JSX.Element => {
     const [oppgaveider, setOppgaveider] = useState<number[]>([]);
 
-    const { data, error } = useSWR(oppgaveider, () => fetchData(oppgaveider));
+    const fetchKey = createFetchKey(oppgaveider);
 
-    const setOppgaveiderdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setOppgaveider(event.target.value.split(',').map(Number));
-    };
-
-    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setOppgaveider(oppgaveider);
-    };
+    const { data, error } = useSWR(fetchKey, () => fetchData(oppgaveider));
 
     return (
         <div className={styles.innhold}>
             <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
-            <form onSubmit={submitHandler} className={styles.form}>
-                <TextField label="oppgaveider" size="medium" onChange={setOppgaveiderdHandler} />
-                <Button variant="primary" size="medium" className={styles.button}>
-                    Hent
-                </Button>
-            </form>
+            <OppgaveIdForm
+                onChange={(oppgaveIder) => {
+                    setOppgaveider(oppgaveIder);
+                }}
+            />
+            {!data && !error && fetchKey && <Loader size="medium" />}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
         </div>
     );
 };

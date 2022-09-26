@@ -6,9 +6,6 @@ import { Copy } from '@navikt/ds-icons';
 import { Employer } from '@navikt/ds-icons';
 import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
-import { grantAzureOboToken } from '@navikt/next-auth-wonderwall';
-import { GrantError } from '@navikt/next-auth-wonderwall';
-import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../auth/withAuth';
 import styles from '../styles/App.module.css';
