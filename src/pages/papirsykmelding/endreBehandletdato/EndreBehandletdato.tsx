@@ -2,7 +2,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import Innhold from '../../../components/innhold/Innhold';
+
+import styles from './EndreBehandletdato.module.css';
 
 const EndretBehandletdato = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
@@ -25,7 +27,7 @@ const EndretBehandletdato = (): JSX.Element => {
     };
 
     return (
-        <div className={styles.innhold}>
+        <Innhold>
             <BodyShort>Endre behandletdato ein papir sykmelding</BodyShort>
             <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
@@ -34,7 +36,7 @@ const EndretBehandletdato = (): JSX.Element => {
                     Endre
                 </Button>
             </form>
-        </div>
+        </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();

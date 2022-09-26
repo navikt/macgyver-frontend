@@ -2,7 +2,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import styles from './BiDiagnoseEndring.module.css';
+import Innhold from '../../../components/innhold/Innhold';
 
 const BiDiagnoseEndring = (): JSX.Element => {
     const [kode, setKode] = useState('');
@@ -32,7 +33,7 @@ const BiDiagnoseEndring = (): JSX.Element => {
     };
 
     return (
-        <div className={styles.innhold}>
+        <Innhold>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
             <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
@@ -42,7 +43,7 @@ const BiDiagnoseEndring = (): JSX.Element => {
                     Endre
                 </Button>
             </form>
-        </div>
+        </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();

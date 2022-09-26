@@ -2,7 +2,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { BodyShort, Button, TextField } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import styles from './IdentEndring.module.css';
+import Innhold from '../../../components/innhold/Innhold';
 
 const IdentEndring = (): JSX.Element => {
     const [fnr, setFnr] = useState('');
@@ -26,7 +27,7 @@ const IdentEndring = (): JSX.Element => {
     };
 
     return (
-        <div className={styles.innhold}>
+        <Innhold>
             <BodyShort>
                 Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger
             </BodyShort>
@@ -37,7 +38,7 @@ const IdentEndring = (): JSX.Element => {
                     Endre
                 </Button>
             </form>
-        </div>
+        </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();

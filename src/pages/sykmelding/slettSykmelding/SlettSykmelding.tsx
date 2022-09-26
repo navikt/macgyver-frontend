@@ -3,7 +3,8 @@ import { BodyShort, Button, TextField } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import styles from './SlettSykmelding.module.css';
+import Innhold from '../../../components/innhold/Innhold';
 
 const SlettSykmelding = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
@@ -33,7 +34,7 @@ const SlettSykmelding = (): JSX.Element => {
     };
 
     return (
-        <div className={styles.innhold}>
+        <Innhold>
             <BodyShort>Sletter en sykmelding</BodyShort>
             <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
@@ -41,7 +42,7 @@ const SlettSykmelding = (): JSX.Element => {
                     Slett
                 </Button>
             </form>
-        </div>
+        </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();

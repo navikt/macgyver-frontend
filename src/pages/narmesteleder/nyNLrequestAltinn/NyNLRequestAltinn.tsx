@@ -2,7 +2,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, TextField, BodyShort } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from '../../../styles/Forms.module.css';
+import Innhold from '../../../components/innhold/Innhold';
+
+import styles from './NyNLRequestAltinn.module.css';
 
 const NyNLRequestAltinn = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
@@ -30,7 +32,7 @@ const NyNLRequestAltinn = (): JSX.Element => {
     };
 
     return (
-        <div className={styles.innhold}>
+        <Innhold>
             <BodyShort>Sender ny NL-request til altinn</BodyShort>
             <form onSubmit={submitHandler} className={styles.form}>
                 <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
@@ -40,7 +42,7 @@ const NyNLRequestAltinn = (): JSX.Element => {
                     Send
                 </Button>
             </form>
-        </div>
+        </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
