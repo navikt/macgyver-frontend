@@ -35,7 +35,7 @@ const HentListeAvOppgaver = (): JSX.Element => {
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
             {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-            {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
+            {error && <pre>{error.message}</pre>}
         </div>
     );
 };
