@@ -1,44 +1,65 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { useState } from 'react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
 
-import styles from './EndreBehandletdato.module.css';
+import EndreBehandletdatoForm from '../../../components/EndreBehandletdatoForm/EndreBehandletdatoForm';
+import useSWR from 'swr';
+import { logger } from '@navikt/next-logger';
+
+function createFetchKey(sykmeldingId: string, behandletDato: string): string | null {
+    if (sykmeldingId === '' && behandletDato === '') {
+        return null;
+    } else {
+        return sykmeldingId + behandletDato;
+    }
+}
+
+const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
 
 const EndretBehandletdato = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
     const [behandletDato, setBehandletDato] = useState('');
 
-    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSykmeldingId(event.target.value);
-    };
+    const fetchKey = createFetchKey(sykmeldingId, behandletDato);
 
-    const setBehandletDatoHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setBehandletDato(event.target.value);
-    };
-
-    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setSykmeldingId(sykmeldingId);
-        setBehandletDato(behandletDato);
-
-        //TODO also send to backend api
-    };
-
+    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId, behandletDato));
     return (
         <Innhold>
             <BodyShort>Endre behandletdato ein papir sykmelding</BodyShort>
-            <form onSubmit={submitHandler} className={styles.form}>
-                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
-                <TextField label="behandletDato" size="medium" onChange={setBehandletDatoHandler} />
-                <Button variant="primary" size="medium" className={styles.button}>
-                    Endre
-                </Button>
-            </form>
+            <EndreBehandletdatoForm
+                onChange={(sykmeldingId, behandletDato) => {
+                    setSykmeldingId(sykmeldingId);
+                    setBehandletDato(behandletDato);
+                }}
+            />
+            {!data && !error && fetchKey && <Loader size="medium" />}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {error && <pre>{error.message}</pre>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
+
+async function fetchData(sykmeldingId: string, behandletDato: string): Promise<unknown> {
+    const behandletDatoData: BehandletDatoData = {
+        behandletDato: behandletDato,
+    };
+
+    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/behandletdato`, {
+        method: 'POST',
+        body: JSON.stringify(behandletDatoData),
+    });
+    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    if (!response.ok) {
+        throw new Error(`Httpstatus code is ${response.status}`);
+    }
+    return await response.json();
+}
+
+type BehandletDatoData = {
+    behandletDato: string;
+};
 
 export default EndretBehandletdato;

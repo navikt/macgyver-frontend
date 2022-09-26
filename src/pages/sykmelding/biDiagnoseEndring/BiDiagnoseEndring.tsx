@@ -1,9 +1,21 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { useState } from 'react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from './BiDiagnoseEndring.module.css';
 import Innhold from '../../../components/innhold/Innhold';
+import BiDiagnoseEndringForm from '../../../components/BiDiagnoseEndringForm/BiDiagnoseEndringForm';
+import useSWR from 'swr';
+import { logger } from '@navikt/next-logger';
+
+function createFetchKey(kode: string, system: string, sykmeldingId: string): string | null {
+    if (kode === '' && system === '' && sykmeldingId === '') {
+        return null;
+    } else {
+        return kode + system + sykmeldingId;
+    }
+}
+
+const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
 
 const BiDiagnoseEndring = (): JSX.Element => {
     const [kode, setKode] = useState('');
@@ -11,41 +23,56 @@ const BiDiagnoseEndring = (): JSX.Element => {
 
     const [sykmeldingId, setSykmeldingId] = useState('');
 
-    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSykmeldingId(event.target.value);
-    };
+    const fetchKey = createFetchKey(kode, system, sykmeldingId);
 
-    const setKodeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setKode(event.target.value);
-    };
-
-    const setSystemHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSystem(event.target.value);
-    };
-
-    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setSykmeldingId(sykmeldingId);
-        setKode(kode);
-        setSystem(system);
-
-        //TODO also send to backend api
-    };
+    const { data, error } = useSWR(fetchKey, () => fetchData(kode, system, sykmeldingId));
 
     return (
         <Innhold>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
-            <form onSubmit={submitHandler} className={styles.form}>
-                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
-                <TextField label="kode" size="medium" onChange={setKodeHandler} />
-                <TextField label="system" size="medium" onChange={setSystemHandler} />
-                <Button variant="primary" size="medium" className={styles.button}>
-                    Endre
-                </Button>
-            </form>
+            <BiDiagnoseEndringForm
+                onChange={(kode, system, sykmeldingId) => {
+                    setKode(kode);
+                    setSystem(system);
+                    setSykmeldingId(sykmeldingId);
+                }}
+            />
+            {!data && !error && fetchKey && <Loader size="medium" />}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {error && <pre>{error.message}</pre>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
+
+async function fetchData(kode: string, system: string, sykmeldingId: string): Promise<unknown> {
+    const diagnose: Diagnose = {
+        kode: system,
+        system: system,
+    };
+
+    const biDiagnoseEndringData: BiDiagnoseEndringData = {
+        diagnoser: [diagnose],
+    };
+
+    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/bidiagnose`, {
+        method: 'POST',
+        body: JSON.stringify(biDiagnoseEndringData),
+    });
+    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    if (!response.ok) {
+        throw new Error(`Httpstatus code is ${response.status}`);
+    }
+    return await response.json();
+}
+
+type BiDiagnoseEndringData = {
+    diagnoser: Diagnose[];
+};
+
+type Diagnose = {
+    kode: string;
+    system: string;
+};
 
 export default BiDiagnoseEndring;

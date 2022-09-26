@@ -1,50 +1,55 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { BodyShort, Button, TextField } from '@navikt/ds-react';
+import { useState } from 'react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
+import useSWR from 'swr';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import styles from './SlettSykmelding.module.css';
 import Innhold from '../../../components/innhold/Innhold';
 
+import SlettSykmeldingForm from '../../../components/slettSykmeldingForm/SlettSykmeldingForm';
+
+const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
+
+function createFetchKey(sykmeldingId: string): string | null {
+    if (sykmeldingId === '') {
+        return null;
+    } else {
+        return sykmeldingId;
+    }
+}
+
 const SlettSykmelding = (): JSX.Element => {
-    const [sykmeldingId, setSykmeldingId] = useState('');
+    const [sykmeldingId, setSykmeldingId] = useState<string>('');
 
-    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSykmeldingId(event.target.value);
-    };
+    const fetchKey = createFetchKey(sykmeldingId);
 
-    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setSykmeldingId(sykmeldingId);
-
-        delteData();
-    };
-    const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
-
-    const delteData = async (): Promise<void> => {
-        const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
-            method: 'DELETE',
-        });
-
-        if (response.ok) {
-            logger.info(`Response is OK, message is: ${await response.json()}`);
-        } else {
-            logger.info(`Response is not OK, message is: ${await response.json()}`);
-        }
-    };
+    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId));
 
     return (
         <Innhold>
             <BodyShort>Sletter en sykmelding</BodyShort>
-            <form onSubmit={submitHandler} className={styles.form}>
-                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
-                <Button variant="primary" size="medium" className={styles.button}>
-                    Slett
-                </Button>
-            </form>
+            <SlettSykmeldingForm
+                onChange={(sykmeldingId) => {
+                    setSykmeldingId(sykmeldingId);
+                }}
+            />
+            {!data && !error && fetchKey && <Loader size="medium" />}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {error && <pre>{error.message}</pre>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
+
+async function fetchData(sykmeldingId: string): Promise<unknown> {
+    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
+        method: 'DELETE',
+    });
+    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    if (!response.ok) {
+        throw new Error(`Httpstatus code is ${response.status}`);
+    }
+    return await response.json();
+}
 
 export default SlettSykmelding;

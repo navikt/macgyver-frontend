@@ -1,50 +1,72 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { Button, TextField, BodyShort } from '@navikt/ds-react';
+import { useState } from 'react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
 
-import styles from './NyNLRequestAltinn.module.css';
+import useSWR from 'swr';
+import { logger } from '@navikt/next-logger';
+import NyNLRequestAltinnForm from '../../../components/nyNLRequestAltinnForm/NyNLRequestAltinnForm';
+
+function createFetchKey(sykmeldingId: string, fnr: string, orgnummer: string): string | null {
+    if (sykmeldingId === '' && fnr === '' && orgnummer === '') {
+        return null;
+    } else {
+        return sykmeldingId + fnr + orgnummer;
+    }
+}
+
+const NARMESTELEDER_URL = `/api/proxy/api/narmesteleder/request`;
 
 const NyNLRequestAltinn = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
     const [fnr, setFnr] = useState('');
     const [orgnummer, setOrgnummer] = useState('');
 
-    const setSykmeldingIdHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setSykmeldingId(event.target.value);
-    };
+    const fetchKey = createFetchKey(sykmeldingId, fnr, orgnummer);
 
-    const setFnrHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setFnr(event.target.value);
-    };
-
-    const setOrgnummerHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        setOrgnummer(event.target.value);
-    };
-
-    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setSykmeldingId(sykmeldingId);
-        setFnr(fnr);
-        setOrgnummer(orgnummer);
-        //TODO also send to backend api
-    };
+    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId, fnr, orgnummer));
 
     return (
         <Innhold>
             <BodyShort>Sender ny NL-request til altinn</BodyShort>
-            <form onSubmit={submitHandler} className={styles.form}>
-                <TextField label="sykmeldingId" size="medium" onChange={setSykmeldingIdHandler} />
-                <TextField label="fnr" size="medium" onChange={setFnrHandler} />
-                <TextField label="orgnummer" size="medium" onChange={setOrgnummerHandler} />
-                <Button variant="primary" size="medium" className={styles.button}>
-                    Send
-                </Button>
-            </form>
+            <NyNLRequestAltinnForm
+                onChange={(sykmeldingId, fnr, orgnummer) => {
+                    setSykmeldingId(sykmeldingId);
+                    setFnr(fnr);
+                    setOrgnummer(orgnummer);
+                }}
+            />
+            {!data && !error && fetchKey && <Loader size="medium" />}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {error && <pre>{error.message}</pre>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
+
+async function fetchData(sykmeldingId: string, fnr: string, orgnummer: string): Promise<unknown> {
+    const nyNLRequestData: NyNLRequestData = {
+        sykmeldingId: sykmeldingId,
+        fnr: fnr,
+        orgnummer: orgnummer,
+    };
+
+    const response = await fetch(`${NARMESTELEDER_URL}`, {
+        method: 'POST',
+        body: JSON.stringify(nyNLRequestData),
+    });
+    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    if (!response.ok) {
+        throw new Error(`Httpstatus code is ${response.status}`);
+    }
+    return await response.json();
+}
+
+type NyNLRequestData = {
+    sykmeldingId: string;
+    fnr: string;
+    orgnummer: string;
+};
 
 export default NyNLRequestAltinn;
