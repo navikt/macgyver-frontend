@@ -49,6 +49,8 @@ This the high level flow of the application
 
 ```mermaid
   graph LR;
+      azure-ad-sidecar --- macgyver-frontend;
+      macgyver-frontend---azure-ad;
       macgyver-frontend---macgyver;
 ```
 
