@@ -13,7 +13,7 @@ const SlettSykmelding = (): JSX.Element => {
     const [error, setError] = useState<string | null>(null);
     const [result, setResult] = useState<string | null>(null);
 
-    const postData = async (sykmeldingId: string): Promise<void> => {
+    const postData = async (): Promise<void> => {
         const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
             method: 'DELETE',
         });
@@ -31,7 +31,7 @@ const SlettSykmelding = (): JSX.Element => {
             <SlettSykmeldingForm
                 onChange={(sykmeldingId) => {
                     setSykmeldingId(sykmeldingId);
-                    postData(sykmeldingId);
+                    postData();
                 }}
             />
             {!result && !error && sykmeldingId && <Loader size="medium" />}
