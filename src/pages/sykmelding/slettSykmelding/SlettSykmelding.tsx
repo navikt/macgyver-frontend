@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BodyShort, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
 import useSWR from 'swr';
 
@@ -39,8 +39,8 @@ const SlettSykmelding = (): JSX.Element => {
                 }}
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-            {error && <pre>{error.message}</pre>}
+            {data && <Alert variant="success">Sykmelding slettet</Alert>}
+            {error && <Alert variant="error">Noe gikk feil ved sletting av sykmelding</Alert>}
         </Innhold>
     );
 };
