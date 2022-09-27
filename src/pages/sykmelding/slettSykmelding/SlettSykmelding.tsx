@@ -10,7 +10,7 @@ import SlettSykmeldingForm from '../../../components/slettSykmeldingForm/SlettSy
 const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
 
 function createFetchKey(sykmeldingId: string): string | null {
-    if (sykmeldingId) {
+    if (sykmeldingId === '') {
         return null;
     } else {
         return sykmeldingId;
