@@ -1,4 +1,4 @@
-import { BodyShort, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { useState } from 'react';
 import { logger } from '@navikt/next-logger';
 import useSWR from 'swr';
@@ -33,8 +33,8 @@ const HentListeAvOppgaver = (): JSX.Element => {
                 }}
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-            {error && <pre>{error.message}</pre>}
+            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {error && <Alert variant="error">{error.message}</Alert>}
         </Innhold>
     );
 };

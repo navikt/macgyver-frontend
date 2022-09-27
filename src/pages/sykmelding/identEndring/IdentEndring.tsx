@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { BodyShort, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react';
+import useSWR from 'swr';
+import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
-
 import IdentEndringForm from '../../../components/IdentEndringForm/IdentEndringForm';
-import useSWR from 'swr';
-import { logger } from '@navikt/next-logger';
 
 function createFetchKey(fnr: string, nyttFnr: string): string | null {
     if (fnr === '' && nyttFnr === '') {
@@ -37,8 +36,8 @@ const IdentEndring = (): JSX.Element => {
                 }}
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-            {error && <pre>{error.message}</pre>}
+            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {error && <Alert variant="error">{error.message}</Alert>}
         </Innhold>
     );
 };
