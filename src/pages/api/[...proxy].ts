@@ -38,7 +38,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: s
         return;
     }
 
-    res.status(result.status).json(await result.json());
+    if (req.method === 'DELETE') {
+        logger.info('DELETE method, only show repsone status and statusText');
+        res.status(result.status).json({ message: result.statusText });
+    } else {
+        res.status(result.status).json(await result.json());
+    }
 };
 
 function getBody(req: NextApiRequest): string | undefined {
