@@ -22,7 +22,13 @@ const SlettSykmelding = (): JSX.Element => {
 
     const fetchKey = createFetchKey(sykmeldingId);
 
-    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId));
+    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId), {
+        refreshWhenOffline: false,
+        shouldRetryOnError: false,
+        revalidateOnReconnect: false,
+        revalidateOnFocus: false,
+        revalidateIfStale: false,
+    });
 
     return (
         <Innhold>
