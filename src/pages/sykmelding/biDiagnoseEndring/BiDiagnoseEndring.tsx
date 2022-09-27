@@ -47,7 +47,7 @@ export const getServerSideProps = withAuthenticatedPage();
 
 async function fetchData(kode: string, system: string, sykmeldingId: string): Promise<unknown> {
     const diagnose: Diagnose = {
-        kode: system,
+        kode: kode,
         system: system,
     };
 

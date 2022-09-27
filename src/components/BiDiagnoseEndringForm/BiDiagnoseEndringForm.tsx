@@ -18,21 +18,21 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
     return (
         <div>
             <TextField
-                label="kode"
+                label="kode, eks Z09"
                 size="medium"
                 onChange={(event) => {
                     setKode(event.currentTarget.value);
                 }}
             />
             <TextField
-                label="system"
+                label="system eks: ICD10 eller ICPC2"
                 size="medium"
                 onChange={(event) => {
                     setSystem(event.currentTarget.value);
                 }}
             />
             <TextField
-                label="sykmeldingId"
+                label="sykmeldingId, eks 5afaef5d-34ac-4dc5-909f-78c1d82dbf69"
                 size="medium"
                 onChange={(event) => {
                     setSykmeldingId(event.currentTarget.value);
