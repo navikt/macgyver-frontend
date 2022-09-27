@@ -5,8 +5,7 @@ import useSWR from 'swr';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import OppgaveIdForm from '../../../components/oppgaveIdForm/OppgaveIdForm';
-
-import Innhold from "../../../components/innhold/Innhold";
+import Innhold from '../../../components/innhold/Innhold';
 
 const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
 
