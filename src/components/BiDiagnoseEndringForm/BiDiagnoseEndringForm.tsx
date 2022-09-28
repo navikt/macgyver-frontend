@@ -73,7 +73,7 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
                 }}
             />
             <Button variant="secondary" size="medium" className={styles.button} onClick={handleLeggTilClick}>
-                Legg til diagnoser
+                Legg til diagnose
             </Button>
             {biDiagonser.length > 0 && showBiDiagnoser}
             <TextField
