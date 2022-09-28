@@ -5,7 +5,7 @@ import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
-import IdentEndringForm from '../../../components/IdentEndringForm/IdentEndringForm';
+import IdentEndringNarmestelederForm from '../../../components/IdentEndringForm/Narmesteleder/IdentEndringNarmestelederForm';
 
 function createFetchKey(fnr: string, nyttFnr: string): string | null {
     if (fnr === '' && nyttFnr === '') {
@@ -15,9 +15,9 @@ function createFetchKey(fnr: string, nyttFnr: string): string | null {
     }
 }
 
-const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`;
+const SYKMELDING_LEDER_FNR_URL = `/api/proxy/api/leder/fnr`;
 
-const IdentEndring = (): JSX.Element => {
+const IdentEndringNarmesteleder = (): JSX.Element => {
     const [fnr, setFnr] = useState('');
     const [nyttFnr, setNyttFnr] = useState('');
 
@@ -26,10 +26,8 @@ const IdentEndring = (): JSX.Element => {
     const { data, error } = useSWR(fetchKey, () => fetchData(fnr, nyttFnr));
     return (
         <Innhold>
-            <BodyShort>
-                Endrer fnr for et gitt fnr i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive NL-koblinger
-            </BodyShort>
-            <IdentEndringForm
+            <BodyShort>Endre fnr for nærmeste leder, oppdaterer aktive NL-koblinger for leder med nytt fnr</BodyShort>
+            <IdentEndringNarmestelederForm
                 onChange={(fnr, nyttFnr) => {
                     setFnr(fnr);
                     setNyttFnr(nyttFnr);
@@ -49,11 +47,13 @@ async function fetchData(fnr: string, nyttFnr: string): Promise<unknown> {
         nyttFnr: nyttFnr,
     };
 
-    const response = await fetch(`${SYKMELDING_FNR_URL}`, {
+    const response = await fetch(`${SYKMELDING_LEDER_FNR_URL}`, {
         method: 'POST',
         body: JSON.stringify(identEndringData),
     });
-    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    logger.info(
+        `IdentEndringNarmesteleder·response·status·is:·${response.status}·and·statusText·${response.statusText}`,
+    );
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
@@ -65,4 +65,4 @@ type IdentEndringData = {
     nyttFnr: string;
 };
 
-export default IdentEndring;
+export default IdentEndringNarmesteleder;

@@ -24,7 +24,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/sykmelding/identEndring/IdentEndring" passHref>
+                        <Link href="/identEndring/sykmeldt/IdentEndringSykmeldt" passHref>
                             <DsLink>Endre fnr for en gitt sykmelding</DsLink>
                         </Link>
                     </li>

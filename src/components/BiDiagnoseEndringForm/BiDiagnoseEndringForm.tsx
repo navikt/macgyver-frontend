@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {Button, TextField} from "@navikt/ds-react";
-import styles from "../DiagnoseEndringForm/DiagnoseEndringForm.module.css";
+import React, { useState } from 'react';
+import { Button, TextField } from '@navikt/ds-react';
+
+import styles from '../BiDiagnoseEndringForm/BiDiagnoseEndringForm.module.css';
 
 interface BiDiagnoseEndringFormProps {
     onChange: (kode: string, system: string, sykmeldingId: string) => void;

@@ -59,7 +59,7 @@ async function fetchData(kode: string, system: string, sykmeldingId: string): Pr
         method: 'POST',
         body: JSON.stringify(biDiagnoseEndringData),
     });
-    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    logger.info(`BiDiagnoseEndring response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }

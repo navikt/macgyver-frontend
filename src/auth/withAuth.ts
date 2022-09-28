@@ -24,7 +24,6 @@ export function withAuthenticatedPage(handler: PageHandler = async () => ({ prop
 
         const validate: ValidationResult<AzureAdErrorVariants> = await validateAzureToken(authorizationHeader);
         if (validate === 'valid') {
-            logger.info('Logged in :)');
             return await handler(context, authorizationHeader.replace('Bearer ', ''));
         } else {
             return { redirect: { destination: `/oauth2/login?redirect=${context.resolvedUrl}`, permanent: false } };
@@ -45,7 +44,6 @@ export function withAuthenticatedApiRoute(handler: ApiHandler) {
 
         const validate: ValidationResult<AzureAdErrorVariants> = await validateAzureToken(authorizationHeader);
         if (validate === 'valid') {
-            logger.info('Logged in :)');
             return handler(req, res, authorizationHeader.replace('Bearer ', ''));
         } else {
             logger.info(`Failed to validate due to: ${validate.errorType} ${validate.message}`);

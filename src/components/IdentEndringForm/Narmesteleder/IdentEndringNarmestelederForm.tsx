@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
-import styles from './IdentEndringForm.module.css';
 
-interface IdentEndringFormProps {
+import styles from './IdentEndringNarmestelederForm.module.css';
+
+interface IdentEndringNarmestelederFormProps {
     onChange: (fnr: string, nyttFnr: string) => void;
 }
 
-const IdentEndringForm = ({ onChange }: IdentEndringFormProps): JSX.Element => {
+const IdentEndringNarmestelederForm = ({ onChange }: IdentEndringNarmestelederFormProps): JSX.Element => {
     const [fnr, setFnr] = useState('');
     const [nyttFnr, setNyttFnr] = useState('');
 
@@ -38,4 +39,4 @@ const IdentEndringForm = ({ onChange }: IdentEndringFormProps): JSX.Element => {
     );
 };
 
-export default IdentEndringForm;
+export default IdentEndringNarmestelederForm;

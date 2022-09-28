@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
-import SlettSykmeldingForm from '../../../components/slettSykmeldingForm/SlettSykmeldingForm';
+import GjenapneForm from '../../../components/GjenapneForm/GjenapneForm';
 
 const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
 
@@ -17,7 +17,7 @@ function createFetchKey(sykmeldingId: string): string | null {
     }
 }
 
-const SlettSykmelding = (): JSX.Element => {
+const Gjenapne = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState<string>('');
 
     const fetchKey = createFetchKey(sykmeldingId);
@@ -32,29 +32,29 @@ const SlettSykmelding = (): JSX.Element => {
 
     return (
         <Innhold>
-            <BodyShort>Sletter en sykmelding</BodyShort>
-            <SlettSykmeldingForm
+            <BodyShort>Gjenåpne en sykmelding</BodyShort>
+            <GjenapneForm
                 onChange={(sykmeldingId) => {
                     setSykmeldingId(sykmeldingId);
                 }}
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <Alert variant="success">Sykmelding slettet</Alert>}
-            {error && <Alert variant="error">Noe gikk feil ved sletting av sykmelding</Alert>}
+            {data && <Alert variant="success">Sykmelding gjenåpnet</Alert>}
+            {error && <Alert variant="error">Noe gikk feil ved gjenåpning av sykmelding</Alert>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
 
 async function fetchData(sykmeldingId: string): Promise<unknown> {
-    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
-        method: 'DELETE',
+    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/gjenapne`, {
+        method: 'POST',
     });
-    logger.info(`SlettSykmelding response status is: ${response.status} and statusText ${response.statusText}`);
+    logger.info(`Gjenapne response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
     return await response.json();
 }
 
-export default SlettSykmelding;
+export default Gjenapne;

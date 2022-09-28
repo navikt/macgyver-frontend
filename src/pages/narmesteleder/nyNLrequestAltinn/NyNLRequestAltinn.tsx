@@ -55,7 +55,7 @@ async function fetchData(sykmeldingId: string, fnr: string, orgnummer: string): 
         method: 'POST',
         body: JSON.stringify(nyNLRequestData),
     });
-    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    logger.info(`NyNLRequestAltinn response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }

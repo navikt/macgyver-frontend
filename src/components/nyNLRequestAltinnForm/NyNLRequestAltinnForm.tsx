@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
+
 import styles from './NyNLRequestAltinnForm.module.css';
 
 interface NyNlRequestAltinnFormProps {

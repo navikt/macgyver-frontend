@@ -50,7 +50,7 @@ async function fetchData(sykmeldingId: string, behandletDato: string): Promise<u
         method: 'POST',
         body: JSON.stringify(behandletDatoData),
     });
-    logger.info(`Response status is: ${response.status} and statusText ${response.statusText}`);
+    logger.info(`EndretBehandletdato response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
