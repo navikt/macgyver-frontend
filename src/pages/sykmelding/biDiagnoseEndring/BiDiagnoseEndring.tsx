@@ -7,33 +7,31 @@ import { withAuthenticatedPage } from '../../../auth/withAuth';
 import Innhold from '../../../components/innhold/Innhold';
 import BiDiagnoseEndringForm from '../../../components/BiDiagnoseEndringForm/BiDiagnoseEndringForm';
 
-function createFetchKey(kode: string, system: string, sykmeldingId: string): string | null {
-    if (kode === '' && system === '' && sykmeldingId === '') {
+function createFetchKey(biDiagonser: BiDiagnose[], sykmeldingId: string): string | null {
+    if (biDiagonser.length === 0 && sykmeldingId === '') {
         return null;
     } else {
-        return kode + system + sykmeldingId;
+        return biDiagonser + sykmeldingId;
     }
 }
 
 const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
 
 const BiDiagnoseEndring = (): JSX.Element => {
-    const [kode, setKode] = useState('');
-    const [system, setSystem] = useState('');
+    const [biDiagonser, setBidiagnoser] = useState<BiDiagnose[]>([]);
 
     const [sykmeldingId, setSykmeldingId] = useState('');
 
-    const fetchKey = createFetchKey(kode, system, sykmeldingId);
+    const fetchKey = createFetchKey(biDiagonser, sykmeldingId);
 
-    const { data, error } = useSWR(fetchKey, () => fetchData(kode, system, sykmeldingId));
+    const { data, error } = useSWR(fetchKey, () => fetchData(biDiagonser, sykmeldingId));
 
     return (
         <Innhold>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
             <BiDiagnoseEndringForm
-                onChange={(kode, system, sykmeldingId) => {
-                    setKode(kode);
-                    setSystem(system);
+                onChange={(biDiagonser, sykmeldingId) => {
+                    setBidiagnoser(biDiagonser);
                     setSykmeldingId(sykmeldingId);
                 }}
             />
@@ -45,14 +43,9 @@ const BiDiagnoseEndring = (): JSX.Element => {
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function fetchData(kode: string, system: string, sykmeldingId: string): Promise<unknown> {
-    const diagnose: Diagnose = {
-        kode: kode,
-        system: system,
-    };
-
+async function fetchData(biDiagonser: BiDiagnose[], sykmeldingId: string): Promise<unknown> {
     const biDiagnoseEndringData: BiDiagnoseEndringData = {
-        diagnoser: [diagnose],
+        diagnoser: biDiagonser,
     };
 
     const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/bidiagnose`, {
@@ -67,10 +60,10 @@ async function fetchData(kode: string, system: string, sykmeldingId: string): Pr
 }
 
 type BiDiagnoseEndringData = {
-    diagnoser: Diagnose[];
+    diagnoser: BiDiagnose[];
 };
 
-type Diagnose = {
+export type BiDiagnose = {
     kode: string;
     system: string;
 };
