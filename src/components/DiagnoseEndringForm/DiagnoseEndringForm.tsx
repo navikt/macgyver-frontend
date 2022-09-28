@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+
 import styles from './DiagnoseEndringForm.module.css';
 
 interface DiagnoseEndringFormProps {
@@ -12,10 +14,7 @@ const DiagnoseEndringForm = ({ onChange }: DiagnoseEndringFormProps): JSX.Elemen
     const [system, setSystem] = useState('');
     const [sykmeldingId, setSykmeldingId] = useState('');
 
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(kode, system, sykmeldingId);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
         <div>
@@ -40,9 +39,27 @@ const DiagnoseEndringForm = ({ onChange }: DiagnoseEndringFormProps): JSX.Elemen
                     setSykmeldingId(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
                 Endre
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil endre houved diagnose for sykmelding med id: ${sykmeldingId}`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(kode, system, sykmeldingId);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };

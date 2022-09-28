@@ -1,34 +1,26 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
-import ConfirmationModal from '../../ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
-import styles from './IdentEndringSykmeldtForm.module.css';
+import styles from './SlettSykmeldingForm.module.css';
 
-interface IdentEndringFormProps {
-    onChange: (fnr: string, nyttFnr: string) => void;
+interface SlettSykmeldingFormProps {
+    onSubmit: (sykmeldingId: string) => void;
 }
 
-const IdentEndringSykmeldtForm = ({ onChange }: IdentEndringFormProps): JSX.Element => {
-    const [fnr, setFnr] = useState('');
-    const [nyttFnr, setNyttFnr] = useState('');
-
+const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Element => {
+    const [sykmeldingId, setSykmeldingId] = useState<string>('');
     const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
         <div>
             <TextField
-                label="fnr"
+                name="sykmeldingId"
+                label="sykmeldingId"
                 size="medium"
                 onChange={(event) => {
-                    setFnr(event.currentTarget.value);
-                }}
-            />
-            <TextField
-                label="nyttFnr"
-                size="medium"
-                onChange={(event) => {
-                    setNyttFnr(event.currentTarget.value);
+                    setSykmeldingId(event.currentTarget.value);
                 }}
             />
             <Button
@@ -39,15 +31,15 @@ const IdentEndringSykmeldtForm = ({ onChange }: IdentEndringFormProps): JSX.Elem
                     setConformationModalOpen(true);
                 }}
             >
-                Endre
+                Slett
             </Button>
             <ConfirmationModal
-                message={`Er du sikker på at du vil endret fnr for sykmeldt`}
+                message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId}`}
                 onCancel={() => {
                     setConformationModalOpen(false);
                 }}
                 onOK={() => {
-                    onChange(fnr, nyttFnr);
+                    onSubmit(sykmeldingId);
                     setConformationModalOpen(false);
                 }}
                 open={conformationModalOpen}
@@ -56,4 +48,4 @@ const IdentEndringSykmeldtForm = ({ onChange }: IdentEndringFormProps): JSX.Elem
     );
 };
 
-export default IdentEndringSykmeldtForm;
+export default SlettSykmeldingForm;

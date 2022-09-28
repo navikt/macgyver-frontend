@@ -4,6 +4,7 @@ import { Print } from '@navikt/ds-icons';
 import { Bandage } from '@navikt/ds-icons';
 import { Copy } from '@navikt/ds-icons';
 import { Employer } from '@navikt/ds-icons';
+import { People } from '@navikt/ds-icons';
 import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
 
@@ -20,12 +21,24 @@ const Home: NextPage = () => {
             </Head>
             <div>
                 <h1>
-                    <Bandage /> Sykmelding
+                    <People /> IdentEndring
                 </h1>
                 <ul className={styles.list}>
                     <li>
                         <Link href="/identEndring/sykmeldt/IdentEndringSykmeldt" passHref>
                             <DsLink>Endre fnr for en gitt sykmelding</DsLink>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h1>
+                    <Bandage /> Sykmelding
+                </h1>
+                <ul className={styles.list}>
+                    <li>
+                        <Link href="/sykmelding/gjenapne/Gjenapne" passHref>
+                            <DsLink>Gjenåpne sykmelding med gitt sykmeldingId</DsLink>
                         </Link>
                     </li>
                     <li>

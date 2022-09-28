@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
+import ConfirmationModal from '../../ConfirmationModal/ConfirmationModal';
+
 import styles from './IdentEndringNarmestelederForm.module.css';
 
 interface IdentEndringNarmestelederFormProps {
@@ -11,10 +13,7 @@ const IdentEndringNarmestelederForm = ({ onChange }: IdentEndringNarmestelederFo
     const [fnr, setFnr] = useState('');
     const [nyttFnr, setNyttFnr] = useState('');
 
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(fnr, nyttFnr);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
         <div>
@@ -32,9 +31,27 @@ const IdentEndringNarmestelederForm = ({ onChange }: IdentEndringNarmestelederFo
                     setNyttFnr(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
                 Endre
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil endret fnr for leder`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(fnr, nyttFnr);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };

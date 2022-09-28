@@ -1,50 +1,46 @@
 import { useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import useSWR from 'swr';
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/innhold/Innhold';
+import Innhold from '../../../components/Innhold/Innhold';
 import DiagnoseEndringForm from '../../../components/DiagnoseEndringForm/DiagnoseEndringForm';
-
-function createFetchKey(kode: string, system: string, sykmeldingId: string): string | null {
-    if (kode === '' && system === '' && sykmeldingId === '') {
-        return null;
-    } else {
-        return kode + system + sykmeldingId;
-    }
-}
 
 const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
 
 const DiagnoseEndring = (): JSX.Element => {
-    const [kode, setKode] = useState('');
-    const [system, setSystem] = useState('');
-    const [sykmeldingId, setSykmeldingId] = useState('');
-
-    const fetchKey = createFetchKey(kode, system, sykmeldingId);
-
-    const { data, error } = useSWR(fetchKey, () => fetchData(kode, system, sykmeldingId));
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
 
     return (
         <Innhold>
             <BodyShort>Endre diagnose for sykmelding</BodyShort>
             <DiagnoseEndringForm
                 onChange={(kode, system, sykmeldingId) => {
-                    setKode(kode);
-                    setSystem(system);
-                    setSykmeldingId(sykmeldingId);
+                    setIsLoading(true);
+                    setSuccess(false);
+                    endreHouvedDiagnose(kode, system, sykmeldingId)
+                        .then(() => {
+                            setSuccess(true);
+                        })
+                        .catch((error) => {
+                            setError(error.message);
+                        })
+                        .finally(() => {
+                            setIsLoading(false);
+                        });
                 }}
             />
-            {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {isLoading && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">Sykmelding gjenåpnet</Alert>}
+            {error && <Alert variant="error">Noe gikk feil ved endring av houved diagnose</Alert>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function fetchData(kode: string, system: string, sykmeldingId: string): Promise<unknown> {
+async function endreHouvedDiagnose(kode: string, system: string, sykmeldingId: string): Promise<void> {
     const diagnoseEndringData: DiagnoseEndringData = {
         kode: kode,
         system: system,
@@ -58,7 +54,6 @@ async function fetchData(kode: string, system: string, sykmeldingId: string): Pr
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
-    return await response.json();
 }
 
 type DiagnoseEndringData = {

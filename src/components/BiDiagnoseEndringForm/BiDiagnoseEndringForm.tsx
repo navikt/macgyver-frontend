@@ -3,6 +3,7 @@ import { Button, Heading, Table, TextField } from '@navikt/ds-react';
 
 import styles from '../BiDiagnoseEndringForm/BiDiagnoseEndringForm.module.css';
 import { BiDiagnose } from '../../pages/sykmelding/biDiagnoseEndring/BiDiagnoseEndring';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 interface BiDiagnoseEndringFormProps {
     onChange: (biDiagonser: BiDiagnose[], sykmeldingId: string) => void;
@@ -11,15 +12,9 @@ interface BiDiagnoseEndringFormProps {
 const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.Element => {
     const [kode, setKode] = useState('');
     const [system, setSystem] = useState('');
-
     const [biDiagonser, setBidiagnoser] = useState<BiDiagnose[]>([]);
-
     const [sykmeldingId, setSykmeldingId] = useState('');
-
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(biDiagonser, sykmeldingId);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     const handleLeggTilClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
@@ -83,9 +78,27 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
                     setSykmeldingId(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
                 Endre
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil endre houved bi diagnose for sykmelding med id: ${sykmeldingId}`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(biDiagonser, sykmeldingId);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };

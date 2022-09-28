@@ -1,47 +1,46 @@
 import { useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import useSWR from 'swr';
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/innhold/Innhold';
+import Innhold from '../../../components/Innhold/Innhold';
 import EndreBehandletdatoForm from '../../../components/EndreBehandletdatoForm/EndreBehandletdatoForm';
-
-function createFetchKey(sykmeldingId: string, behandletDato: string): string | null {
-    if (sykmeldingId === '' && behandletDato === '') {
-        return null;
-    } else {
-        return sykmeldingId + behandletDato;
-    }
-}
 
 const PAPIR_SYKMELDING_URL = `/api/proxy/api/papirsykmelding/`;
 
 const EndretBehandletdato = (): JSX.Element => {
-    const [sykmeldingId, setSykmeldingId] = useState('');
-    const [behandletDato, setBehandletDato] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
 
-    const fetchKey = createFetchKey(sykmeldingId, behandletDato);
-
-    const { data, error } = useSWR(fetchKey, () => fetchData(sykmeldingId, behandletDato));
     return (
         <Innhold>
             <BodyShort>Endre behandletdato ein papir sykmelding</BodyShort>
             <EndreBehandletdatoForm
                 onChange={(sykmeldingId, behandletDato) => {
-                    setSykmeldingId(sykmeldingId);
-                    setBehandletDato(behandletDato);
+                    setIsLoading(true);
+                    setSuccess(false);
+                    endreBehandletDato(behandletDato, sykmeldingId)
+                        .then(() => {
+                            setSuccess(true);
+                        })
+                        .catch((error) => {
+                            setError(error.message);
+                        })
+                        .finally(() => {
+                            setIsLoading(false);
+                        });
                 }}
             />
-            {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {isLoading && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">BehandletDato ble endret</Alert>}
+            {error && <Alert variant="error">Noe gikk feil ved endring av behandletDato</Alert>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function fetchData(sykmeldingId: string, behandletDato: string): Promise<unknown> {
+async function endreBehandletDato(behandletDato: string, sykmeldingId: string): Promise<void> {
     const behandletDatoData: BehandletDatoData = {
         behandletDato: behandletDato,
     };
@@ -54,7 +53,6 @@ async function fetchData(sykmeldingId: string, behandletDato: string): Promise<u
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
-    return await response.json();
 }
 
 type BehandletDatoData = {

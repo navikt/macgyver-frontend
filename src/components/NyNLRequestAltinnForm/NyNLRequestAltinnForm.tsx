@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+
 import styles from './NyNLRequestAltinnForm.module.css';
 
 interface NyNlRequestAltinnFormProps {
@@ -12,10 +14,8 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
     const [fnr, setFnr] = useState('');
     const [orgnummer, setOrgnummer] = useState('');
 
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(sykmeldingId, fnr, orgnummer);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
+
     return (
         <div>
             <TextField
@@ -40,9 +40,27 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
                     setOrgnummer(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
-                Send
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
+                send
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil sending ny NL-request til altinn`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(sykmeldingId, fnr, orgnummer);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };

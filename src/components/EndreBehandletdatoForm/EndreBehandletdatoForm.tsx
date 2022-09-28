@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+
 import styles from './EndreBehandletdatoForm.module.css';
 
 interface EndreBehandletdatoFormProps {
@@ -11,10 +13,7 @@ const EndreBehandletdatoForm = ({ onChange }: EndreBehandletdatoFormProps): JSX.
     const [sykmeldingId, setSykmeldingId] = useState('');
     const [behandletDato, setBehandletDato] = useState('');
 
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(sykmeldingId, behandletDato);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
         <div>
@@ -32,9 +31,27 @@ const EndreBehandletdatoForm = ({ onChange }: EndreBehandletdatoFormProps): JSX.
                     setBehandletDato(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
                 Endre
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil endre behandletDato for papir sykmelding med id: ${sykmeldingId}`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(behandletDato, sykmeldingId);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };

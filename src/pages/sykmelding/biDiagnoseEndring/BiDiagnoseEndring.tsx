@@ -1,49 +1,46 @@
 import { useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import useSWR from 'swr';
 import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/innhold/Innhold';
+import Innhold from '../../../components/Innhold/Innhold';
 import BiDiagnoseEndringForm from '../../../components/BiDiagnoseEndringForm/BiDiagnoseEndringForm';
-
-function createFetchKey(biDiagonser: BiDiagnose[], sykmeldingId: string): string | null {
-    if (biDiagonser.length === 0 && sykmeldingId === '') {
-        return null;
-    } else {
-        return biDiagonser + sykmeldingId;
-    }
-}
 
 const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
 
 const BiDiagnoseEndring = (): JSX.Element => {
-    const [biDiagonser, setBidiagnoser] = useState<BiDiagnose[]>([]);
-
-    const [sykmeldingId, setSykmeldingId] = useState('');
-
-    const fetchKey = createFetchKey(biDiagonser, sykmeldingId);
-
-    const { data, error } = useSWR(fetchKey, () => fetchData(biDiagonser, sykmeldingId));
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
 
     return (
         <Innhold>
             <BodyShort>Endre Bi-diagnose for sykmelding</BodyShort>
             <BiDiagnoseEndringForm
                 onChange={(biDiagonser, sykmeldingId) => {
-                    setBidiagnoser(biDiagonser);
-                    setSykmeldingId(sykmeldingId);
+                    setIsLoading(true);
+                    setSuccess(false);
+                    endreBiDiagnose(biDiagonser, sykmeldingId)
+                        .then(() => {
+                            setSuccess(true);
+                        })
+                        .catch((error) => {
+                            setError(error.message);
+                        })
+                        .finally(() => {
+                            setIsLoading(false);
+                        });
                 }}
             />
-            {!data && !error && fetchKey && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {isLoading && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">Sykmelding gjenåpnet</Alert>}
+            {error && <Alert variant="error">Noe gikk feil ved endring av bi diagnose</Alert>}
         </Innhold>
     );
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function fetchData(biDiagonser: BiDiagnose[], sykmeldingId: string): Promise<unknown> {
+async function endreBiDiagnose(biDiagonser: BiDiagnose[], sykmeldingId: string): Promise<void> {
     const biDiagnoseEndringData: BiDiagnoseEndringData = {
         diagnoser: biDiagonser,
     };
@@ -56,7 +53,6 @@ async function fetchData(biDiagonser: BiDiagnose[], sykmeldingId: string): Promi
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
-    return await response.json();
 }
 
 type BiDiagnoseEndringData = {

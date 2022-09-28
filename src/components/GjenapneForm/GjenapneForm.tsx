@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
 
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+
 import styles from './GjenapneForm.module.css';
 
 interface GjenapneFormProps {
@@ -9,11 +11,7 @@ interface GjenapneFormProps {
 
 const GjenapneForm = ({ onChange }: GjenapneFormProps): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState<string>('');
-
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.preventDefault();
-        onChange(sykmeldingId);
-    };
+    const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
         <div>
@@ -25,9 +23,27 @@ const GjenapneForm = ({ onChange }: GjenapneFormProps): JSX.Element => {
                     setSykmeldingId(event.currentTarget.value);
                 }}
             />
-            <Button variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button
+                variant="primary"
+                size="medium"
+                className={styles.button}
+                onClick={() => {
+                    setConformationModalOpen(true);
+                }}
+            >
                 Gjenåpne
             </Button>
+            <ConfirmationModal
+                message={`Er du sikker på at du vil gjenåpne sykmelding med id: ${sykmeldingId}`}
+                onCancel={() => {
+                    setConformationModalOpen(false);
+                }}
+                onOK={() => {
+                    onChange(sykmeldingId);
+                    setConformationModalOpen(false);
+                }}
+                open={conformationModalOpen}
+            ></ConfirmationModal>
         </div>
     );
 };
