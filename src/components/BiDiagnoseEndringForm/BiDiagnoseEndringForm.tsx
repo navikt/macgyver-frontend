@@ -27,7 +27,7 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
         });
     };
 
-    const showBiDiagnoser = (
+    const showBiDiagnoserAndEndre = (
         <div>
             <Heading level="1" size="medium">
                 Følgende biDiagnoser er lagt klar for å endres
@@ -48,29 +48,6 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
                     ))}
                 </Table.Body>
             </Table>
-        </div>
-    );
-
-    return (
-        <div>
-            <TextField
-                label="kode, eks Z09"
-                size="medium"
-                onChange={(event) => {
-                    setKode(event.currentTarget.value);
-                }}
-            />
-            <TextField
-                label="system eks: ICD10 eller ICPC2"
-                size="medium"
-                onChange={(event) => {
-                    setSystem(event.currentTarget.value);
-                }}
-            />
-            <Button variant="secondary" size="medium" className={styles.button} onClick={handleLeggTilClick}>
-                Legg til diagnose
-            </Button>
-            {biDiagonser.length > 0 && showBiDiagnoser}
             <TextField
                 label="sykmeldingId, eks 5afaef5d-34ac-4dc5-909f-78c1d82dbf69"
                 size="medium"
@@ -99,6 +76,29 @@ const BiDiagnoseEndringForm = ({ onChange }: BiDiagnoseEndringFormProps): JSX.El
                 }}
                 open={conformationModalOpen}
             ></ConfirmationModal>
+        </div>
+    );
+
+    return (
+        <div>
+            <TextField
+                label="kode, eks Z09"
+                size="medium"
+                onChange={(event) => {
+                    setKode(event.currentTarget.value);
+                }}
+            />
+            <TextField
+                label="system eks: ICD10 eller ICPC2"
+                size="medium"
+                onChange={(event) => {
+                    setSystem(event.currentTarget.value);
+                }}
+            />
+            <Button variant="secondary" size="medium" className={styles.button} onClick={handleLeggTilClick}>
+                Legg til diagnose
+            </Button>
+            {biDiagonser.length > 0 && showBiDiagnoserAndEndre}
         </div>
     );
 };

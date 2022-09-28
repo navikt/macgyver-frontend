@@ -33,7 +33,7 @@ const BiDiagnoseEndring = (): JSX.Element => {
                 }}
             />
             {isLoading && !error && <Loader size="medium" />}
-            {success && <Alert variant="success">Sykmelding gjenåpnet</Alert>}
+            {success && <Alert variant="success">Bi-diagnose er endret</Alert>}
             {error && <Alert variant="error">Noe gikk feil ved endring av bi diagnose</Alert>}
         </Innhold>
     );
