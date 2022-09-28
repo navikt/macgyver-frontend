@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@navikt/ds-react';
+
 import styles from './EndreBehandletdatoForm.module.css';
 
 interface EndreBehandletdatoFormProps {
@@ -18,14 +19,14 @@ const EndreBehandletdatoForm = ({ onChange }: EndreBehandletdatoFormProps): JSX.
     return (
         <div>
             <TextField
-                label="sykmeldingId"
+                label="sykmeldingId, eks 5afaef5d-34ac-4dc5-909f-78c1d82dbf69"
                 size="medium"
                 onChange={(event) => {
                     setSykmeldingId(event.currentTarget.value);
                 }}
             />
             <TextField
-                label="behandletDato"
+                label="behandletDato, eks 2022-09-19"
                 size="medium"
                 onChange={(event) => {
                     setBehandletDato(event.currentTarget.value);

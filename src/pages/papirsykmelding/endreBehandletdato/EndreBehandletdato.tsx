@@ -15,7 +15,7 @@ function createFetchKey(sykmeldingId: string, behandletDato: string): string | n
     }
 }
 
-const SYKMELDING_URL = `/api/proxy/api/sykmelding/`;
+const PAPIR_SYKMELDING_URL = `/api/proxy/api/papirsykmelding/`;
 
 const EndretBehandletdato = (): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState('');
@@ -46,7 +46,7 @@ async function fetchData(sykmeldingId: string, behandletDato: string): Promise<u
         behandletDato: behandletDato,
     };
 
-    const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/behandletdato`, {
+    const response = await fetch(`${PAPIR_SYKMELDING_URL}/${sykmeldingId}/behandletdato`, {
         method: 'POST',
         body: JSON.stringify(behandletDatoData),
     });
