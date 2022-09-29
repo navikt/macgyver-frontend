@@ -15,7 +15,7 @@ const SlettLegeerklaring = (): JSX.Element => {
 
     return (
         <Innhold>
-            <BodyShort>Sletter en legeerklaeringI</BodyShort>
+            <BodyShort>Sletter en legeerklaering</BodyShort>
             <SlettLegeerklaeringForm
                 onSubmit={(legeerklaeringId) => {
                     setIsLoading(true);
