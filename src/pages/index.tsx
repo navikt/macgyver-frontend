@@ -5,6 +5,7 @@ import { Bandage } from '@navikt/ds-icons';
 import { Copy } from '@navikt/ds-icons';
 import { Employer } from '@navikt/ds-icons';
 import { People } from '@navikt/ds-icons';
+import { Stethoscope } from '@navikt/ds-icons';
 import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
 
@@ -92,6 +93,19 @@ const Home: NextPage = () => {
                     <li>
                         <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn" passHref>
                             <DsLink>Sender ny NL-request til altinn</DsLink>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h1>
+                    <Stethoscope /> Legeerklæring
+                </h1>
+                <ul className={styles.list}>
+                    <li>
+                        <Link href="/legeerklaring/slettLegeerklaring/SlettLegeerklaring" passHref>
+                            <DsLink>Slett en gitt legeerklaring</DsLink>
                         </Link>
                     </li>
                 </ul>
