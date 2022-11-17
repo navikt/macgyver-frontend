@@ -17,10 +17,10 @@ const FerdigstillSmregistreringOppgave = (): JSX.Element => {
         <Innhold>
             <BodyShort>Ferdigstill smregistreringsoppgave</BodyShort>
             <FerdigstillSmregForm
-                onChange={(journalpostId) => {
+                onChange={(journalpostId, ferdigstiltAv) => {
                     setIsLoading(true);
                     setSuccess(false);
-                    ferdigstillSmregistreringOppgave(journalpostId)
+                    ferdigstillSmregistreringOppgave(journalpostId, ferdigstiltAv)
                         .then(() => {
                             setSuccess(true);
                         })
@@ -40,8 +40,8 @@ const FerdigstillSmregistreringOppgave = (): JSX.Element => {
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function ferdigstillSmregistreringOppgave(journalpostId: string): Promise<void> {
-    const response = await fetch(`${SMREG_URL}/${journalpostId}/ferdigstill`, {
+async function ferdigstillSmregistreringOppgave(journalpostId: string, ferdigstiltAv: string): Promise<void> {
+    const response = await fetch(`${SMREG_URL}/${journalpostId}/ferdigstill?ferdigstiltAv=${ferdigstiltAv}`, {
         method: 'POST',
     });
     logger.info(`Ferdigstill response status is: ${response.status} and statusText ${response.statusText}`);

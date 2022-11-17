@@ -6,11 +6,12 @@ import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import styles from './FerdigstillSmregForm.module.css';
 
 interface FerdigstillSmregFormProps {
-    onChange: (journalpostId: string) => void;
+    onChange: (journalpostId: string, ferdigstiltAv: string) => void;
 }
 
 const FerdigstillSmregForm = ({ onChange }: FerdigstillSmregFormProps): JSX.Element => {
     const [journalpostId, setJournalpostId] = useState<string>('');
+    const [ferdigstiltAv, setFerdigstiltAv] = useState<string>('');
     const [conformationModalOpen, setConformationModalOpen] = useState(false);
 
     return (
@@ -21,6 +22,14 @@ const FerdigstillSmregForm = ({ onChange }: FerdigstillSmregFormProps): JSX.Elem
                 size="medium"
                 onChange={(event) => {
                     setJournalpostId(event.currentTarget.value);
+                }}
+            />
+            <TextField
+                name="ferdigstiltAv"
+                label="ferdigstiltAv (din ident, f.eks. A123456)"
+                size="medium"
+                onChange={(event) => {
+                    setFerdigstiltAv(event.currentTarget.value);
                 }}
             />
             <Button
@@ -39,7 +48,7 @@ const FerdigstillSmregForm = ({ onChange }: FerdigstillSmregFormProps): JSX.Elem
                     setConformationModalOpen(false);
                 }}
                 onOK={() => {
-                    onChange(journalpostId);
+                    onChange(journalpostId, ferdigstiltAv);
                     setConformationModalOpen(false);
                 }}
                 open={conformationModalOpen}
