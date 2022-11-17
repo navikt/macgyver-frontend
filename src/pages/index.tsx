@@ -82,6 +82,11 @@ const Home: NextPage = () => {
                             <DsLink>Hent liste av oppgaver </DsLink>
                         </Link>
                     </li>
+                    <li>
+                        <Link href="/oppgave/ferdigstillSmregistreringOppgave/FerdigstillSmregistreringOppgave" passHref>
+                            <DsLink>Ferdigstill smregistreringsoppgave </DsLink>
+                        </Link>
+                    </li>
                 </ul>
             </div>
 
