@@ -41,13 +41,22 @@ const FerdigstillSmregistreringOppgave = (): JSX.Element => {
 export const getServerSideProps = withAuthenticatedPage();
 
 async function ferdigstillSmregistreringOppgave(journalpostId: string, ferdigstiltAv: string): Promise<void> {
-    const response = await fetch(`${SMREG_URL}/${journalpostId}/ferdigstill?ferdigstiltAv=${ferdigstiltAv}`, {
+    const ferdigstillSmregOppgave: FerdigstillSmregOppgaveData = {
+        ferdigstiltAv: ferdigstiltAv,
+    };
+
+    const response = await fetch(`${SMREG_URL}/${journalpostId}/ferdigstill`, {
         method: 'POST',
+        body: JSON.stringify(ferdigstillSmregOppgave),
     });
     logger.info(`Ferdigstill response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);
     }
 }
+
+type FerdigstillSmregOppgaveData = {
+    ferdigstiltAv: string;
+};
 
 export default FerdigstillSmregistreringOppgave;
