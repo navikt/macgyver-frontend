@@ -69,6 +69,11 @@ const Home: NextPage = () => {
                             <DsLink>Endre behandletdato for en gitt papir sykmelding </DsLink>
                         </Link>
                     </li>
+                    <li>
+                        <Link href="/papirsykmelding/oppdaterPeriode/OppdaterPeriode" passHref>
+                            <DsLink>Oppdatere periode</DsLink>
+                        </Link>
+                    </li>
                 </ul>
             </div>
 
