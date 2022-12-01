@@ -47,31 +47,8 @@ const Home: NextPage = () => {
                             <DsLink>Slett en gitt sykmelding</DsLink>
                         </Link>
                     </li>
-                    <li>
-                        <Link href="/sykmelding/diagnoseEndring/DiagnoseEndring" passHref>
-                            <DsLink>Endre diagnose for en gitt sykmelding</DsLink>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/sykmelding/biDiagnoseEndring/BiDiagnoseEndring" passHref>
-                            <DsLink> Endre Bi-diagnose for en gitt sykmelding</DsLink>
-                        </Link>
-                    </li>
                 </ul>
             </div>
-            <div>
-                <h1>
-                    <Print /> Papirsykmelding
-                </h1>
-                <ul className={styles.list}>
-                    <li>
-                        <Link href="/papirsykmelding/endreBehandletdato/EndreBehandletdato" passHref>
-                            <DsLink>Endre behandletdato for en gitt papir sykmelding </DsLink>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-
             <div>
                 <h1>
                     <Copy /> Oppgave
