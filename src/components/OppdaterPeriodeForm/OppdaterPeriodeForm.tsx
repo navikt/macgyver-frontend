@@ -29,32 +29,32 @@ const OppdaterPeriodeForm = ({ onChange }: OppdaterPeriodeFormProps): JSX.Elemen
                 className={styles.commonFormElement}
                 label="Periodeliste som json, eksempelverdi:"
                 size="medium"
-                defaultValue={
-                    '"perioder": [\n' +
-                    '    {\n' +
-                    '      "fom": "2020-12-09",\n' +
-                    '      "tom": "2020-12-15",\n' +
-                    '      "gradert": null,\n' +
-                    '      "reisetilskudd": false,\n' +
-                    '      "behandlingsdager": null,\n' +
-                    '      "aktivitetIkkeMulig": {\n' +
-                    '        "medisinskArsak": {\n' +
-                    '          "arsak": [\n' +
-                    '            "AKTIVITET_FORHINDRER_BEDRING"\n' +
-                    '          ],\n' +
-                    '          "beskrivelse": "andre årsaker til sykefravær"\n' +
-                    '        },\n' +
-                    '        "arbeidsrelatertArsak": {\n' +
-                    '          "arsak": [\n' +
-                    '            "ANNET"\n' +
-                    '          ],\n' +
-                    '          "beskrivelse": "andre årsaker til sykefravær"\n' +
-                    '        }\n' +
-                    '      },\n' +
-                    '      "avventendeInnspillTilArbeidsgiver": null\n' +
-                    '    }\n' +
-                    '  ]'
-                }
+                defaultValue={JSON.stringify(
+                    {
+                        periodeliste: [
+                            {
+                                fom: '2020-12-09',
+                                tom: '2020-12-15',
+                                gradert: null,
+                                reisetilskudd: false,
+                                behandlingsdager: null,
+                                aktivitetIkkeMulig: {
+                                    medisinskArsak: {
+                                        arsak: ['AKTIVITET_FORHINDRER_BEDRING'],
+                                        beskrivelse: 'andre årsaker til sykefravær',
+                                    },
+                                    arbeidsrelatertArsak: {
+                                        arsak: ['ANNET'],
+                                        beskrivelse: 'andre årsaker til sykefravær',
+                                    },
+                                },
+                                avventendeInnspillTilArbeidsgiver: null,
+                            },
+                        ],
+                    },
+                    null,
+                    2,
+                )}
                 onChange={(event) => {
                     setPeriodeListe(event.currentTarget.value);
                 }}
