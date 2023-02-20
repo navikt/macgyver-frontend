@@ -32,6 +32,7 @@ spec:
       autoLoginIgnorePaths:
         - /internal/*
     application:
+      allowAllUsers: true
       enabled: true
       tenant: trygdeetaten.no
       claims:
