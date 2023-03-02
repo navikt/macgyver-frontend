@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   port: 3000
   ingresses:
-    - "https://macgyver-frontend.dev.intern.nav.no"
+    - "https://macgyver-frontend.intern.dev.nav.no"
   replicas:
     min: 1
     max: 1
