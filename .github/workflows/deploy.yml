@@ -63,7 +63,6 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
-
   deploy-to-dev-gcp:
     name: deploy to nais dev
     needs: [snyk-test, build]
@@ -75,7 +74,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_TEAMSYKMELDING }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev.yaml
-          VAR: image=${{ env.docker_image }}
+          VAR: image=${{ needs.build.outputs.image }}
 
   deploy-to-prod-gcp:
     name: deploy to nais prod
