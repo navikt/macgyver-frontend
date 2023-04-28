@@ -22,7 +22,7 @@ const HentListeAvJournalposter = (): JSX.Element => {
 
     return (
         <Innhold>
-            <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
+            <BodyShort>Hent en liste av journalposter med oppgaveId fra saf-api</BodyShort>
             <FnrForm
                 onChange={(fnr) => {
                     setFnr(fnr);
