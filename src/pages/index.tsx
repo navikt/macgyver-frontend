@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Print } from '@navikt/ds-icons';
 import { Bandage } from '@navikt/ds-icons';
 import { Copy } from '@navikt/ds-icons';
+import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Employer } from '@navikt/ds-icons';
 import { People } from '@navikt/ds-icons';
 import { Stethoscope } from '@navikt/ds-icons';
@@ -88,6 +88,19 @@ const Home: NextPage = () => {
                     <li>
                         <Link href="/legeerklaring/slettLegeerklaring/SlettLegeerklaring" passHref>
                             <DsLink>Slett en gitt legeerklaring</DsLink>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h1>
+                    <FilePdfIcon /> Journalpost
+                </h1>
+                <ul className={styles.list}>
+                    <li>
+                        <Link href="/journalpost/hentListeAvJournalposter/HentListeAvJouranlposter" passHref>
+                            <DsLink>Hent liste av journalposter </DsLink>
                         </Link>
                     </li>
                 </ul>

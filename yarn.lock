@@ -121,6 +121,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:^2.9.2":
+  version: 2.9.2
+  resolution: "@navikt/aksel-icons@npm:2.9.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F2.9.2%2F8b1dac941cac93dd8ba6f7e7d377a2336e275364"
+  checksum: ee9196075d4363a59289139a775ed0e720c9e8c88e63edf163d90a885437dfb20aaac74e40a8c6a4d6f2618974611d28d71dd83bdf94b86ec4da9aa02b0696d4
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-css-internal@npm:^1.5.9":
   version: 1.5.9
   resolution: "@navikt/ds-css-internal@npm:1.5.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css-internal%2F1.5.9%2F1cb787342e083dbc9b857a4387a60c41cb7c5c3c"
@@ -2676,6 +2683,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "macgyver-frontend@workspace:."
   dependencies:
+    "@navikt/aksel-icons": ^2.9.2
     "@navikt/ds-css": ^1.5.9
     "@navikt/ds-css-internal": ^1.5.9
     "@navikt/ds-react-internal": ^1.5.9
