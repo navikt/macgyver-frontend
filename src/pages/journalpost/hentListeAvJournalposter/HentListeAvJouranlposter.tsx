@@ -9,7 +9,7 @@ import FnrForm from '../../../components/FnrForm/FnrForm';
 
 const HENT_LISTE_AV_JOURNALPOSTER_URL = `/api/proxy/api/journalposter`;
 
-function createFetchKey(fnr: string): string | null {
+function createFetchKey(fnr: string): string {
     return fnr;
 }
 
@@ -37,9 +37,8 @@ const HentListeAvJournalposter = (): JSX.Element => {
 export const getServerSideProps = withAuthenticatedPage();
 
 async function fetchData(fnr: string): Promise<unknown> {
-    const response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL, {
+    const response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL + `/${fnr}`, {
         method: 'GET',
-        headers: { fnr: fnr },
     });
     logger.info(
         `HentListeAvJournalposter response status is: ${response.status} and statusText ${response.statusText}`,
