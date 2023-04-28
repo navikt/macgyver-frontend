@@ -37,8 +37,9 @@ const HentListeAvJournalposter = (): JSX.Element => {
 export const getServerSideProps = withAuthenticatedPage();
 
 async function fetchData(fnr: string): Promise<unknown> {
-    const response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL + `?fnr=${fnr}`, {
+    const response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL, {
         method: 'GET',
+        headers: { fnr: fnr },
     });
     logger.info(
         `HentListeAvJournalposter response status is: ${response.status} and statusText ${response.statusText}`,
