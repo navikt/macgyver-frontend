@@ -8,7 +8,7 @@ Frontend app for [macgyver](https://github.com/navikt/macgyver)
 
 #### Requirements
 * Node.js
-* npm or Yarn
+* Yarn
 
 ## Getting Started
 
