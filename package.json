@@ -14,7 +14,7 @@
     "@navikt/ds-css-internal": "^1.5.9",
     "@navikt/ds-react-internal": "^1.5.9",
     "@navikt/next-auth-wonderwall": "^0.6.0",
-    "@navikt/next-logger": "^1.11.0",
+    "@navikt/next-logger": "^1.19.0",
     "next": "12.3.0",
     "pino": "^8.6.0",
     "react": "18.2.0",
