@@ -60,7 +60,10 @@ const Home: NextPage = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/oppgave/ferdigstillSmregistreringOppgave/FerdigstillSmregistreringOppgave" passHref>
+                        <Link
+                            href="/oppgave/ferdigstillSmregistreringOppgave/FerdigstillSmregistreringOppgave"
+                            passHref
+                        >
                             <DsLink>Ferdigstill smregistreringsoppgave </DsLink>
                         </Link>
                     </li>
