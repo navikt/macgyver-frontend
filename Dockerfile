@@ -1,6 +1,9 @@
-FROM gcr.io/distroless/nodejs18:nonroot
+FROM node:18-slim as builder
 
-RUN apk add --no-cache bash
+COPY . /app
+WORKDIR /app
+
+FROM gcr.io/distroless/nodejs18:nonroot
 
 WORKDIR /app
 
