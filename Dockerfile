@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM gcr.io/distroless/nodejs18:nonroot
 
 RUN apk add --no-cache bash
 
