@@ -1,22 +1,16 @@
-FROM node:18-alpine
-
-RUN apk add --no-cache bash
+FROM gcr.io/distroless/nodejs:18 as runtime
 
 WORKDIR /app
 
-ENV NODE_ENV production
-
-COPY package*.json /app/
-COPY .yarn /app/.yarn
-COPY .yarnrc.yml /app/
-COPY yarn.lock /app/
-
-RUN yarn --immutable
-
-COPY next.config.js /app/
-COPY .next /app/.next/
+COPY package.json /app/
+COPY next-logger.config.js /app/
+COPY .next/standalone /app/
 COPY public /app/public/
+COPY /.next/static ./.next/static
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+ENV NODE_ENV=production
+ENV NODE_OPTIONS '-r next-logger'
+
+CMD ["server.js"]
