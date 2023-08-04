@@ -2816,7 +2816,7 @@ __metadata:
     eslint-config-next: ^12.3.1
     next: 12.3.0
     next-logger: ^3.0.2
-    pino: ^8.6.0
+    pino: ^8.15.0
     pino-pretty: ^9.1.0
     prettier: ^2.7.1
     react: 18.2.0
@@ -3457,9 +3457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^8.6.0":
-  version: 8.6.0
-  resolution: "pino@npm:8.6.0"
+"pino@npm:^8.15.0":
+  version: 8.15.0
+  resolution: "pino@npm:8.15.0"
   dependencies:
     atomic-sleep: ^1.0.0
     fast-redact: ^3.1.1
@@ -3474,7 +3474,7 @@ __metadata:
     thread-stream: ^2.0.0
   bin:
     pino: bin.js
-  checksum: 1142454645053191239e126d1f248e55d116dd3c7f0b00a2201ad4ea907b655d8b5dc6eb44ec1ea823974a13f5034df08cd5607e097c11409eda2a9c6672cc95
+  checksum: 9a54d0757f0256201fad01346be1c18b0a4378704fa383df867189da12151d664d2bd18b1e53df70633fbff6c90fd3175228c0c971eaaa734939709cc1a0005b
   languageName: node
   linkType: hard
 
