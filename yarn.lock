@@ -689,7 +689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.0.20":
+"@types/react@npm:*":
   version: 18.0.20
   resolution: "@types/react@npm:18.0.20"
   dependencies:
@@ -697,6 +697,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f67f5b16efd89e237bf0e40d133218c398cf2a2f81166ce1e9fa32d0df6b869106740983396c51df9708a1b79b2a9d725eda1230cc3064c92d86d9ea6a4b714c
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.2.18":
+  version: 18.2.18
+  resolution: "@types/react@npm:18.2.18"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 2e0d75de2b618e76780019e52478b1bec2b015a9187aea30f84518c0c3ddc639055bdfea50864aece937bad0cb0544d0100b80d30f5461e72fbc1c3c0be8b140
   languageName: node
   linkType: hard
 
@@ -2810,7 +2821,7 @@ __metadata:
     "@navikt/next-auth-wonderwall": ^0.6.0
     "@navikt/next-logger": ^1.19.0
     "@types/node": 18.7.18
-    "@types/react": 18.0.20
+    "@types/react": 18.2.18
     "@types/react-dom": 18.0.6
     eslint: 8.23.1
     eslint-config-next: ^12.3.1
