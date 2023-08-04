@@ -6,6 +6,7 @@ COPY package.json /app/
 COPY next-logger.config.js /app/
 COPY .next/standalone /app/
 COPY public /app/public/
+COPY /.next/static ./.next/static
 
 EXPOSE 3000
 
