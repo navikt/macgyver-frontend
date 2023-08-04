@@ -1,9 +1,6 @@
-FROM node:18-slim as builder
+FROM node:18-alpine
 
-COPY . /app
-WORKDIR /app
-
-FROM gcr.io/distroless/nodejs18:nonroot
+RUN apk add --no-cache bash
 
 WORKDIR /app
 
