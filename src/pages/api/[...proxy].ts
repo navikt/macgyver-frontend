@@ -5,7 +5,9 @@ import { grantAzureOboToken, isInvalidTokenSet } from '@navikt/next-auth-wonderw
 import { withAuthenticatedApiRoute } from '../../auth/withAuth';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: string): Promise<void> => {
-    if (!Array.isArray(req.query.proxy)) {
+    const queryParams: string[] | null = (req.query.proxy ?? null) as string[] | null;
+
+    if (!isValidQueryParams(queryParams)) {
         res.status(400).json({ message: 'Invalid request' });
         return;
     }
@@ -15,8 +17,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: s
         return;
     }
 
-    const macgyverBaseUrl = 'http://macgyver';
-
     const oboToken = await grantAzureOboToken(accessToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set');
     if (isInvalidTokenSet(oboToken)) {
         logger.error(oboToken.message);
@@ -24,8 +24,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: s
         return;
     }
 
-    const path = req.query.proxy.slice(1).join('/');
-    const result = await fetch(`${macgyverBaseUrl}/${path}`, {
+    if (!queryParams) {
+        res.status(400).json({ message: 'Path is missing' });
+        return;
+    }
+
+    const path: string = createPath(queryParams);
+    const result: Response = await fetch(`http://macgyver/${path}`, {
         method: req.method,
         body: getBody(req),
         headers: getHeaders(req, oboToken),
@@ -50,6 +55,14 @@ function getHeaders(req: NextApiRequest, accessToken: string): Record<string, st
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
     };
+}
+
+function isValidQueryParams(query: string[] | null): query is string[] | null {
+    return query == null || (Array.isArray(query) && query.length >= 1);
+}
+
+function createPath(path: string[]): string {
+    return path.slice(1).join('/');
 }
 
 export default withAuthenticatedApiRoute(handler);
