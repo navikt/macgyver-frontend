@@ -108,6 +108,18 @@ const Home: NextPage = () => {
                     </li>
                 </ul>
             </div>
+            <div>
+                <h1>
+                    <People /> Person
+                </h1>
+                <ul className={styles.list}>
+                    <li>
+                        <Link href="/person/hentPerson/HentPerson" passHref>
+                            <DsLink>Hent navn på person og liste med identer</DsLink>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
