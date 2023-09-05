@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Bandage } from '@navikt/ds-icons';
-import { Copy } from '@navikt/ds-icons';
+import { BandageIcon } from '@navikt/aksel-icons';
+import { FilesIcon } from '@navikt/aksel-icons';
 import { FilePdfIcon } from '@navikt/aksel-icons';
-import { Employer } from '@navikt/ds-icons';
-import { People } from '@navikt/ds-icons';
-import { Stethoscope } from '@navikt/ds-icons';
+import { ReceptionIcon } from '@navikt/aksel-icons';
+import { PersonGroupIcon } from '@navikt/aksel-icons';
+import { StethoscopeIcon } from '@navikt/aksel-icons';
+import { PersonIcon } from '@navikt/aksel-icons';
 import Link from 'next/link';
 import { Link as DsLink } from '@navikt/ds-react';
 
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
             </Head>
             <div>
                 <h1>
-                    <People /> IdentEndring
+                    <PersonGroupIcon /> IdentEndring
                 </h1>
                 <ul className={styles.list}>
                     <li>
@@ -34,7 +35,7 @@ const Home: NextPage = () => {
             </div>
             <div>
                 <h1>
-                    <Bandage /> Sykmelding
+                    <BandageIcon /> Sykmelding
                 </h1>
                 <ul className={styles.list}>
                     <li>
@@ -51,7 +52,7 @@ const Home: NextPage = () => {
             </div>
             <div>
                 <h1>
-                    <Copy /> Oppgave
+                    <FilesIcon /> Oppgave
                 </h1>
                 <ul className={styles.list}>
                     <li>
@@ -72,7 +73,7 @@ const Home: NextPage = () => {
 
             <div>
                 <h1>
-                    <Employer /> Narmesteleder
+                    <ReceptionIcon /> Narmesteleder
                 </h1>
                 <ul className={styles.list}>
                     <li>
@@ -85,7 +86,7 @@ const Home: NextPage = () => {
 
             <div>
                 <h1>
-                    <Stethoscope /> Legeerklæring
+                    <StethoscopeIcon /> Legeerklæring
                 </h1>
                 <ul className={styles.list}>
                     <li>
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
             </div>
             <div>
                 <h1>
-                    <People /> Person
+                    <PersonIcon /> Person
                 </h1>
                 <ul className={styles.list}>
                     <li>
