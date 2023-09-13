@@ -49,6 +49,7 @@ async function endreFnrNarmesteleder(fnr: string, nyttFnr: string): Promise<void
     const response = await fetch(`${SYKMELDING_LEDER_FNR_URL}`, {
         method: 'POST',
         body: JSON.stringify(identEndringData),
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(
         `IdentEndringNarmesteleder·response·status·is:·${response.status}·and·statusText·${response.statusText}`,

@@ -44,6 +44,7 @@ async function fetchData(oppgaveider: number[]): Promise<unknown> {
     const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
         method: 'POST',
         body: JSON.stringify(oppgaveider),
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {

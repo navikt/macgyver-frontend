@@ -52,6 +52,7 @@ async function endreFnrSykmeldt(fnr: string, nyttFnr: string): Promise<unknown> 
     const response = await fetch(`${SYKMELDING_FNR_URL}`, {
         method: 'POST',
         body: JSON.stringify(identEndringData),
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`IdentEndringSykmeldt response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {

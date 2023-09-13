@@ -40,9 +40,10 @@ async function fetchData(fnr: string): Promise<unknown> {
     const response = await fetch(HENT_PERSON, {
         method: 'GET',
         headers: {
-            'fnr': fnr,
+            'Content-Type': 'application/json',
+            fnr: fnr,
         },
-    });
+    })
     logger.info(
         `HentPerson response status is: ${response.status} and statusText ${response.statusText}`,
     );

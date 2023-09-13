@@ -43,6 +43,7 @@ export const getServerSideProps = withAuthenticatedPage();
 async function gjenapneSykmelding(sykmeldingId: string): Promise<void> {
     const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}/gjenapne`, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`Gjenapne response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
