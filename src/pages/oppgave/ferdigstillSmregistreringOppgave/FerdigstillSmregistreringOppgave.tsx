@@ -48,6 +48,7 @@ async function ferdigstillSmregistreringOppgave(journalpostId: string, ferdigsti
     const response = await fetch(`${SMREG_URL}/${journalpostId}/ferdigstill`, {
         method: 'POST',
         body: JSON.stringify(ferdigstillSmregOppgave),
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`Ferdigstill response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {

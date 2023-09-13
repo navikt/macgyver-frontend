@@ -50,7 +50,8 @@ async function nyNLRequestAltinn(sykmeldingId: string, fnr: string, orgnummer: s
     const response = await fetch(`${NARMESTELEDER_URL}`, {
         method: 'POST',
         body: JSON.stringify(nyNLRequestData),
-    });
+        headers: { 'Content-Type': 'application/json' },
+    })
     logger.info(`NyNLRequestAltinn response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
         throw new Error(`Httpstatus code is ${response.status}`);

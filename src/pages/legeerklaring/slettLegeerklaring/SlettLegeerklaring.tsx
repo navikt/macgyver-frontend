@@ -43,6 +43,7 @@ export const getServerSideProps = withAuthenticatedPage();
 async function deleteLegeerklaring(legeerklaeringId: string): Promise<void> {
     const response = await fetch(`${LEGEERKLARING_URL}/${legeerklaeringId}`, {
         method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`SlettLegeerklaring response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {

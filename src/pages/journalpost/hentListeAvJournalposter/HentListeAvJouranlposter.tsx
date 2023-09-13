@@ -39,6 +39,7 @@ export const getServerSideProps = withAuthenticatedPage();
 async function fetchData(fnr: string): Promise<unknown> {
     const response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL + `/${fnr}`, {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(
         `HentListeAvJournalposter response status is: ${response.status} and statusText ${response.statusText}`,

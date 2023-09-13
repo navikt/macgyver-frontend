@@ -29,4 +29,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse, accessToken: s
     })
 };
 
+export const config = {
+    api: {
+        bodyParser: false,
+        externalResolver: true,
+    },
+}
+
 export default withAuthenticatedApiRoute(handler);
