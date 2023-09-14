@@ -43,7 +43,6 @@ export const getServerSideProps = withAuthenticatedPage();
 async function deleteSykmelding(sykmeldingId: string): Promise<void> {
     const response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
     });
     logger.info(`SlettSykmelding response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
