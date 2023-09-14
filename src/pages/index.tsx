@@ -38,11 +38,6 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/sykmelding/gjenapne/Gjenapne" passHref>
-                            Gjenåpne sykmelding med gitt sykmeldingId
-                        </Link>
-                    </li>
-                    <li>
                         <Link href="/sykmelding/slettSykmelding/SlettSykmelding" passHref>
                             Slett en gitt sykmelding
                         </Link>
