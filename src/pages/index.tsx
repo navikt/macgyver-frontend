@@ -54,14 +54,6 @@ const Home: NextPage = () => {
                             Hent liste av oppgaver
                         </Link>
                     </li>
-                    <li>
-                        <Link
-                            href="/oppgave/ferdigstillSmregistreringOppgave/FerdigstillSmregistreringOppgave"
-                            passHref
-                        >
-                            Ferdigstill smregistreringsoppgave
-                        </Link>
-                    </li>
                 </ul>
             </div>
 
