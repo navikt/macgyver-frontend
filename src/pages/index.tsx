@@ -8,7 +8,6 @@ import { PersonGroupIcon } from '@navikt/aksel-icons';
 import { StethoscopeIcon } from '@navikt/aksel-icons';
 import { PersonIcon } from '@navikt/aksel-icons';
 import Link from 'next/link';
-import { Link as DsLink } from '@navikt/ds-react';
 
 import { withAuthenticatedPage } from '../auth/withAuth';
 import styles from '../styles/App.module.css';
@@ -28,7 +27,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/identEndring/sykmeldt/IdentEndringSykmeldt" passHref>
-                            <DsLink>Endre fnr for en gitt sykmelding</DsLink>
+                            Endre fnr for en gitt sykmelding
                         </Link>
                     </li>
                 </ul>
@@ -40,12 +39,12 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/sykmelding/gjenapne/Gjenapne" passHref>
-                            <DsLink>Gjenåpne sykmelding med gitt sykmeldingId</DsLink>
+                            Gjenåpne sykmelding med gitt sykmeldingId
                         </Link>
                     </li>
                     <li>
                         <Link href="/sykmelding/slettSykmelding/SlettSykmelding" passHref>
-                            <DsLink>Slett en gitt sykmelding</DsLink>
+                            Slett en gitt sykmelding
                         </Link>
                     </li>
                 </ul>
@@ -57,7 +56,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver" passHref>
-                            <DsLink>Hent liste av oppgaver </DsLink>
+                            Hent liste av oppgaver
                         </Link>
                     </li>
                     <li>
@@ -65,7 +64,7 @@ const Home: NextPage = () => {
                             href="/oppgave/ferdigstillSmregistreringOppgave/FerdigstillSmregistreringOppgave"
                             passHref
                         >
-                            <DsLink>Ferdigstill smregistreringsoppgave </DsLink>
+                            Ferdigstill smregistreringsoppgave
                         </Link>
                     </li>
                 </ul>
@@ -78,7 +77,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn" passHref>
-                            <DsLink>Sender ny NL-request til altinn</DsLink>
+                            Sender ny NL-request til altinn
                         </Link>
                     </li>
                 </ul>
@@ -91,7 +90,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/legeerklaring/slettLegeerklaring/SlettLegeerklaring" passHref>
-                            <DsLink>Slett en gitt legeerklaring</DsLink>
+                            Slett en gitt legeerklaring
                         </Link>
                     </li>
                 </ul>
@@ -104,7 +103,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/journalpost/hentListeAvJournalposter/HentListeAvJouranlposter" passHref>
-                            <DsLink>Hent liste av journalposter </DsLink>
+                            Hent liste av journalposter
                         </Link>
                     </li>
                 </ul>
@@ -116,7 +115,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/person/hentPerson/HentPerson" passHref>
-                            <DsLink>Hent navn på person og liste med identer</DsLink>
+                            Hent navn på person og liste med identer
                         </Link>
                     </li>
                 </ul>
