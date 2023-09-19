@@ -5,6 +5,7 @@ import { logger } from '@navikt/next-logger';
 import { withAuthenticatedPage } from '../../auth/withAuth';
 import Innhold from '../../components/Innhold/Innhold';
 import IdentEndringSykmeldtForm from '../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm';
+import { IdentEndringSykmeldt } from '../../types/identEndring'
 
 const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`;
 
@@ -45,7 +46,7 @@ const IdentEndringSykmeldt = (): JSX.Element => {
 export const getServerSideProps = withAuthenticatedPage();
 
 async function endreFnrSykmeldt(fnr: string, nyttFnr: string): Promise<unknown> {
-    const identEndringData: IdentEndringData = {
+    const identEndringData: IdentEndringSykmeldt = {
         fnr: fnr,
         nyttFnr: nyttFnr,
     };
@@ -61,10 +62,5 @@ async function endreFnrSykmeldt(fnr: string, nyttFnr: string): Promise<unknown> 
     }
     return await response.json();
 }
-
-type IdentEndringData = {
-    fnr: string;
-    nyttFnr: string;
-};
 
 export default IdentEndringSykmeldt;

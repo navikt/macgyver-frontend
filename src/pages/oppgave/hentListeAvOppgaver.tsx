@@ -6,10 +6,11 @@ import useSWR from 'swr';
 import { withAuthenticatedPage } from '../../auth/withAuth';
 import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm';
 import Innhold from '../../components/Innhold/Innhold';
+import { OppgaverField } from '../../types/oppgaver'
 
 const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
 
-function createFetchKey(oppgaveIder: number[]): string | null {
+function createFetchKey(oppgaveIder: OppgaverField): string | null {
     if (oppgaveIder.length === 0) {
         return null;
     } else {
@@ -18,7 +19,7 @@ function createFetchKey(oppgaveIder: number[]): string | null {
 }
 
 const HentListeAvOppgaver = (): JSX.Element => {
-    const [oppgaveider, setOppgaveider] = useState<number[]>([]);
+    const [oppgaveider, setOppgaveider] = useState<OppgaverField | []>([]);
 
     const fetchKey = createFetchKey(oppgaveider);
 
@@ -40,7 +41,7 @@ const HentListeAvOppgaver = (): JSX.Element => {
 };
 export const getServerSideProps = withAuthenticatedPage();
 
-async function fetchData(oppgaveider: number[]): Promise<unknown> {
+async function fetchData(oppgaveider: OppgaverField): Promise<unknown> {
     const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
         method: 'POST',
         body: JSON.stringify(oppgaveider),
