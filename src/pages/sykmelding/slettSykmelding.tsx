@@ -2,9 +2,9 @@ import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
 import { useState } from 'react';
 
-import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/Innhold/Innhold';
-import SlettSykmeldingForm from '../../../components/SlettSykmeldingForm/SlettSykmeldingForm';
+import { withAuthenticatedPage } from '../../auth/withAuth';
+import Innhold from '../../components/Innhold/Innhold';
+import SlettSykmeldingForm from '../../components/SlettSykmeldingForm/SlettSykmeldingForm';
 
 const SYKMELDING_URL = `/api/proxy/api/sykmelding`;
 

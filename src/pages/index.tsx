@@ -26,7 +26,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/identEndring/sykmeldt/IdentEndringSykmeldt" passHref>
+                        <Link href="/identEndring/identEndringSykmeldt" passHref>
                             Endre fnr for en gitt sykmelding
                         </Link>
                     </li>
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/sykmelding/slettSykmelding/SlettSykmelding" passHref>
+                        <Link href="/sykmelding/slettSykmelding" passHref>
                             Slett en gitt sykmelding
                         </Link>
                     </li>
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/oppgave/hentListeAvOppgaver/HentListeAvOppgaver" passHref>
+                        <Link href="/oppgave/hentListeAvOppgaver" passHref>
                             Hent liste av oppgaver
                         </Link>
                     </li>
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/narmesteleder/nyNLrequestAltinn/NyNLRequestAltinn" passHref>
+                        <Link href="/narmesteleder/nyNLRequestAltinn" passHref>
                             Sender ny NL-request til altinn
                         </Link>
                     </li>
@@ -76,7 +76,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/legeerklaring/slettLegeerklaring/SlettLegeerklaring" passHref>
+                        <Link href="/legeerklaring/slettLegeerklaring" passHref>
                             Slett en gitt legeerklaring
                         </Link>
                     </li>
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/journalpost/hentListeAvJournalposter/HentListeAvJouranlposter" passHref>
+                        <Link href="/journalpost/hentListeAvJouranlposter" passHref>
                             Hent liste av journalposter
                         </Link>
                     </li>
@@ -101,7 +101,7 @@ const Home: NextPage = () => {
                 </h1>
                 <ul className={styles.list}>
                     <li>
-                        <Link href="/person/hentPerson/HentPerson" passHref>
+                        <Link href="/person/hentPerson" passHref>
                             Hent navn på person og liste med identer
                         </Link>
                     </li>

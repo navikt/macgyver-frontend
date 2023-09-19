@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { logger } from '@navikt/next-logger';
 import useSWR from 'swr';
 
-import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/Innhold/Innhold';
-import FnrForm from '../../../components/FnrForm/FnrForm';
+import { withAuthenticatedPage } from '../../auth/withAuth';
+import Innhold from '../../components/Innhold/Innhold';
+import FnrForm from '../../components/FnrForm/FnrForm';
 
 const HENT_PERSON = `/api/proxy/api/person`;
 

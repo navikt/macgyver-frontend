@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
 
-import Innhold from '../../../components/Innhold/Innhold';
-import { withAuthenticatedPage } from '../../../auth/withAuth';
-import SlettLegeerklaeringForm from '../../../components/Legeerklaering/SlettLegeerklaeringForm';
+import Innhold from '../../components/Innhold/Innhold';
+import { withAuthenticatedPage } from '../../auth/withAuth';
+import SlettLegeerklaeringForm from '../../components/Legeerklaering/SlettLegeerklaeringForm';
 
 const LEGEERKLARING_URL = `/api/proxy/api/legeerklaering`;
 

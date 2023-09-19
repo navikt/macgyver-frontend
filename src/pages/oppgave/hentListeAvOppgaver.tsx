@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { logger } from '@navikt/next-logger';
 import useSWR from 'swr';
 
-import { withAuthenticatedPage } from '../../../auth/withAuth';
-import OppgaveIdForm from '../../../components/OppgaveIdForm/OppgaveIdForm';
-import Innhold from '../../../components/Innhold/Innhold';
+import { withAuthenticatedPage } from '../../auth/withAuth';
+import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm';
+import Innhold from '../../components/Innhold/Innhold';
 
 const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
 
