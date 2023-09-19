@@ -4,6 +4,12 @@ import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
 import { useEffect } from 'react';
 import { Modal } from '@navikt/ds-react';
+import { logger } from '@navikt/next-logger'
+
+if (process.env.NODE_ENV !== 'production') {
+    logger.info('Setting up MSW for local')
+    require('../mocks')
+}
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useEffect(() => {
