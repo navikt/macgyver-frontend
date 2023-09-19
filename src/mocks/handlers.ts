@@ -1,11 +1,16 @@
 import { rest, RestHandler } from 'msw'
 
+import { IdentEndringSykmeldt } from '../types/identEndring'
+import { OppgaverField, Oppgave } from '../types/oppgaver'
+import { NyNLAltinn } from '../types/nyNLAltinn'
+import { Jouranlpost } from '../types/jouranlpost'
+import { Person } from '../types/person'
+
 import { journalposterList, oppgaverList, personer } from './data/mockData'
-import { Journalpost, Oppgave, Person } from './data/types'
 
 export const handlers: RestHandler[] = [
     rest.post('/api/proxy/api/sykmelding/fnr', async (req, res, ctx) => {
-        const fnr = await req.json()
+        const fnr: IdentEndringSykmeldt = await req.json()
 
         if (fnr.fnr !== '' && fnr.nyttFnr !== '') {
             return res(ctx.json({ message: 'Fnr has been changed.' }))
@@ -23,7 +28,7 @@ export const handlers: RestHandler[] = [
         }
     }),
     rest.post('/api/proxy/api/oppgave/list', async (req, res, ctx) => {
-        const oppgaveider: number[] = await req.json()
+        const oppgaveider: OppgaverField = await req.json()
 
         const oppgaver: (Oppgave | undefined)[] = oppgaveider
             .map((id: number) => {
@@ -40,7 +45,7 @@ export const handlers: RestHandler[] = [
         }
     }),
     rest.post('/api/proxy/api/narmesteleder/request', async (req, res, ctx) => {
-        const values = await req.json()
+        const values: NyNLAltinn = await req.json()
 
         if (values.sykmeldingId !== '' && values.fnr !== '' && values.orgnummer !== '') {
             return res(ctx.json({ message: 'Request has been sent.' }))
@@ -60,7 +65,7 @@ export const handlers: RestHandler[] = [
     rest.get('/api/proxy/api/journalposter/:fnr', (req, res, ctx) => {
         const fnr = req.params.fnr
 
-        const journalposter: Journalpost[] | undefined = journalposterList.find((person): boolean => {
+        const journalposter: Jouranlpost[] | undefined = journalposterList.find((person): boolean => {
             return person.fnr === fnr
         })?.journalposter
 

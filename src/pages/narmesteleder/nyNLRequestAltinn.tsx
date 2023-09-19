@@ -5,6 +5,7 @@ import { logger } from '@navikt/next-logger';
 import { withAuthenticatedPage } from '../../auth/withAuth';
 import Innhold from '../../components/Innhold/Innhold';
 import NyNLRequestAltinnForm from '../../components/NyNLRequestAltinnForm/NyNLRequestAltinnForm';
+import { NyNLAltinn } from '../../types/nyNLAltinn'
 
 const NARMESTELEDER_URL = `/api/proxy/api/narmesteleder/request`;
 
@@ -42,7 +43,7 @@ const NyNLRequestAltinn = (): JSX.Element => {
 export const getServerSideProps = withAuthenticatedPage();
 
 async function nyNLRequestAltinn(sykmeldingId: string, fnr: string, orgnummer: string): Promise<unknown> {
-    const nyNLRequestData: NyNLRequestData = {
+    const nyNLRequestData: NyNLAltinn = {
         sykmeldingId: sykmeldingId,
         fnr: fnr,
         orgnummer: orgnummer,
@@ -59,11 +60,5 @@ async function nyNLRequestAltinn(sykmeldingId: string, fnr: string, orgnummer: s
     }
     return await response.json();
 }
-
-type NyNLRequestData = {
-    sykmeldingId: string;
-    fnr: string;
-    orgnummer: string;
-};
 
 export default NyNLRequestAltinn;

@@ -1,4 +1,6 @@
-import { Oppgave, Journalpost, Person } from './types'
+import { Oppgave } from '../../types/oppgaver'
+import { Jouranlpost } from '../../types/jouranlpost'
+import { Person } from '../../types/person'
 
 export const oppgaverList: Oppgave[] = [
     {
@@ -44,7 +46,7 @@ export const oppgaverList: Oppgave[] = [
     },
 ]
 
-export const journalposterList: { fnr: string; journalposter: Journalpost[] }[] = [
+export const journalposterList: { fnr: string; journalposter: Jouranlpost[] }[] = [
     {
         fnr: '6107783512',
         journalposter: [

@@ -3865,6 +3865,7 @@ __metadata:
     swr: ^2.2.2
     typescript: 5.2.2
     word-wrap: ^1.2.4
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
