@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { logger } from '@navikt/next-logger';
 
-import { withAuthenticatedPage } from '../../../auth/withAuth';
-import Innhold from '../../../components/Innhold/Innhold';
-import IdentEndringSykmeldtForm from '../../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm';
+import { withAuthenticatedPage } from '../../auth/withAuth';
+import Innhold from '../../components/Innhold/Innhold';
+import IdentEndringSykmeldtForm from '../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm';
 
 const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`;
 
