@@ -20,6 +20,7 @@ const NyNLRequestAltinn = (): JSX.Element => {
                 onChange={(sykmeldingId, fnr, orgnummer) => {
                     setIsLoading(true);
                     setSuccess(false);
+                    setError(null)
                     nyNLRequestAltinn(sykmeldingId, fnr, orgnummer)
                         .then(() => {
                             setSuccess(true);

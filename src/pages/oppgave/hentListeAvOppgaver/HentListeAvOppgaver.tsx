@@ -48,7 +48,7 @@ async function fetchData(oppgaveider: number[]): Promise<unknown> {
     });
     logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`);
     if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`);
+        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`);
     }
     return await response.json();
 }

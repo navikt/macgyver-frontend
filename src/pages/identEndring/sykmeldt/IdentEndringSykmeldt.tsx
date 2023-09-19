@@ -23,6 +23,7 @@ const IdentEndringSykmeldt = (): JSX.Element => {
                 onChange={(fnr, nyttFnr) => {
                     setIsLoading(true);
                     setSuccess(false);
+                    setError(null)
                     endreFnrSykmeldt(fnr, nyttFnr)
                         .then(() => {
                             setSuccess(true);

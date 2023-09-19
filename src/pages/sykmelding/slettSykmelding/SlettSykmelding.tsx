@@ -20,6 +20,7 @@ const SlettSykmelding = (): JSX.Element => {
                 onSubmit={(sykmeldingId) => {
                     setIsLoading(true);
                     setSuccess(false);
+                    setError(null);
                     deleteSykmelding(sykmeldingId)
                         .then(() => {
                             setSuccess(true);

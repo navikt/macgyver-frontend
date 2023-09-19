@@ -20,6 +20,7 @@ const SlettLegeerklaring = (): JSX.Element => {
                 onSubmit={(legeerklaeringId) => {
                     setIsLoading(true);
                     setSuccess(false);
+                    setError(null)
                     deleteLegeerklaring(legeerklaeringId)
                         .then(() => {
                             setSuccess(true);
