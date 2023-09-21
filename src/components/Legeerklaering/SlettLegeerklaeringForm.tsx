@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button, TextField } from '@navikt/ds-react';
+import React, { useState } from 'react'
+import { Button, TextField } from '@navikt/ds-react'
 
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
-import styles from './SlettLegeerklaeringForm.module.css';
+import styles from './SlettLegeerklaeringForm.module.css'
 
 interface SlettLegeerklaeringFormProps {
-    onSubmit: (legeerklaeringId: string) => void;
+    onSubmit: (legeerklaeringId: string) => void
 }
 
 const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JSX.Element => {
-    const [legeerklaeringId, setlegeerklaeringId] = useState<string>('');
-    const [conformationModalOpen, setConformationModalOpen] = useState(false);
+    const [legeerklaeringId, setlegeerklaeringId] = useState<string>('')
+    const [conformationModalOpen, setConformationModalOpen] = useState(false)
 
     return (
         <div>
@@ -20,7 +20,7 @@ const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JS
                 label="legeerklaeringId"
                 size="medium"
                 onChange={(event) => {
-                    setlegeerklaeringId(event.currentTarget.value);
+                    setlegeerklaeringId(event.currentTarget.value)
                 }}
             />
             <Button
@@ -28,7 +28,7 @@ const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JS
                 size="medium"
                 className={styles.button}
                 onClick={() => {
-                    setConformationModalOpen(true);
+                    setConformationModalOpen(true)
                 }}
             >
                 Slett
@@ -36,16 +36,16 @@ const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JS
             <ConfirmationModal
                 message={`Er du sikker på at du vil slette legeerklaeringId med id: ${legeerklaeringId}`}
                 onCancel={() => {
-                    setConformationModalOpen(false);
+                    setConformationModalOpen(false)
                 }}
                 onOK={() => {
-                    onSubmit(legeerklaeringId);
-                    setConformationModalOpen(false);
+                    onSubmit(legeerklaeringId)
+                    setConformationModalOpen(false)
                 }}
                 open={conformationModalOpen}
             ></ConfirmationModal>
         </div>
-    );
-};
+    )
+}
 
-export default SlettLegeerklaeringForm;
+export default SlettLegeerklaeringForm

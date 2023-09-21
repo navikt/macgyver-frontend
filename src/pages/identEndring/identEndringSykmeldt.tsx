@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import { logger } from '@navikt/next-logger';
+import { useState } from 'react'
+import { Alert, BodyShort, Loader } from '@navikt/ds-react'
+import { logger } from '@navikt/next-logger'
 
-import { withAuthenticatedPage } from '../../auth/withAuth';
-import Innhold from '../../components/Innhold/Innhold';
-import IdentEndringSykmeldtForm from '../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm';
+import { withAuthenticatedPage } from '../../auth/withAuth'
+import Innhold from '../../components/Innhold/Innhold'
+import IdentEndringSykmeldtForm from '../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm'
 import { IdentEndringSykmeldt } from '../../types/identEndring'
 
-const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`;
+const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`
 
 const IdentEndringSykmeldt = (): JSX.Element => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState(false)
 
     return (
         <Innhold>
@@ -22,45 +22,45 @@ const IdentEndringSykmeldt = (): JSX.Element => {
             </BodyShort>
             <IdentEndringSykmeldtForm
                 onChange={(fnr, nyttFnr) => {
-                    setIsLoading(true);
-                    setSuccess(false);
+                    setIsLoading(true)
+                    setSuccess(false)
                     setError(null)
                     endreFnrSykmeldt(fnr, nyttFnr)
                         .then(() => {
-                            setSuccess(true);
+                            setSuccess(true)
                         })
                         .catch((error) => {
-                            setError(error.message);
+                            setError(error.message)
                         })
                         .finally(() => {
-                            setIsLoading(false);
-                        });
+                            setIsLoading(false)
+                        })
                 }}
             />
             {isLoading && !error && <Loader size="medium" />}
             {success && <Alert variant="success">Endret fnr for sykmeldt</Alert>}
             {error && <Alert variant="error">Noe gikk feil ved endring fnr for sykmeldt</Alert>}
         </Innhold>
-    );
-};
-export const getServerSideProps = withAuthenticatedPage();
+    )
+}
+export const getServerSideProps = withAuthenticatedPage()
 
 async function endreFnrSykmeldt(fnr: string, nyttFnr: string): Promise<unknown> {
     const identEndringData: IdentEndringSykmeldt = {
         fnr: fnr,
         nyttFnr: nyttFnr,
-    };
+    }
 
     const response = await fetch(`${SYKMELDING_FNR_URL}`, {
         method: 'POST',
         body: JSON.stringify(identEndringData),
         headers: { 'Content-Type': 'application/json' },
-    });
-    logger.info(`IdentEndringSykmeldt response status is: ${response.status} and statusText ${response.statusText}`);
+    })
+    logger.info(`IdentEndringSykmeldt response status is: ${response.status} and statusText ${response.statusText}`)
     if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`);
+        throw new Error(`Httpstatus code is ${response.status}`)
     }
-    return await response.json();
+    return await response.json()
 }
 
-export default IdentEndringSykmeldt;
+export default IdentEndringSykmeldt

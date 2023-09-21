@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button, TextField } from '@navikt/ds-react';
+import React, { useState } from 'react'
+import { Button, TextField } from '@navikt/ds-react'
 
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
-import styles from './SlettSykmeldingForm.module.css';
+import styles from './SlettSykmeldingForm.module.css'
 
 interface SlettSykmeldingFormProps {
-    onSubmit: (sykmeldingId: string) => void;
+    onSubmit: (sykmeldingId: string) => void
 }
 
 const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Element => {
-    const [sykmeldingId, setSykmeldingId] = useState<string>('');
-    const [conformationModalOpen, setConformationModalOpen] = useState(false);
+    const [sykmeldingId, setSykmeldingId] = useState<string>('')
+    const [conformationModalOpen, setConformationModalOpen] = useState(false)
 
     return (
         <div>
@@ -20,7 +20,7 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
                 label="sykmeldingId"
                 size="medium"
                 onChange={(event) => {
-                    setSykmeldingId(event.currentTarget.value);
+                    setSykmeldingId(event.currentTarget.value)
                 }}
             />
             <Button
@@ -28,7 +28,7 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
                 size="medium"
                 className={styles.button}
                 onClick={() => {
-                    setConformationModalOpen(true);
+                    setConformationModalOpen(true)
                 }}
             >
                 Slett
@@ -36,16 +36,16 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
             <ConfirmationModal
                 message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId}`}
                 onCancel={() => {
-                    setConformationModalOpen(false);
+                    setConformationModalOpen(false)
                 }}
                 onOK={() => {
-                    onSubmit(sykmeldingId);
-                    setConformationModalOpen(false);
+                    onSubmit(sykmeldingId)
+                    setConformationModalOpen(false)
                 }}
                 open={conformationModalOpen}
             ></ConfirmationModal>
         </div>
-    );
-};
+    )
+}
 
-export default SlettSykmeldingForm;
+export default SlettSykmeldingForm

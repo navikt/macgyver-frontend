@@ -1,13 +1,13 @@
-import React from 'react';
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import React from 'react'
+import { BodyLong, Button, Modal } from '@navikt/ds-react'
 
-import styles from './ConfirmationModal.module.css';
+import styles from './ConfirmationModal.module.css'
 
 interface ConfirmationModalProps {
-    open: boolean;
-    message: string;
-    onCancel: () => void;
-    onOK: () => void;
+    open: boolean
+    message: string
+    onCancel: () => void
+    onOK: () => void
 }
 
 const ConfirmationModal = ({ open, message, onCancel, onOK }: ConfirmationModalProps): JSX.Element => {
@@ -21,15 +21,15 @@ const ConfirmationModal = ({ open, message, onCancel, onOK }: ConfirmationModalP
         >
             <Modal.Content>
                 <BodyLong spacing>{message}</BodyLong>
-                <Button className={styles.button} variant={'danger'} onClick={onOK}>
+                <Button className={styles.button} variant="danger" onClick={onOK}>
                     Ja eg er sikker
                 </Button>
-                <Button className={styles.button} variant={'secondary'} onClick={onCancel}>
+                <Button className={styles.button} variant="secondary" onClick={onCancel}>
                     Nei
                 </Button>
             </Modal.Content>
         </Modal>
-    );
-};
+    )
+}
 
-export default ConfirmationModal;
+export default ConfirmationModal

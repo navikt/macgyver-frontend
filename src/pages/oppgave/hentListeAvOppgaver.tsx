@@ -1,57 +1,57 @@
-import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import { useState } from 'react';
-import { logger } from '@navikt/next-logger';
-import useSWR from 'swr';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react'
+import { useState } from 'react'
+import { logger } from '@navikt/next-logger'
+import useSWR from 'swr'
 
-import { withAuthenticatedPage } from '../../auth/withAuth';
-import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm';
-import Innhold from '../../components/Innhold/Innhold';
+import { withAuthenticatedPage } from '../../auth/withAuth'
+import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm'
+import Innhold from '../../components/Innhold/Innhold'
 import { OppgaverField } from '../../types/oppgaver'
 
-const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`;
+const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`
 
 function createFetchKey(oppgaveIder: OppgaverField): string | null {
     if (oppgaveIder.length === 0) {
-        return null;
+        return null
     } else {
-        return oppgaveIder.join(',');
+        return oppgaveIder.join(',')
     }
 }
 
 const HentListeAvOppgaver = (): JSX.Element => {
-    const [oppgaveider, setOppgaveider] = useState<OppgaverField | []>([]);
+    const [oppgaveider, setOppgaveider] = useState<OppgaverField | []>([])
 
-    const fetchKey = createFetchKey(oppgaveider);
+    const fetchKey = createFetchKey(oppgaveider)
 
-    const { data, error } = useSWR(fetchKey, () => fetchData(oppgaveider));
+    const { data, error } = useSWR(fetchKey, () => fetchData(oppgaveider))
 
     return (
         <Innhold>
             <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
             <OppgaveIdForm
                 onChange={(oppgaveIder) => {
-                    setOppgaveider(oppgaveIder);
+                    setOppgaveider(oppgaveIder)
                 }}
             />
             {!data && !error && fetchKey && <Loader size="medium" />}
             {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
             {error && <Alert variant="error">{error.message}</Alert>}
         </Innhold>
-    );
-};
-export const getServerSideProps = withAuthenticatedPage();
+    )
+}
+export const getServerSideProps = withAuthenticatedPage()
 
 async function fetchData(oppgaveider: OppgaverField): Promise<unknown> {
     const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
         method: 'POST',
         body: JSON.stringify(oppgaveider),
         headers: { 'Content-Type': 'application/json' },
-    });
-    logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`);
+    })
+    logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`)
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`);
+        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
     }
-    return await response.json();
+    return await response.json()
 }
 
-export default HentListeAvOppgaver;
+export default HentListeAvOppgaver

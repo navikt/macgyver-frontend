@@ -1,9 +1,9 @@
-import '@navikt/ds-css';
-import '@navikt/ds-css-internal';
-import type { AppProps } from 'next/app';
-import { SWRConfig } from 'swr';
-import { useEffect } from 'react';
-import { Modal } from '@navikt/ds-react';
+import '@navikt/ds-css'
+import '@navikt/ds-css-internal'
+import type { AppProps } from 'next/app'
+import { SWRConfig } from 'swr'
+import { useEffect } from 'react'
+import { Modal } from '@navikt/ds-react'
 import { logger } from '@navikt/next-logger'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -13,8 +13,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     useEffect(() => {
-        Modal.setAppElement?.('#__next');
-    }, []);
+        Modal.setAppElement?.('#__next')
+    }, [])
 
     return (
         <SWRConfig
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         >
             <Component {...pageProps} />
         </SWRConfig>
-    );
+    )
 }
 
-export default MyApp;
+export default MyApp
