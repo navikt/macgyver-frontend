@@ -1,16 +1,16 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import { BandageIcon } from '@navikt/aksel-icons';
-import { FilesIcon } from '@navikt/aksel-icons';
-import { FilePdfIcon } from '@navikt/aksel-icons';
-import { ReceptionIcon } from '@navikt/aksel-icons';
-import { PersonGroupIcon } from '@navikt/aksel-icons';
-import { StethoscopeIcon } from '@navikt/aksel-icons';
-import { PersonIcon } from '@navikt/aksel-icons';
-import Link from 'next/link';
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import { BandageIcon } from '@navikt/aksel-icons'
+import { FilesIcon } from '@navikt/aksel-icons'
+import { FilePdfIcon } from '@navikt/aksel-icons'
+import { ReceptionIcon } from '@navikt/aksel-icons'
+import { PersonGroupIcon } from '@navikt/aksel-icons'
+import { StethoscopeIcon } from '@navikt/aksel-icons'
+import { PersonIcon } from '@navikt/aksel-icons'
+import Link from 'next/link'
 
-import { withAuthenticatedPage } from '../auth/withAuth';
-import styles from '../styles/App.module.css';
+import { withAuthenticatedPage } from '../auth/withAuth'
+import styles from '../styles/App.module.css'
 
 const Home: NextPage = () => {
     return (
@@ -108,9 +108,9 @@ const Home: NextPage = () => {
                 </ul>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export const getServerSideProps = withAuthenticatedPage();
+export const getServerSideProps = withAuthenticatedPage()
 
-export default Home;
+export default Home
