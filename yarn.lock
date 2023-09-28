@@ -223,10 +223,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:^4.12.1":
-  version: 4.12.1
-  resolution: "@navikt/aksel-icons@npm:4.12.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.12.1%2F1055d322e956e073b83dca8e8b3a6be62879e1f1"
-  checksum: 7c4d671c1cda7fed95f3d740a60cbc1c9885518c04073b2636430322da18b4b4e4dbb48af9be87bb707880c3df5745d890e692fadaf435a2aaf9a628ed9b5c89
+"@navikt/aksel-icons@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "@navikt/aksel-icons@npm:5.6.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.6.0%2F2e1deb98cf5f940fad4443dda85aff4683f696d8"
+  checksum: 878697c3eac733b37796b15110fc725994716ae261aeccb726361bb10ddd6c16c70126908f3ff5af2332e94452de4d67182ff52863c5d85ea0aade718afbed3e
   languageName: node
   linkType: hard
 
@@ -237,10 +237,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:^4.12.3":
-  version: 4.12.3
-  resolution: "@navikt/ds-css@npm:4.12.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.12.3%2F49e36eb3a1060bb5d4d73975accbdb4ec5a79f8b"
-  checksum: c516028db7005059fe1cdcd00611210fbf0b632562f555d065d53adc5df265885dc6bfd1218d449d3d550f6fe0a874582d58d0f7272ba954ffb5dd6444eab9ae
+"@navikt/ds-css@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "@navikt/ds-css@npm:5.6.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.6.0%2F07eb221619195debd470b1269ae58e60706c1e40"
+  checksum: 16ac15c6cc3815bd179b603c12c3ca69693ead7359da4668324a0a476be7a4cdc73a671ada950c23502cb747413c2a1de26af06484b64be7c25d07d1cbe1aa8a
   languageName: node
   linkType: hard
 
@@ -3838,8 +3838,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "macgyver-frontend@workspace:."
   dependencies:
-    "@navikt/aksel-icons": ^4.12.1
-    "@navikt/ds-css": ^4.12.3
+    "@navikt/aksel-icons": ^5.6.0
+    "@navikt/ds-css": ^5.6.0
     "@navikt/ds-css-internal": ^3.4.3
     "@navikt/ds-react-internal": ^3.4.3
     "@navikt/eslint-config-teamsykmelding": ^4.3.0
