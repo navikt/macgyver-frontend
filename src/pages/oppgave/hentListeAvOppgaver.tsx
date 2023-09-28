@@ -1,57 +1,46 @@
+'use client'
+
 import { Alert, BodyShort, Loader } from '@navikt/ds-react'
-import { useState } from 'react'
-import { logger } from '@navikt/next-logger'
-import useSWR from 'swr'
+import { ReactElement, useState, useTransition } from 'react'
 
 import { withAuthenticatedPage } from '../../auth/withAuth'
 import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm'
 import Innhold from '../../components/Innhold/Innhold'
-import { OppgaverField } from '../../types/oppgaver'
+import { Oppgave, OppgaverField } from '../../types/oppgaver'
+import { hentListeMedOppgaver } from '../../actions/server-actions'
 
-const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`
+const HentListeAvOppgaver = (): ReactElement => {
+    const [data, setData] = useState<Oppgave | null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [isPending, startTransition] = useTransition()
 
-function createFetchKey(oppgaveIder: OppgaverField): string | null {
-    if (oppgaveIder.length === 0) {
-        return null
-    } else {
-        return oppgaveIder.join(',')
+    const handleClick = (oppgaveider: OppgaverField): void => {
+        startTransition(async (): Promise<void> => {
+            try {
+                const response: Oppgave = await hentListeMedOppgaver(oppgaveider)
+                setData(response)
+                setError(null)
+            } catch (e) {
+                setData(null)
+                setError(`Henting av oppgaver feilet. ${e}`)
+            }
+        })
     }
-}
-
-const HentListeAvOppgaver = (): JSX.Element => {
-    const [oppgaveider, setOppgaveider] = useState<OppgaverField | []>([])
-
-    const fetchKey = createFetchKey(oppgaveider)
-
-    const { data, error } = useSWR(fetchKey, () => fetchData(oppgaveider))
 
     return (
         <Innhold>
             <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
             <OppgaveIdForm
-                onChange={(oppgaveIder) => {
-                    setOppgaveider(oppgaveIder)
+                onChange={(oppgaveIder: number[]): void => {
+                    handleClick(oppgaveIder)
                 }}
             />
-            {!data && !error && fetchKey && <Loader size="medium" />}
+            {!data && !error && isPending && <Loader size="medium" />}
             {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )
 }
 export const getServerSideProps = withAuthenticatedPage()
-
-async function fetchData(oppgaveider: OppgaverField): Promise<unknown> {
-    const response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
-        method: 'POST',
-        body: JSON.stringify(oppgaveider),
-        headers: { 'Content-Type': 'application/json' },
-    })
-    logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`)
-    if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
-    }
-    return await response.json()
-}
 
 export default HentListeAvOppgaver

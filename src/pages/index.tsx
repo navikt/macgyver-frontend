@@ -77,7 +77,7 @@ const Home: NextPage = () => {
                 <ul className={styles.list}>
                     <li>
                         <Link href="/legeerklaring/slettLegeerklaring" passHref>
-                            Slett en gitt legeerklaring
+                            Slett en gitt legeerklæring
                         </Link>
                     </li>
                 </ul>

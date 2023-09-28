@@ -12,7 +12,7 @@ export const handlers: RestHandler[] = [
     rest.post('/api/proxy/api/sykmelding/fnr', async (req, res, ctx) => {
         const fnr: IdentEndringSykmeldt = await req.json()
 
-        if (fnr.fnr !== '' && fnr.nyttFnr !== '') {
+        if (fnr.fnr && fnr.nyttFnr) {
             return res(ctx.json({ message: 'Fnr has been changed.' }))
         } else {
             return res(ctx.status(400))
@@ -47,7 +47,7 @@ export const handlers: RestHandler[] = [
     rest.post('/api/proxy/api/narmesteleder/request', async (req, res, ctx) => {
         const values: NyNLAltinn = await req.json()
 
-        if (values.sykmeldingId !== '' && values.fnr !== '' && values.orgnummer !== '') {
+        if (values.sykmeldingId && values.fnr && values.orgnummer) {
             return res(ctx.json({ message: 'Request has been sent.' }))
         } else {
             return res(ctx.status(400))

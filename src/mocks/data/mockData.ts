@@ -4,10 +4,10 @@ import { Person } from '../../types/person'
 
 export const oppgaverList: Oppgave[] = [
     {
-        id: 362848301,
+        id: 362848304,
         versjon: 1,
         tildeltEnhetsnr: '0101',
-        opprettetAvEnhetsnr: '9999',
+        opprettetAvEnhetsnr: '1111',
         aktoerId: '2779114099843',
         journalpostId: '620048552',
         behandlesAvApplikasjon: 'FS22',
@@ -25,10 +25,10 @@ export const oppgaverList: Oppgave[] = [
         mappeId: null,
     },
     {
-        id: 362851981,
+        id: 362851984,
         versjon: 1,
         tildeltEnhetsnr: '0231',
-        opprettetAvEnhetsnr: '9999',
+        opprettetAvEnhetsnr: '3333',
         aktoerId: '2843217343728',
         journalpostId: '620048839',
         behandlesAvApplikasjon: 'FS22',

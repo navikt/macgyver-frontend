@@ -1,54 +1,45 @@
-import React, { useState } from 'react'
+'use client'
+
+import React, { ReactElement, useState, useTransition } from 'react'
 import { Alert, BodyShort, Loader } from '@navikt/ds-react'
-import { logger } from '@navikt/next-logger'
 
 import Innhold from '../../components/Innhold/Innhold'
 import { withAuthenticatedPage } from '../../auth/withAuth'
 import SlettLegeerklaeringForm from '../../components/Legeerklaering/SlettLegeerklaeringForm'
+import { slettLegeerklaring } from '../../actions/server-actions'
 
-const LEGEERKLARING_URL = `/api/proxy/api/legeerklaering`
-
-const SlettLegeerklaring = (): JSX.Element => {
-    const [isLoading, setIsLoading] = useState(false)
+const SlettLegeerklaring = (): ReactElement => {
     const [error, setError] = useState<string | null>(null)
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState<boolean>(false)
+    const [isPending, startTransition] = useTransition()
+
+    const handleClick = (legeerklaeringId: string): void => {
+        startTransition(async (): Promise<void> => {
+            try {
+                await slettLegeerklaring(legeerklaeringId)
+                setError(null)
+                setSuccess(true)
+            } catch (e) {
+                setSuccess(false)
+                setError(`Sletting av legeerklæring feilet. ${e}`)
+            }
+        })
+    }
 
     return (
         <Innhold>
-            <BodyShort>Sletter en legeerklaering</BodyShort>
+            <BodyShort>Sletter en legeerklæring</BodyShort>
             <SlettLegeerklaeringForm
-                onSubmit={(legeerklaeringId) => {
-                    setIsLoading(true)
-                    setSuccess(false)
-                    setError(null)
-                    deleteLegeerklaring(legeerklaeringId)
-                        .then(() => {
-                            setSuccess(true)
-                        })
-                        .catch((error) => {
-                            setError(error.message)
-                        })
-                        .finally(() => {
-                            setIsLoading(false)
-                        })
+                onSubmit={(legeerklaeringId: string): void => {
+                    handleClick(legeerklaeringId)
                 }}
             />
-            {isLoading && !error && <Loader size="medium" />}
-            {success && <Alert variant="success">Legeerklaring slettet</Alert>}
-            {error && <Alert variant="error">Noe gikk feil ved sletting av legeerklaring</Alert>}
+            {isPending && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">Legeerklæring er slettet.</Alert>}
+            {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )
 }
 export const getServerSideProps = withAuthenticatedPage()
-
-async function deleteLegeerklaring(legeerklaeringId: string): Promise<void> {
-    const response = await fetch(`${LEGEERKLARING_URL}/${legeerklaeringId}`, {
-        method: 'DELETE',
-    })
-    logger.info(`SlettLegeerklaring response status is: ${response.status} and statusText ${response.statusText}`)
-    if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`)
-    }
-}
 
 export default SlettLegeerklaring

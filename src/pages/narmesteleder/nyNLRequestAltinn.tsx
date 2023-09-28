@@ -1,64 +1,45 @@
-import { useState } from 'react';
+'use client'
+
+import { ReactElement, useState, useTransition } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
-import { logger } from '@navikt/next-logger';
 
 import { withAuthenticatedPage } from '../../auth/withAuth';
 import Innhold from '../../components/Innhold/Innhold';
 import NyNLRequestAltinnForm from '../../components/NyNLRequestAltinnForm/NyNLRequestAltinnForm';
-import { NyNLAltinn } from '../../types/nyNLAltinn'
+import { nlRequestAltinn } from '../../actions/server-actions'
 
-const NARMESTELEDER_URL = `/api/proxy/api/narmesteleder/request`;
-
-const NyNLRequestAltinn = (): JSX.Element => {
-    const [isLoading, setIsLoading] = useState(false);
+const NyNLRequestAltinn = (): ReactElement => {
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState<boolean>(false);
+    const [isPending, startTransition] = useTransition()
+
+    const handleClick = (sykmeldingId: string, fnr: string, orgnummer: string): void => {
+        startTransition(async (): Promise<void> => {
+            try {
+                await nlRequestAltinn(sykmeldingId, fnr, orgnummer)
+                setError(null)
+                setSuccess(true)
+            } catch (e) {
+                setSuccess(false)
+                setError(`Ny NL-request til altinn feilet. ${e}`)
+            }
+        })
+    }
 
     return (
         <Innhold>
             <BodyShort>Sender ny NL-request til altinn</BodyShort>
             <NyNLRequestAltinnForm
-                onChange={(sykmeldingId, fnr, orgnummer) => {
-                    setIsLoading(true);
-                    setSuccess(false);
-                    setError(null)
-                    nyNLRequestAltinn(sykmeldingId, fnr, orgnummer)
-                        .then(() => {
-                            setSuccess(true);
-                        })
-                        .catch((error) => {
-                            setError(error.message);
-                        })
-                        .finally(() => {
-                            setIsLoading(false);
-                        });
+                onChange={(sykmeldingId: string, fnr: string, orgnummer: string): void => {
+                    handleClick(sykmeldingId, fnr, orgnummer)
                 }}
             />
-            {isLoading && !error && <Loader size="medium" />}
-            {success && <Alert variant="success">Ny NL-request sendt til altinn</Alert>}
-            {error && <Alert variant="error">Noe gikk feil ved sending ny NL-request til altinn</Alert>}
+            {isPending && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">Ny NL-request er sendt til altinn.</Alert>}
+            {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
-    );
-};
-export const getServerSideProps = withAuthenticatedPage();
-
-async function nyNLRequestAltinn(sykmeldingId: string, fnr: string, orgnummer: string): Promise<unknown> {
-    const nyNLRequestData: NyNLAltinn = {
-        sykmeldingId: sykmeldingId,
-        fnr: fnr,
-        orgnummer: orgnummer,
-    };
-
-    const response = await fetch(`${NARMESTELEDER_URL}`, {
-        method: 'POST',
-        body: JSON.stringify(nyNLRequestData),
-        headers: { 'Content-Type': 'application/json' },
-    })
-    logger.info(`NyNLRequestAltinn response status is: ${response.status} and statusText ${response.statusText}`);
-    if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`);
-    }
-    return await response.json();
+    )
 }
+export const getServerSideProps = withAuthenticatedPage();
 
 export default NyNLRequestAltinn;

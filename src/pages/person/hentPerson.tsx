@@ -1,54 +1,46 @@
+'use client'
+
 import { Alert, BodyShort, Loader } from '@navikt/ds-react'
-import { useState } from 'react'
-import { logger } from '@navikt/next-logger'
-import useSWR from 'swr'
+import { ReactElement, useState, useTransition } from 'react'
 
 import { withAuthenticatedPage } from '../../auth/withAuth'
 import Innhold from '../../components/Innhold/Innhold'
 import FnrForm from '../../components/FnrForm/FnrForm'
+import { hentPerson } from '../../actions/server-actions'
+import { Person } from '../../types/person'
 
-const HENT_PERSON = `/api/proxy/api/person`
+const HentPerson = (): ReactElement => {
+    const [data, setData] = useState<Person | null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [isPending, startTransition] = useTransition()
 
-function createFetchKey(fnr: string): string {
-    return fnr
-}
-
-const HentPerson = (): JSX.Element => {
-    const [fnr, setFnr] = useState('')
-
-    const fetchKey = createFetchKey(fnr)
-
-    const { data, error } = useSWR(fetchKey, () => fetchData(fnr))
+    const handleClick = (fnr: string): void => {
+        startTransition(async (): Promise<void> => {
+            try {
+                const response: Person = await hentPerson(fnr)
+                setData(response)
+                setError(null)
+            } catch (e) {
+                setData(null)
+                setError(`Henting av oppgaver feilet. ${e}`)
+            }
+        })
+    }
 
     return (
         <Innhold>
             <BodyShort>Hent navn på person og liste med identer fra saf-api</BodyShort>
             <FnrForm
-                onChange={(fnr) => {
-                    setFnr(fnr)
+                onChange={(fnr: string): void => {
+                    handleClick(fnr)
                 }}
             />
-            {!data && !error && fetchKey && <Loader size="medium" />}
+            {!data && !error && isPending && <Loader size="medium" />}
             {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
-            {error && <Alert variant="error">{error.message}</Alert>}
+            {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )
 }
 export const getServerSideProps = withAuthenticatedPage()
-
-async function fetchData(fnr: string): Promise<unknown> {
-    const response = await fetch(HENT_PERSON, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            fnr: fnr,
-        },
-    })
-    logger.info(`HentPerson response status is: ${response.status} and statusText ${response.statusText}`)
-    if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`)
-    }
-    return await response.json()
-}
 
 export default HentPerson

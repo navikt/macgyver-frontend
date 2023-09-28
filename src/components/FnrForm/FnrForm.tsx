@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { Button, TextField } from '@navikt/ds-react'
 
 import styles from './FnrForm.module.css'
@@ -7,7 +7,7 @@ interface FnrFormProps {
     onChange: (fnr: string) => void
 }
 
-const FnrForm = ({ onChange }: FnrFormProps): JSX.Element => {
+const FnrForm = ({ onChange }: FnrFormProps): ReactElement => {
     const [fnr, setFnr] = useState('')
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

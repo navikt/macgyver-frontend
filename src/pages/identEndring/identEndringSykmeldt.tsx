@@ -1,66 +1,48 @@
-import { useState } from 'react'
+'use client'
+
+import { ReactElement, useState, useTransition } from 'react'
 import { Alert, BodyShort, Loader } from '@navikt/ds-react'
-import { logger } from '@navikt/next-logger'
 
 import { withAuthenticatedPage } from '../../auth/withAuth'
 import Innhold from '../../components/Innhold/Innhold'
 import IdentEndringSykmeldtForm from '../../components/IdentEndringForm/Sykmeldt/IdentEndringSykmeldtForm'
-import { IdentEndringSykmeldt } from '../../types/identEndring'
+import { identEndringSykmeldt } from '../../actions/server-actions'
 
-const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`
-
-const IdentEndringSykmeldt = (): JSX.Element => {
-    const [isLoading, setIsLoading] = useState(false)
+const IdentEndringSykmeldt = (): ReactElement => {
     const [error, setError] = useState<string | null>(null)
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState<boolean>(false)
+    const [isPending, startTransition] = useTransition()
+
+    const handleClick = (fnr: string, nyttFnr: string): void => {
+        startTransition(async (): Promise<void> => {
+            try {
+                await identEndringSykmeldt(fnr, nyttFnr)
+                setError(null)
+                setSuccess(true)
+            } catch (e) {
+                setSuccess(false)
+                setError(`Endring av fnr for sykmeldt feilet. ${e}`)
+            }
+        })
+    }
 
     return (
         <Innhold>
             <BodyShort>
                 Endrer fnr for ein sykmeldt person i alle sykmeldinger i SyfoSmRegister og oppdaterer aktive
-                NL-koblinger
+                NL-koblinger.
             </BodyShort>
             <IdentEndringSykmeldtForm
-                onChange={(fnr, nyttFnr) => {
-                    setIsLoading(true)
-                    setSuccess(false)
-                    setError(null)
-                    endreFnrSykmeldt(fnr, nyttFnr)
-                        .then(() => {
-                            setSuccess(true)
-                        })
-                        .catch((error) => {
-                            setError(error.message)
-                        })
-                        .finally(() => {
-                            setIsLoading(false)
-                        })
+                onChange={(fnr: string, nyttFnr: string): void => {
+                    handleClick(fnr, nyttFnr)
                 }}
             />
-            {isLoading && !error && <Loader size="medium" />}
-            {success && <Alert variant="success">Endret fnr for sykmeldt</Alert>}
-            {error && <Alert variant="error">Noe gikk feil ved endring fnr for sykmeldt</Alert>}
+            {isPending && !error && <Loader size="medium" />}
+            {success && <Alert variant="success">Endring av fnr for sykmeldt er fullført.</Alert>}
+            {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )
 }
 export const getServerSideProps = withAuthenticatedPage()
-
-async function endreFnrSykmeldt(fnr: string, nyttFnr: string): Promise<unknown> {
-    const identEndringData: IdentEndringSykmeldt = {
-        fnr: fnr,
-        nyttFnr: nyttFnr,
-    }
-
-    const response = await fetch(`${SYKMELDING_FNR_URL}`, {
-        method: 'POST',
-        body: JSON.stringify(identEndringData),
-        headers: { 'Content-Type': 'application/json' },
-    })
-    logger.info(`IdentEndringSykmeldt response status is: ${response.status} and statusText ${response.statusText}`)
-    if (!response.ok) {
-        throw new Error(`Httpstatus code is ${response.status}`)
-    }
-    return await response.json()
-}
 
 export default IdentEndringSykmeldt
