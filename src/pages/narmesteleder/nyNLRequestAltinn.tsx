@@ -3,14 +3,14 @@
 import { ReactElement, useState, useTransition } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 
-import { withAuthenticatedPage } from '../../auth/withAuth';
-import Innhold from '../../components/Innhold/Innhold';
-import NyNLRequestAltinnForm from '../../components/NyNLRequestAltinnForm/NyNLRequestAltinnForm';
+import { withAuthenticatedPage } from '../../auth/withAuth'
+import Innhold from '../../components/Innhold/Innhold'
+import NyNLRequestAltinnForm from '../../components/NyNLRequestAltinnForm/NyNLRequestAltinnForm'
 import { nlRequestAltinn } from '../../actions/server-actions'
 
 const NyNLRequestAltinn = (): ReactElement => {
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState<boolean>(false)
     const [isPending, startTransition] = useTransition()
 
     const handleClick = (sykmeldingId: string, fnr: string, orgnummer: string): void => {
@@ -40,6 +40,6 @@ const NyNLRequestAltinn = (): ReactElement => {
         </Innhold>
     )
 }
-export const getServerSideProps = withAuthenticatedPage();
+export const getServerSideProps = withAuthenticatedPage()
 
-export default NyNLRequestAltinn;
+export default NyNLRequestAltinn
