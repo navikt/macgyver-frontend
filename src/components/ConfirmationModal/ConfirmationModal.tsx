@@ -12,22 +12,18 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal = ({ open, message, onCancel, onOK }: ConfirmationModalProps): JSX.Element => {
     return (
-        <Modal
-            shouldCloseOnOverlayClick={false}
-            open={open}
-            aria-label="Modal demo"
-            onClose={onCancel}
-            closeButton={false}
-        >
-            <Modal.Content>
+        <Modal open={open} aria-label="Modal demo" onClose={onCancel}>
+            <Modal.Body>
                 <BodyLong spacing>{message}</BodyLong>
-                <Button className={styles.button} variant="danger" onClick={onOK}>
-                    Ja eg er sikker
-                </Button>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button className={styles.button} variant="secondary" onClick={onCancel}>
                     Nei
                 </Button>
-            </Modal.Content>
+                <Button className={styles.button} variant="danger" onClick={onOK}>
+                    Ja eg er sikker
+                </Button>
+            </Modal.Footer>
         </Modal>
     )
 }

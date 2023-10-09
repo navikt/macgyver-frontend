@@ -51,7 +51,7 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
                 send
             </Button>
             <ConfirmationModal
-                message="Er du sikker på at du vil sending ny NL-request til altinn"
+                message="Er du sikker på at du vil sending ny NL-request til altinn?"
                 onCancel={() => {
                     setConformationModalOpen(false)
                 }}
