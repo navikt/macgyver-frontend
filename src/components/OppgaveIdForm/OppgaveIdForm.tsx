@@ -12,7 +12,12 @@ const OppgaveIdForm = ({ onChange }: OppgaveIdFormProps): ReactElement => {
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault()
-        onChange(oppgaveIder.split(',').map(Number))
+        onChange(
+            oppgaveIder
+                .split(',')
+                .map(Number)
+                .filter((numb) => numb != 0),
+        )
     }
 
     return (

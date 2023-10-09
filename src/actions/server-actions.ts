@@ -1,143 +1,129 @@
-'use client'
+'use server'
 
 import { logger } from '@navikt/next-logger'
 
 import { IdentEndringSykmeldt } from '../types/identEndring'
 import { NyNLAltinn } from '../types/nyNLAltinn'
 import { Oppgave } from '../types/oppgaver'
-import { Jouranlpost } from '../types/jouranlpost'
 import { Person } from '../types/person'
+import { getJournalposterMock, getListeMedOppgaverMock, getPersonMock } from '../mocks/mockData'
+import { authorizationFetch } from '../auth/withAuth'
+import { Jouranlpost } from '../types/jouranlpost'
 
 export async function identEndringSykmeldt(fnr: string, nyttFnr: string): Promise<void> {
-    if (!fnr || !nyttFnr) throw new Error('fnr eller nyttFnr mangler.')
+    if (process.env.NODE_ENV !== 'production') return
 
-    const SYKMELDING_FNR_URL = `/api/proxy/api/sykmelding/fnr`
     const identEndringData: IdentEndringSykmeldt = {
         fnr,
         nyttFnr,
     }
-
-    const response: Response = await fetch(`${SYKMELDING_FNR_URL}`, {
-        method: 'POST',
-        body: JSON.stringify(identEndringData),
-        headers: { 'Content-Type': 'application/json' },
-    })
-
-    logger.info(`IdentEndringSykmeldt response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch('sykmelding/fnr', 'POST', {}, JSON.stringify(identEndringData))
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved ved endring av fnr: ${response.status} ${response.statusText}`)
+    } else {
+        logger.info(`Endring av fnr er fullført.`)
     }
-    logger.info(`Endring av fnr er fullført.`)
 }
 
 export async function slettSykmelding(sykmeldingId: string): Promise<void> {
-    if (!sykmeldingId) throw new Error('sykmeldingId mangler.')
+    if (process.env.NODE_ENV !== 'production') return
 
-    const SYKMELDING_URL = `/api/proxy/api/sykmelding`
-    const response: Response = await fetch(`${SYKMELDING_URL}/${sykmeldingId}`, {
-        method: 'DELETE',
-    })
-
-    logger.info(`SlettSykmelding response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch(`sykmelding/${sykmeldingId}`, 'DELETE')
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved sletting av sykmelding: ${response.status} ${response.statusText}`)
+    } else {
+        logger.info(`Sykmelding er slettet.`)
     }
-    logger.info(`Sykmelding er slettet.`)
 }
 
 export async function nlRequestAltinn(sykmeldingId: string, fnr: string, orgnummer: string): Promise<void> {
-    if (!sykmeldingId || !fnr || !orgnummer) throw new Error('sykmeldingId, fnr eller orgnummer mangler.')
+    if (process.env.NODE_ENV !== 'production') return
 
-    const NARMESTELEDER_URL = `/api/proxy/api/narmesteleder/request`
     const nyNLRequestData: NyNLAltinn = {
         sykmeldingId,
         fnr,
         orgnummer,
     }
 
-    const response: Response = await fetch(`${NARMESTELEDER_URL}`, {
-        method: 'POST',
-        body: JSON.stringify(nyNLRequestData),
-        headers: { 'Content-Type': 'application/json' },
-    })
-
-    logger.info(`NyNLRequestAltinn response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch(
+        'narmesteleder/request',
+        'POST',
+        {},
+        JSON.stringify(nyNLRequestData),
+    )
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(
+            `Noe gikk galt ved sending av ny NL-request til Altinn: ${response.status} ${response.statusText}`,
+        )
+    } else {
+        logger.info(`Ny NL-request er sendt til altinn.`)
     }
-    logger.info(`Ny NL-request er sendt til altinn.`)
 }
 
-export async function hentListeMedOppgaver(oppgaveider: number[]): Promise<Oppgave> {
-    if (!oppgaveider || !oppgaveider.length) throw new Error('oppgaveider mangler.')
+export async function hentListeMedOppgaver(oppgaveider: number[]): Promise<Oppgave[]> {
+    if (process.env.NODE_ENV !== 'production') {
+        const oppgaver: Oppgave[] | [] = getListeMedOppgaverMock(oppgaveider)
 
-    const HENT_LISTE_AV_OPPGAVER_URL = `/api/proxy/api/oppgave/list`
-    const response: Response = await fetch(HENT_LISTE_AV_OPPGAVER_URL, {
-        method: 'POST',
-        body: JSON.stringify(oppgaveider),
-        headers: { 'Content-Type': 'application/json' },
-    })
+        if (oppgaver && oppgaver.length) return oppgaver
+        throw new Error('Finner ikke oppgaver.')
+    }
 
-    logger.info(`HentListeAvOppgaver response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch('oppgave/list', 'POST', {}, JSON.stringify(oppgaveider))
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved henting av liste med oppgaver: ${response.status} ${response.statusText}`)
+    } else {
+        return await response.json()
     }
-    return await response.json()
 }
 
 export async function slettLegeerklaring(legeerklaeringId: string): Promise<void> {
-    if (!legeerklaeringId) throw new Error('legeerklaeringId mangler.')
+    if (process.env.NODE_ENV !== 'production') return
 
-    const LEGEERKLARING_URL = `/api/proxy/api/legeerklaering`
-    const response: Response = await fetch(`${LEGEERKLARING_URL}/${legeerklaeringId}`, {
-        method: 'DELETE',
-    })
-
-    logger.info(`SlettLegeerklaring response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch(`legeerklaering/${legeerklaeringId}`, 'DELETE')
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved sletting av legeerklaering: ${response.status} ${response.statusText}`)
+    } else {
+        logger.info(`Legeerklæring er slettet.`)
     }
-    logger.info(`Legeerklæring er slettet.`)
 }
 
-export async function hentListeMedJournalposter(fnr: string): Promise<Jouranlpost> {
-    if (!fnr) throw new Error('fnr mangler.')
+export async function hentListeMedJournalposter(fnr: string): Promise<Jouranlpost[]> {
+    if (process.env.NODE_ENV !== 'production') {
+        const journalposter: Jouranlpost[] | undefined = getJournalposterMock(fnr)
 
-    const HENT_LISTE_AV_JOURNALPOSTER_URL = `/api/proxy/api/journalposter`
-    const response: Response = await fetch(HENT_LISTE_AV_JOURNALPOSTER_URL + `/${fnr}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-    })
+        if (journalposter) return journalposter
+        throw new Error('Finner ikke journalposter.')
+    }
 
-    logger.info(`HentListeAvJournalposter response status is: ${response.status} and statusText ${response.statusText}`)
+    const response: Response = await authorizationFetch(`journalposter/${fnr}`, 'GET')
 
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved henting av journalposter: ${response.status} ${response.statusText}`)
+    } else {
+        return await response.json()
     }
-    return await response.json()
 }
 
 export async function hentPerson(fnr: string): Promise<Person> {
-    if (!fnr) throw new Error('fnr mangler.')
+    if (process.env.NODE_ENV !== 'production') {
+        const person: Person | undefined = getPersonMock(fnr)
 
-    const HENT_PERSON = `/api/proxy/api/person`
-    const response: Response = await fetch(HENT_PERSON, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            fnr: fnr,
-        },
+        if (person) return person
+        throw new Error('Finner ikke person.')
+    }
+
+    const response: Response = await authorizationFetch('person', 'GET', {
+        fnr: fnr,
     })
 
-    logger.info(`HentPerson response status is: ${response.status} and statusText ${response.statusText}`)
-
     if (!response.ok) {
-        throw new Error(`${response.statusText} Httpstatus code is ${response.status}`)
+        throw new Error(`Noe gikk galt ved henting av person: ${response.status} ${response.statusText}`)
+    } else {
+        return await response.json()
     }
-    return await response.json()
 }
