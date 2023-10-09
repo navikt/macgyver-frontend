@@ -34,7 +34,7 @@ const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JS
                 Slett
             </Button>
             <ConfirmationModal
-                message={`Er du sikker på at du vil slette legeerklaeringId med id: ${legeerklaeringId}`}
+                message={`Er du sikker på at du vil slette legeerklaeringId med id: ${legeerklaeringId}?`}
                 onCancel={() => {
                     setConformationModalOpen(false)
                 }}

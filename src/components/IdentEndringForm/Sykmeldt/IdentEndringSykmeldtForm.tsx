@@ -42,7 +42,7 @@ const IdentEndringSykmeldtForm = ({ onChange }: IdentEndringFormProps): JSX.Elem
                 Endre
             </Button>
             <ConfirmationModal
-                message="Er du sikker på at du vil endret fnr for sykmeldt"
+                message="Er du sikker på at du vil endret fnr for sykmeldt?"
                 onCancel={() => {
                     setConformationModalOpen(false)
                 }}

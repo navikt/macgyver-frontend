@@ -34,7 +34,7 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
                 Slett
             </Button>
             <ConfirmationModal
-                message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId}`}
+                message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId}?`}
                 onCancel={() => {
                     setConformationModalOpen(false)
                 }}
