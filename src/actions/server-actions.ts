@@ -71,7 +71,7 @@ export async function nlRequestAltinn(sykmeldingId: string, fnr: string, orgnumm
 
 export async function narmesteldereRequest(sykmeldtFnr: string): Promise<Narmesteldere[]> {
     if (process.env.NODE_ENV !== 'production'){
-        return getListeMedNarmesteLedereMock(sykmeldtFnr)
+        return getListeMedNarmesteLedereMock()
     }
 
     const finnNarmesteldereRequestData: FinnNarmesteldere = {

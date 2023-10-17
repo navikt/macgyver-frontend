@@ -127,7 +127,7 @@ export function getListeMedOppgaverMock(oppgaveider: OppgaverField): Oppgave[] |
         })
 }
 
-export function getListeMedNarmesteLedereMock(sykmeldtFnr: string): Narmesteldere[] | [] {
+export function getListeMedNarmesteLedereMock(): Narmesteldere[] | [] {
     return narmesteldereList
 }
 
