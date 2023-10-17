@@ -57,6 +57,9 @@ function Menu(): ReactElement {
                     <li>
                         <Link href="/ny-naermeste-leder">Sender ny NL-request til altinn</Link>
                     </li>
+                    <li>
+                        <Link href="/hent-naermeste-ledere">Hent narmesteldere for ein sykmeldt person</Link>
+                    </li>
                 </ul>
             </div>
 

@@ -1,14 +1,21 @@
 'use server'
 
-import { logger } from '@navikt/next-logger'
+import {logger} from '@navikt/next-logger'
 
-import { IdentEndringSykmeldt } from '../types/identEndring'
-import { NyNLAltinn } from '../types/nyNLAltinn'
-import { Oppgave } from '../types/oppgaver'
-import { Person } from '../types/person'
-import { getJournalposterMock, getListeMedOppgaverMock, getPersonMock } from '../mocks/mockData'
-import { authorizationFetch } from '../auth/withAuth'
-import { Jouranlpost } from '../types/jouranlpost'
+import {IdentEndringSykmeldt} from '../types/identEndring'
+import {NyNLAltinn} from '../types/nyNLAltinn'
+import {Oppgave} from '../types/oppgaver'
+import {Person} from '../types/person'
+import {
+    getJournalposterMock,
+    getListeMedNarmesteLedereMock,
+    getListeMedOppgaverMock,
+    getPersonMock
+} from '../mocks/mockData'
+import {authorizationFetch} from '../auth/withAuth'
+import {Jouranlpost} from '../types/jouranlpost'
+import {FinnNarmesteldere} from "../types/finnNarmesteldere";
+import {Narmesteldere} from "../types/narmesteldere";
 
 export async function identEndringSykmeldt(fnr: string, nyttFnr: string): Promise<void> {
     if (process.env.NODE_ENV !== 'production') return
@@ -60,6 +67,31 @@ export async function nlRequestAltinn(sykmeldingId: string, fnr: string, orgnumm
         )
     } else {
         logger.info(`Ny NL-request er sendt til altinn.`)
+    }
+}
+
+export async function narmesteldereRequest(sykmeldtFnr: string): Promise<Narmesteldere[]> {
+    if (process.env.NODE_ENV !== 'production'){
+        return getListeMedNarmesteLedereMock()
+    }
+
+    const finnNarmesteldereRequestData: FinnNarmesteldere = {
+        sykmeldtFnr,
+    }
+
+    const response: Response = await authorizationFetch(
+        'narmesteleder',
+        'GET',
+        {},
+        JSON.stringify(finnNarmesteldereRequestData),
+    )
+
+    if (!response.ok) {
+        throw new Error(
+            `Noe gikk galt ved hentering av narmesteledere: ${response.status} ${response.statusText}`,
+        )
+    } else {
+        return await response.json()
     }
 }
 

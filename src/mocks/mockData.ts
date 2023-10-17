@@ -1,6 +1,7 @@
 import { Oppgave, OppgaverField } from '../types/oppgaver'
 import { Jouranlpost } from '../types/jouranlpost'
 import { Person } from '../types/person'
+import {Narmesteldere} from "../types/narmesteldere";
 
 export const oppgaverList: Oppgave[] = [
     {
@@ -91,6 +92,29 @@ export const personer: Person[] = [
     },
 ]
 
+export const narmesteldereList: Narmesteldere[] = [
+    {
+        fnr:  'Praktisk Ferskvann',
+        narmesteLederFnr: 'Praktisk Ferskvann',
+        orgnummer: '49828801413',
+        narmesteLederTelefonnummer: '49828801413',
+        narmesteLederEpost: '49828801413',
+        aktivFom: '2023-10-17',
+        aktivTom: '2024-10-17',
+        arbeidsgiverForskutterer:  true,
+    },
+    {
+        fnr:  'Praktisk Ferskvann',
+        narmesteLederFnr: 'Praktisk Ferskvann',
+        orgnummer: '498342342',
+        narmesteLederTelefonnummer: '49828801413',
+        narmesteLederEpost: '49828801413',
+        aktivFom: '2023-10-17',
+        aktivTom: null,
+        arbeidsgiverForskutterer: false,
+    },
+]
+
 export function getListeMedOppgaverMock(oppgaveider: OppgaverField): Oppgave[] | [] {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -101,6 +125,10 @@ export function getListeMedOppgaverMock(oppgaveider: OppgaverField): Oppgave[] |
         .filter((oppg: Oppgave | undefined): boolean => {
             return oppg !== undefined
         })
+}
+
+export function getListeMedNarmesteLedereMock(): Narmesteldere[] | [] {
+    return narmesteldereList
 }
 
 export function getJournalposterMock(fnr: string): Jouranlpost[] | undefined {
