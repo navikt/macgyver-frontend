@@ -16,6 +16,16 @@ Available at the following addresses:
 
 ## Getting Started
 
+### Access to GitHub Package Registry
+Since we use dependencies inherent in GPR,
+then one must set up access to the GPR with a PAT (personal access token)
+which has `read:packages`.
+You can [create PAT here](https://github.com/settings/tokens).
+If you have a PAT that you use to access maven packages in GitHub, you can reuse this.
+In your `.bashrc` or `.zshrc`, set the following environment variable:
+
+`export NPM_AUTH_TOKEN=<your PAT with read:packages>`
+
 ### install yarn
 Yarn can be installed through the npm package manager, with this command: 
 ```npm install --global yarn```
