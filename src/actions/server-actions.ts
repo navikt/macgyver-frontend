@@ -14,7 +14,8 @@ import {
 } from '../mocks/mockData'
 import {authorizationFetch} from '../auth/withAuth'
 import {Jouranlpost} from '../types/jouranlpost'
-import {FinnNarmesteldere, Narmesteldere} from "../types/finnNarmesteldere";
+import {FinnNarmesteldere} from "../types/finnNarmesteldere";
+import {Narmesteldere} from "../types/narmesteldere";
 
 export async function identEndringSykmeldt(fnr: string, nyttFnr: string): Promise<void> {
     if (process.env.NODE_ENV !== 'production') return
