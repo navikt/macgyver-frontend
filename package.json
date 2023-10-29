@@ -34,7 +34,7 @@
     "eslint-config-next": "^14.0.0",
     "husky": "^8.0.3",
     "next-logger": "^3.0.2",
-    "node-gyp": "^9.4.0",
+    "node-gyp": "^10.0.0",
     "pino-pretty": "^10.2.3",
     "prettier": "^3.0.3",
     "semver": "^7.5.4",
