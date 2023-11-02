@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@navikt/ds-react'
 
-import styles from './NLRequestForm.module.css'
-
 interface NyNlRequestAltinnFormProps {
     onChange: (sykmeldteFnr: string) => void
 }
@@ -23,9 +21,10 @@ const NLRequestForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.Element =>
                 onChange={(event) => {
                     setSykmeldteFnr(event.currentTarget.value)
                 }}
+                className="my-6 w-96"
             />
 
-            <Button name="hentButton" variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button name="hentButton" variant="primary" size="medium" className="my-4" onClick={handleClick}>
                 Hent
             </Button>
         </div>

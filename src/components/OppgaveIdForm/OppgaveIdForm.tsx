@@ -1,8 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import { Button, TextField } from '@navikt/ds-react'
 
-import styles from './OppgaveIdForm.module.css'
-
 interface OppgaveIdFormProps {
     onChange: (oppgaveIder: number[]) => void
 }
@@ -29,8 +27,9 @@ const OppgaveIdForm = ({ onChange }: OppgaveIdFormProps): ReactElement => {
                 onChange={(event) => {
                     setOppgaveIder(event.currentTarget.value)
                 }}
+                className="my-6 w-3/4"
             />
-            <Button name="hentButton" variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button name="hentButton" variant="primary" size="medium" className="my-4" onClick={handleClick}>
                 Hent
             </Button>
         </div>

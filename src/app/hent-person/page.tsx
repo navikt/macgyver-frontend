@@ -7,6 +7,7 @@ import Innhold from '../../components/Innhold/Innhold'
 import FnrForm from '../../components/FnrForm/FnrForm'
 import { hentPerson } from '../../actions/server-actions'
 import { Person } from '../../types/person'
+import PersonWithIdent from '../../components/FnrForm/PersonWithIdent'
 
 function Page(): ReactElement {
     const [data, setData] = useState<Person | null>(null)
@@ -41,7 +42,7 @@ function Page(): ReactElement {
                 }}
             />
             {!data && !error && isPending && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {data && <PersonWithIdent person={data} />}
             {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )

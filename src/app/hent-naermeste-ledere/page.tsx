@@ -4,9 +4,10 @@ import { ReactElement, useState, useTransition } from 'react'
 import { Alert, BodyShort, Loader } from '@navikt/ds-react'
 
 import Innhold from '../../components/Innhold/Innhold'
-import {Narmesteldere} from "../../types/narmesteldere";
-import {narmesteldereRequest} from "../../actions/server-actions";
-import NLRequestForm from "../../components/NLRequestForm/NLRequestForm";
+import { Narmesteldere } from '../../types/narmesteldere'
+import { narmesteldereRequest } from '../../actions/server-actions'
+import NLRequestForm from '../../components/NLRequestForm/NLRequestForm'
+import NarmesteldereList from '../../components/NLRequestForm/NarmesteldereList'
 
 function Page(): ReactElement {
     const [data, setData] = useState<Narmesteldere[] | null>(null)
@@ -41,7 +42,13 @@ function Page(): ReactElement {
                 }}
             />
             {!data && !error && isPending && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {data && (
+                <div className="flex flex-wrap gap-6">
+                    {data.map((narmesteldere: Narmesteldere) => (
+                        <NarmesteldereList key={narmesteldere.fnr} narmesteldere={narmesteldere} />
+                    ))}
+                </div>
+            )}
             {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )

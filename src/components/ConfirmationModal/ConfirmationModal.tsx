@@ -1,8 +1,6 @@
 import React from 'react'
 import { BodyLong, Button, Modal } from '@navikt/ds-react'
 
-import styles from './ConfirmationModal.module.css'
-
 interface ConfirmationModalProps {
     open: boolean
     message: string
@@ -17,10 +15,10 @@ const ConfirmationModal = ({ open, message, onCancel, onOK }: ConfirmationModalP
                 <BodyLong spacing>{message}</BodyLong>
             </Modal.Body>
             <Modal.Footer>
-                <Button className={styles.button} variant="secondary" onClick={onCancel}>
+                <Button variant="secondary" onClick={onCancel}>
                     Nei
                 </Button>
-                <Button className={styles.button} variant="danger" onClick={onOK}>
+                <Button variant="danger" onClick={onOK}>
                     Ja eg er sikker
                 </Button>
             </Modal.Footer>

@@ -7,6 +7,7 @@ import Innhold from '../../components/Innhold/Innhold'
 import FnrForm from '../../components/FnrForm/FnrForm'
 import { hentListeMedJournalposter } from '../../actions/server-actions'
 import { Jouranlpost } from '../../types/jouranlpost'
+import JournalpostList from '../../components/FnrForm/JournalpostList'
 
 function HentListeAvJournalposter(): ReactElement {
     const [data, setData] = useState<Jouranlpost[] | null>(null)
@@ -34,14 +35,14 @@ function HentListeAvJournalposter(): ReactElement {
 
     return (
         <Innhold>
-            <BodyShort>Hent en liste av journalposter med oppgaveId fra saf-api</BodyShort>
+            <BodyShort>Hent en liste med journalposter, med oppgaveId fra saf-api</BodyShort>
             <FnrForm
                 onChange={(fnr: string): void => {
                     handleClick(fnr)
                 }}
             />
             {!data && !error && isPending && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {data && <JournalpostList journalpostLister={data} />}
             {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )

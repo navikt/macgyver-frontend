@@ -3,8 +3,6 @@ import { Button, TextField } from '@navikt/ds-react'
 
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
-import styles from './SlettLegeerklaeringForm.module.css'
-
 interface SlettLegeerklaeringFormProps {
     onSubmit: (legeerklaeringId: string) => void
 }
@@ -22,11 +20,12 @@ const SlettLegeerklaeringForm = ({ onSubmit }: SlettLegeerklaeringFormProps): JS
                 onChange={(event) => {
                     setlegeerklaeringId(event.currentTarget.value)
                 }}
+                className="my-6 w-96"
             />
             <Button
                 variant="primary"
                 size="medium"
-                className={styles.button}
+                className="my-4"
                 onClick={() => {
                     setConformationModalOpen(true)
                 }}
