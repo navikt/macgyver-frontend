@@ -3,8 +3,6 @@ import { Button, TextField } from '@navikt/ds-react'
 
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
-import styles from './NyNLRequestAltinnForm.module.css'
-
 interface NyNlRequestAltinnFormProps {
     onChange: (sykmeldingId: string, fnr: string, orgnummer: string) => void
 }
@@ -25,6 +23,7 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
                 onChange={(event) => {
                     setSykmeldingId(event.currentTarget.value)
                 }}
+                className="my-6 w-96"
             />
             <TextField
                 label="fnr"
@@ -32,6 +31,7 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
                 onChange={(event) => {
                     setFnr(event.currentTarget.value)
                 }}
+                className="my-4 w-96"
             />
             <TextField
                 label="orgnummer"
@@ -39,11 +39,12 @@ const NyNlRequestAltinnForm = ({ onChange }: NyNlRequestAltinnFormProps): JSX.El
                 onChange={(event) => {
                     setOrgnummer(event.currentTarget.value)
                 }}
+                className="my-4 w-96"
             />
             <Button
                 variant="primary"
                 size="medium"
-                className={styles.button}
+                className="my-4"
                 onClick={() => {
                     setConformationModalOpen(true)
                 }}

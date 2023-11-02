@@ -1,8 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import { Button, TextField } from '@navikt/ds-react'
 
-import styles from './FnrForm.module.css'
-
 interface FnrFormProps {
     onChange: (fnr: string) => void
 }
@@ -24,8 +22,9 @@ const FnrForm = ({ onChange }: FnrFormProps): ReactElement => {
                 onChange={(event) => {
                     setFnr(event.currentTarget.value)
                 }}
+                className="my-6 w-96"
             />
-            <Button name="hentButton" variant="primary" size="medium" className={styles.button} onClick={handleClick}>
+            <Button name="hentButton" variant="primary" size="medium" className="my-4" onClick={handleClick}>
                 Hent
             </Button>
         </div>

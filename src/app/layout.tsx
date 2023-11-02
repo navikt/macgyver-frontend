@@ -15,7 +15,7 @@ export default async function RootLayout({ children }: PropsWithChildren): Promi
                 <meta name="description" content="macgyver" />
                 <link rel="icon" href="/favicon.ico" />
             </head>
-            <body className="bg-bg-subtle">
+            <body>
                 <main id="maincontent" role="main">
                     {children}
                 </main>

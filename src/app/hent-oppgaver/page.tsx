@@ -7,6 +7,7 @@ import OppgaveIdForm from '../../components/OppgaveIdForm/OppgaveIdForm'
 import Innhold from '../../components/Innhold/Innhold'
 import { Oppgave, OppgaverField } from '../../types/oppgaver'
 import { hentListeMedOppgaver } from '../../actions/server-actions'
+import OppgaveList from '../../components/OppgaveIdForm/OppgaveList'
 
 function Page(): ReactElement {
     const [data, setData] = useState<Oppgave[] | null>(null)
@@ -34,14 +35,20 @@ function Page(): ReactElement {
 
     return (
         <Innhold>
-            <BodyShort>Hent en liste av oppgaver med oppgaveId fra Oppgave-api: eks: 2,3,4,5</BodyShort>
+            <BodyShort>Hent en liste med oppgaver med oppgaveId fra Oppgave-api: eks: 2, 3, 4, 5</BodyShort>
             <OppgaveIdForm
                 onChange={(oppgaveIder: number[]): void => {
                     handleClick(oppgaveIder)
                 }}
             />
             {!data && !error && isPending && <Loader size="medium" />}
-            {data && <Alert variant="success">{JSON.stringify(data, null, 2)}</Alert>}
+            {data && (
+                <div className="flex flex-wrap gap-6">
+                    {data.map((oppgave: Oppgave) => (
+                        <OppgaveList key={oppgave.id} oppgave={oppgave} />
+                    ))}
+                </div>
+            )}
             {error && <Alert variant="error">{error}</Alert>}
         </Innhold>
     )
