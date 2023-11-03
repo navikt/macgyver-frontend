@@ -6,11 +6,12 @@ import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import styles from './SlettSykmeldingForm.module.css'
 
 interface SlettSykmeldingFormProps {
-    onSubmit: (sykmeldingId: string) => void
+    onSubmit: (sykmeldingId: string, journalpostId: string) => void
 }
 
 const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Element => {
     const [sykmeldingId, setSykmeldingId] = useState<string>('')
+    const [journalpostId, setJournalpostId] = useState<string>('')
     const [conformationModalOpen, setConformationModalOpen] = useState(false)
 
     return (
@@ -21,6 +22,14 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
                 size="medium"
                 onChange={(event) => {
                     setSykmeldingId(event.currentTarget.value)
+                }}
+            />
+            <TextField
+                name="journalpostId"
+                label="journalpostId"
+                size="medium"
+                onChange={(event) => {
+                    setJournalpostId(event.currentTarget.value)
                 }}
             />
             <Button
@@ -34,12 +43,12 @@ const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Elemen
                 Slett
             </Button>
             <ConfirmationModal
-                message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId}?`}
+                message={`Er du sikker på at du vil slette sykmelding med id: ${sykmeldingId} og journalposten: ${journalpostId} ?`}
                 onCancel={() => {
                     setConformationModalOpen(false)
                 }}
                 onOK={() => {
-                    onSubmit(sykmeldingId)
+                    onSubmit(sykmeldingId, journalpostId)
                     setConformationModalOpen(false)
                 }}
                 open={conformationModalOpen}
