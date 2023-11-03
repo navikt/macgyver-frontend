@@ -12,7 +12,7 @@ function Page(): ReactElement {
     const [success, setSuccess] = useState<boolean>(false)
     const [isPending, startTransition] = useTransition()
 
-    const handleClick = (sykmeldingId: string): void => {
+    const handleClick = (sykmeldingId: string, journalpostId: string): void => {
         startTransition(async (): Promise<void> => {
             if (!sykmeldingId) {
                 setSuccess(false)
@@ -20,8 +20,14 @@ function Page(): ReactElement {
                 return
             }
 
+            if (!journalpostId) {
+                setSuccess(false)
+                setError('Mangler journalpostId.')
+                return
+            }
+
             try {
-                await slettSykmelding(sykmeldingId)
+                await slettSykmelding(sykmeldingId, journalpostId)
                 setError(null)
                 setSuccess(true)
             } catch (e) {
@@ -35,8 +41,8 @@ function Page(): ReactElement {
         <Innhold>
             <BodyShort>Sletter en sykmelding</BodyShort>
             <SlettSykmeldingForm
-                onSubmit={(sykmeldingId: string): void => {
-                    handleClick(sykmeldingId)
+                onSubmit={(sykmeldingId: string, journalpostId: string): void => {
+                    handleClick(sykmeldingId, journalpostId)
                 }}
             />
             {isPending && !error && <Loader size="medium" />}
