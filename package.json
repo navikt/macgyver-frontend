@@ -14,9 +14,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "^5.7.6",
-    "@navikt/ds-css": "^5.7.6",
-    "@navikt/ds-react": "^5.7.6",
+    "@navikt/aksel-icons": "^5.10.3",
+    "@navikt/ds-css": "^5.10.3",
+    "@navikt/ds-react": "^5.10.3",
     "@navikt/next-auth-wonderwall": "^1.5.0",
     "@navikt/next-logger": "^1.19.0",
     "next": "14.0.0",
@@ -26,7 +26,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@navikt/ds-tailwind": "^5.8.0",
+    "@navikt/ds-tailwind": "^5.10.3",
     "@navikt/eslint-config-teamsykmelding": "^4.5.0",
     "@types/node": "20.8.9",
     "@types/react": "18.2.33",
