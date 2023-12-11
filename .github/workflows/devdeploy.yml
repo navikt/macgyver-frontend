@@ -4,8 +4,7 @@ on:
     branches:
       - '**'
       - '!main'
-env:
-  NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
 jobs:
   codeql-analysis:
     runs-on: ubuntu-latest
@@ -25,19 +24,9 @@ jobs:
       contents: "read"
       id-token: "write"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@node-20
         with:
-          node-version: 18.x
-      - uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install yarn dependencies
-        run: yarn --immutable
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Build app
         run: yarn build
       - name: docker-build-push
