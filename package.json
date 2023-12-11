@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=18.17"
+    "node": "20"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@4.0.2",
   "scripts": {
     "dev": "yarn start",
     "build": "next build",
@@ -28,21 +28,20 @@
   "devDependencies": {
     "@navikt/ds-tailwind": "^5.11.4",
     "@navikt/eslint-config-teamsykmelding": "^5.0.0",
-    "@types/node": "20.8.9",
-    "@types/react": "18.2.33",
-    "@types/react-dom": "18.2.14",
+    "@types/node": "20.10.4",
+    "@types/react": "18.2.43",
+    "@types/react-dom": "18.2.17",
     "autoprefixer": "^10.4.16",
     "eslint": "8.55.0",
     "eslint-config-next": "^14.0.4",
     "husky": "^8.0.3",
     "next-logger": "^3.0.2",
-    "node-gyp": "^9.4.0",
     "pino-pretty": "^10.2.3",
-    "prettier": "^3.1.0",
+    "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "semver": "^7.5.4",
-    "tailwindcss": "^3.3.5",
-    "typescript": "5.3.2",
+    "tailwindcss": "^3.3.6",
+    "typescript": "5.3.3",
     "word-wrap": "^1.2.5"
   },
   "resolutions": {
