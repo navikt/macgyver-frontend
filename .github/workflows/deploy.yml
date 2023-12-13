@@ -23,7 +23,7 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@node-20
+      - uses: navikt/teamsykmelding-github-actions-workflows/actions/yarn-cached@main
         with:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Build app
