@@ -1,6 +1,6 @@
 import { headers } from 'next/headers'
 import { logger } from '@navikt/next-logger'
-import { grantAzureOboToken, isInvalidTokenSet, validateAzureToken } from '@navikt/next-auth-wonderwall'
+import { validateToken, requestOboToken, getToken } from '@navikt/oasis'
 import { redirect } from 'next/navigation'
 
 export async function verifyUserLoggedIn(): Promise<void> {
@@ -18,18 +18,18 @@ export async function verifyUserLoggedIn(): Promise<void> {
     }
     logger.info(`Redirect path is ${redirectPath}`)
 
-    const bearerToken: string | null | undefined = requestHeaders.get('authorization')
-    if (!bearerToken) {
+    const token = getToken(requestHeaders)
+    if (!token) {
         logger.info('No token found, redirecting to login')
         redirect(`/oauth2/login?redirect=${redirectPath}`)
     }
 
-    const validationResult = await validateAzureToken(bearerToken)
-    if (validationResult !== 'valid') {
-        if (validationResult.errorType !== 'EXPIRED') {
+    const validationResult = await validateToken(token)
+    if (!validationResult.ok) {
+        if (validationResult.errorType !== 'token expired') {
             logger.error(
                 new Error(
-                    `Invalid JWT token found (cause: ${validationResult.errorType} ${validationResult.message}, redirecting to login.`,
+                    `Invalid JWT token found (cause: ${validationResult.errorType} ${validationResult.error.message}, redirecting to login.`,
                     { cause: validationResult.error },
                 ),
             )
@@ -51,10 +51,9 @@ export async function authorizationFetch(
         throw new Error('Missing token')
     }
 
-    const oboToken = await grantAzureOboToken(bearerToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set')
-
-    if (isInvalidTokenSet(oboToken)) {
-        logger.error(oboToken.message)
+    const oboResult = await requestOboToken(bearerToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set')
+    if (!oboResult.ok) {
+        logger.error(oboResult.error)
         throw new Error('Invalid token')
     }
 
@@ -62,7 +61,7 @@ export async function authorizationFetch(
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${oboToken}`,
+            Authorization: `Bearer ${oboResult}`,
             ...fetchHeaders,
         },
         body: body ?? null,
