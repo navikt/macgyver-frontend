@@ -44,8 +44,7 @@ export async function authorizationFetch(
     fetchHeaders: HeadersInit = {},
     body?: BodyInit,
 ): Promise<Response> {
-    const requestHeaders = headers()
-    const bearerToken: string | null | undefined = requestHeaders.get('authorization')?.replace('Bearer ', '')
+    const bearerToken = getToken(headers())
     if (!bearerToken) {
         logger.info('No token found, redirecting to login')
         throw new Error('Missing token')
@@ -61,7 +60,7 @@ export async function authorizationFetch(
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${oboResult}`,
+            Authorization: `Bearer ${oboResult.token}`,
             ...fetchHeaders,
         },
         body: body ?? null,
