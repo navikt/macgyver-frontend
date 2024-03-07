@@ -3493,6 +3493,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0.5.9"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    remeda: "npm:^1.47.0"
     semver: "npm:^7.5.4"
     tailwindcss: "npm:^3.3.6"
     typescript: "npm:5.3.3"
@@ -4609,6 +4610,13 @@ __metadata:
     define-properties: "npm:^1.2.0"
     set-function-name: "npm:^2.0.0"
   checksum: 3fa5610b8e411bbc3a43ddfd13162f3a817beb43155fbd8caa24d4fd0ce2f431a8197541808772a5a06e5946cebfb68464c827827115bde0d11720a92fe2981a
+  languageName: node
+  linkType: hard
+
+"remeda@npm:^1.47.0":
+  version: 1.47.0
+  resolution: "remeda@npm:1.47.0"
+  checksum: b62cc95a47373b4cf36f3834aff38b6cf1087d2371f5bb7297367fc2d69466b65b59c1a8403aeb484ddd06070c74c76f868d761a38ce1f1bc3f46530d84a8c6c
   languageName: node
   linkType: hard
 

@@ -158,8 +158,8 @@ export async function hentPerson(fnr: string): Promise<Person> {
     }
 }
 
-export async function runRegulusDumpulus(): Promise<boolean> {
-    const response: Response = await authorizationFetch(`smregister/job`, 'POST')
+export async function runRegulusDumpulus(year: number | null): Promise<boolean> {
+    const response: Response = await authorizationFetch(`smregister/job?year=${year ?? null}`, 'POST')
 
     if (!response.ok) {
         logger.error(`Noe gikk galt ved starting av dumpejobb: ${response.status} ${response.statusText}`)
