@@ -36,7 +36,12 @@ export async function identEndringSykmeldt(fnr: string, nyttFnr: string): Promis
 export async function slettSykmelding(sykmeldingId: string, journalpostId: string | null): Promise<void> {
     if (process.env.NODE_ENV !== 'production') return
     logger.info(`sletter sykmelding: journalpostId ${journalpostId}.`)
-    const response: Response = await authorizationFetch(`sykmelding/${sykmeldingId}/${journalpostId??"null"}`, 'DELETE')
+    // http://macgyver/api/sykmeldingId/journalpostId
+    logger.info(`PATH: http://macgyver/api/sykmelding/${sykmeldingId}/${journalpostId || 'mangler'}`)
+    const response: Response = await authorizationFetch(
+        `sykmelding/${sykmeldingId}/${journalpostId || 'mangler'}`,
+        'DELETE',
+    )
 
     if (!response.ok) {
         throw new Error(`Noe gikk galt ved sletting av sykmelding: ${response.status} ${response.statusText}`)

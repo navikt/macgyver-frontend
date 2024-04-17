@@ -35,6 +35,7 @@ function Page(): ReactElement {
             } catch (e) {
                 setSuccess(false)
                 setError('Sletting av sykmelding feilet.')
+                logger.error(e)
             }
         })
     }
