@@ -49,7 +49,6 @@ export async function authorizationFetch(
         logger.info('No token found, redirecting to login')
         throw new Error('Missing token')
     }
-    logger.info(`fetcher autorisation path: ${path}`)
 
     const oboResult = await requestOboToken(bearerToken, process.env.MACGYVER_BACKEND_SCOPE ?? 'scope not set')
     if (!oboResult.ok) {
