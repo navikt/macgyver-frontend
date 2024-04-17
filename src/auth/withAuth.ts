@@ -56,7 +56,6 @@ export async function authorizationFetch(
         throw new Error('Invalid token')
     }
 
-    console.info(`Fetching: ${method} http://macgyver/api/${path}`)
     return fetch(`http://macgyver/api/${path}`, {
         method: method,
         headers: {
