@@ -4,7 +4,7 @@ import { Button, TextField } from '@navikt/ds-react'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
 interface SlettSykmeldingFormProps {
-    onSubmit: (sykmeldingId: string, journalpostId: string | null) => void
+    onSubmit: (sykmeldingId: string, journalpostId: string) => void
 }
 
 const SlettSykmeldingForm = ({ onSubmit }: SlettSykmeldingFormProps): JSX.Element => {
