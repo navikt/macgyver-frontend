@@ -33,10 +33,10 @@ export async function identEndringSykmeldt(fnr: string, nyttFnr: string): Promis
     }
 }
 
-export async function slettSykmelding(sykmeldingId: string, journalpostId: string): Promise<void> {
+export async function slettSykmelding(sykmeldingId: string, journalpostId: string | null): Promise<void> {
     if (process.env.NODE_ENV !== 'production') return
-
-    const response: Response = await authorizationFetch(`sykmelding/${sykmeldingId}/${journalpostId}`, 'DELETE')
+    logger.info(`sletter sykmelding: journalpostId ${journalpostId}.`)
+    const response: Response = await authorizationFetch(`sykmelding/${sykmeldingId}/${journalpostId??"null"}`, 'DELETE')
 
     if (!response.ok) {
         throw new Error(`Noe gikk galt ved sletting av sykmelding: ${response.status} ${response.statusText}`)

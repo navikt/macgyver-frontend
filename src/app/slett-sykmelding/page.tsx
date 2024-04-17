@@ -6,13 +6,13 @@ import { ReactElement, useState, useTransition } from 'react'
 import Innhold from '../../components/Innhold/Innhold'
 import SlettSykmeldingForm from '../../components/SlettSykmeldingForm/SlettSykmeldingForm'
 import { slettSykmelding } from '../../actions/server-actions'
-
+import { logger } from '@navikt/next-logger'
 function Page(): ReactElement {
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<boolean>(false)
     const [isPending, startTransition] = useTransition()
 
-    const handleClick = (sykmeldingId: string, journalpostId: string): void => {
+    const handleClick = (sykmeldingId: string, journalpostId: string | null): void => {
         startTransition(async (): Promise<void> => {
             if (!sykmeldingId) {
                 setSuccess(false)
@@ -20,12 +20,14 @@ function Page(): ReactElement {
                 return
             }
 
-            if (!journalpostId) {
+         /*   if (!journalpostId) {
                 setSuccess(false)
                 setError('Mangler journalpostId.')
                 return
             }
 
+*/
+            logger.info(`sletter sykmelding: journalpostId ${journalpostId}.`)
             try {
                 await slettSykmelding(sykmeldingId, journalpostId)
                 setError(null)
@@ -41,7 +43,7 @@ function Page(): ReactElement {
         <Innhold>
             <BodyShort>Sletter en sykmelding</BodyShort>
             <SlettSykmeldingForm
-                onSubmit={(sykmeldingId: string, journalpostId: string): void => {
+                onSubmit={(sykmeldingId: string, journalpostId: string | null): void => {
                     handleClick(sykmeldingId, journalpostId)
                 }}
             />
