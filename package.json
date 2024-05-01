@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@navikt/ds-tailwind": "^5.11.4",
-    "@navikt/eslint-config-teamsykmelding": "^5.0.0",
+    "@navikt/eslint-config-teamsykmelding": "^6.2.0",
     "@types/node": "20.10.4",
     "@types/react": "18.2.43",
     "@types/react-dom": "18.2.17",
