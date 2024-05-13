@@ -17,7 +17,7 @@
     "@navikt/aksel-icons": "^5.11.4",
     "@navikt/ds-css": "^5.11.4",
     "@navikt/ds-react": "^5.11.4",
-    "@navikt/next-logger": "^1.21.0",
+    "@navikt/next-logger": "^1.24.0",
     "@navikt/oasis": "^3.2.4",
     "next": "14.1.1",
     "pino": "^8.19.0 ",
