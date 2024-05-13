@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
-import { Heading } from './ds/ds-react'
-import { PersonGroupIcon } from './ds/icons'
+import { Heading } from '@navikt/ds-react'
+import { PersonGroupIcon } from '@navikt/aksel-icons'
 
 type Props = {
     title: string

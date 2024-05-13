@@ -6,6 +6,7 @@ const nextConfig = {
     experimental: {
         serverComponentsExternalPackages: ['@navikt/next-logger', 'next-logger'],
         serverActions: true,
+            optimizePackageImports: ['@navikt/ds-react', '@navikt/aksel-icons'],
     },
 }
 
