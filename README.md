@@ -1,9 +1,13 @@
 # macgyver-frontend
 Frontend app for [macgyver](https://github.com/navikt/macgyver)
 
-Available at the following addresses:
--   dev-gcp: https://macgyver-frontend.intern.dev.nav.no/
--   prod-gcp: https://macgyver-frontend.ansatt.nav.no/
+
+## This application has been moved to [macgyver](https://github.com/navikt/macgyver) and now lives in the same repository. 
+This has been archived because the functionality is moved to make development easier for developers. This allows us to have a simpler setup to run the app locally. 
+
+05.06.2024
+
+---
 
 ## Technologies used
 * NEXT.js
